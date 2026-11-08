@@ -1,71 +1,83 @@
-# DevResearch: Developer Knowledge and System Engineering Notes
+# TechMaterials: Engineering Research, Technical Papers, and System Notes
 
-A curated technical repository combining verified OS and network troubleshooting guides, AI inference provider references, developer CLI workflows, and creative design tools.
+Author and Maintainer: Dev Borah (bitzzdev)  
+Repository: `tech-materials`  
+Focus: Systems engineering, hardware-accelerated AI inference, developer agents, and graphics architectures.
+
+---
 
 ## Repository Structure
 
 ```text
-├── ai-providers/              API documentation, free tiers, and integration guides
-├── developer-tools/           Coding assistants, terminal agents, and git tools
-├── creative-ascii-design/     Frontend components, ASCII generators, and design plugins
-├── android/                   Device tuning, Termux fixes, and storage guides
-├── linux/                     Arch Linux setup, UKI boot, Wi-Fi fixes, and maintenance
-├── network/                   Bandwidth optimization and Qualcomm Wi-Fi stability
-├── windows/                   System troubleshooting and diagnostics
-└── cross-platform/            Multi-platform workflows and tooling notes
+├── papers/                    In-depth research papers for tools and architectures
+│   ├── groq-inference-analysis.md       Groq LPU speed, SRAM design, and API limits
+│   ├── cerebras-wse-inference.md        Cerebras Wafer-Scale Engine and token throughput
+│   ├── google-ai-studio-gemini.md       Gemini million-token context and function calling
+│   ├── apinex-gateway-proxy.md          Multi-model API proxying and security boundaries
+│   ├── agy-autonomous-agent.md          Google Antigravity CLI agent runtime architecture
+│   ├── opencode-codex-agents.md         Terminal-native coding agents vs cloud code models
+│   ├── git-tulkun-visualization.md      Procedural pixel art and GitHub Actions automation
+│   ├── react-bits-ui.md                 Zero-dependency React components and animation
+│   ├── efecto-ai-canvas.md              AI-native design canvas and MCP agent integration
+│   ├── ascii-rendering-engines.md       ascii.rest, ASCII Magic, and Asciify algorithms
+│   └── asciicore-figma-dithering.md     VGA matrix dithering inside Figma
+├── ai-providers/              Quick-start guides, curl snippets, and API endpoints
+├── developer-tools/           Autonomous assistants, terminal utilities, and setup notes
+├── creative-ascii-design/     Frontend libraries, ASCII generators, and design plugins
+├── android/                   Device performance, storage reclamation, and Termux setup
+├── linux/                     Arch Linux health checks, UKI kernel boot, and Wi-Fi drivers
+├── network/                   Bandwidth reduction and Qualcomm Wi-Fi stability fixes
+├── windows/                   Diagnostics and operating system troubleshooting
+└── cross-platform/            Shared cross-environment scripts and tools
 ```
 
 ---
 
-## 1. AI API Providers and Inference
+## 1. Technical Research Papers
 
-Detailed documentation on API endpoints, free developer keys, and integration commands:
+Formal technical research papers detailing architecture, algorithms, and benchmark performance:
 
-- **[Groq Cloud](ai-providers/README.md#1-groq-cloud):** Ultra-fast open-source model inference (Llama 3.3, Mixtral) with OpenAI-compatible endpoints.
-- **[Cerebras Inference](ai-providers/README.md#2-cerebras-inference):** High-throughput token generation powered by the Wafer-Scale Engine.
-- **[Google AI Studio](ai-providers/README.md#3-google-ai-studio):** Free-tier Gemini keys, multi-modal context, and REST API examples.
-- **[APInex Gateway](ai-providers/README.md#4-apinex-gateway):** Unified multi-model proxy supporting DeepSeek, Qwen, and GLM.
+### AI Inference and API Gateways
+- [Groq LPU Inference Architecture](papers/groq-inference-analysis.md): SRAM layout, deterministic instruction scheduling, and token latency.
+- [Cerebras Wafer-Scale Engine](papers/cerebras-wse-inference.md): Wafer-scale chip topology, 900,000 AI cores, and high token throughput.
+- [Google AI Studio & Gemini Architecture](papers/google-ai-studio-gemini.md): Long context windows, REST API usage, and structured JSON schemas.
+- [APInex Gateway and Third-Party Proxy Security](papers/apinex-gateway-proxy.md): Multi-model routing mechanics and API security trade-offs.
 
----
+### Developer Agents and Tooling
+- [Google Antigravity (AGY) Agent Architecture](papers/agy-autonomous-agent.md): Orchestration runtime, subagent delegation, and artifact systems.
+- [Terminal-Native Agents: OpenCode and Codex](papers/opencode-codex-agents.md): Comparing shell-integrated agents with cloud model generators.
+- [Git-Tulkun Procedural Visualization](papers/git-tulkun-visualization.md): Logarithmic activity scaling and automated GitHub Actions workflows.
 
-## 2. Developer Tools and Coding Assistants
-
-Reference manuals and workflow setups for coding agents and developer workflows:
-
-- **[Google Antigravity (AGY)](developer-tools/README.md#1-google-antigravity-agy):** CLI architecture, customization skills, and agentic workflows.
-- **[OpenCode](developer-tools/README.md#2-opencode):** Open-source terminal-based AI coding assistant.
-- **[OpenAI Codex / Code Models](developer-tools/README.md#3-openai-codex-and-code-models):** Frontier reasoning and code generation models.
-- **[git-tulkun](developer-tools/README.md#4-git-tulkun):** Procedural pixel-art GitHub profile visualizer driven by commit activity.
-
----
-
-## 3. Creative, ASCII, and Frontend Design
-
-Libraries, visual effects engines, and design tool integrations:
-
-- **[React Bits](creative-ascii-design/README.md#1-react-bits-reactbitsdev):** Production-ready animated UI components for React and Tailwind CSS.
-- **[Efecto](creative-ascii-design/README.md#2-efecto-efectoapp):** AI-native design canvas and layout exporter by Pablo Stanley.
-- **[ascii.rest](creative-ascii-design/README.md#3-asciirest):** Dependency-free TypeScript ASCII UI components and 3D spinners.
-- **[ASCII Magic](creative-ascii-design/README.md#4-ascii-magic-ascii-magiccom):** Browser studio converting images and video into retro character art.
-- **[Asciify Engine](creative-ascii-design/README.md#5-asciify-engine-asciifyorg):** Framework-agnostic engine for live ASCII rendering.
-- **[Asciicore Figma Plugin](creative-ascii-design/README.md#6-asciicore-figma-plugin-vga-asciicoreexe):** VGA dither and ASCII effect generator for Figma canvas designs.
+### Creative, ASCII, and Frontend Systems
+- [React Bits Modular UI Architecture](papers/react-bits-ui.md): Micro-interactions, Tailwind integration, and bundle optimization.
+- [Efecto AI-Collaborative Canvas](papers/efecto-ai-canvas.md): Real-time design canvas, WebGL shaders, and MCP tool protocols.
+- [ASCII Rendering Engines Analysis](papers/ascii-rendering-engines.md): Luminance quantization in ascii.rest, ASCII Magic, and Asciify.
+- [Vector Dithering with Asciicore](papers/asciicore-figma-dithering.md): Bayer matrices and Floyd-Steinberg dithering within Figma.
 
 ---
 
-## 4. System Engineering and Troubleshooting
+## 2. Quick Integration Reference Manuals
 
-Original technical fixes preserved and indexed by platform:
-
-- **[Linux](linux/README.md):** Arch Linux health checks, UKI kernel parameters, QCA9377 Wi-Fi firmware fixes, and VLC codec configurations.
-- **[Android](android/README.md):** Realme C11 optimizations, internal storage recovery, and running CLI coding tools in Termux.
-- **[Network](network/README.md):** Mobile hotspot stability, background bandwidth reduction, and Qualcomm driver power management.
-- **[Cross-Platform](cross-platform/README.md):** Shared debugging utilities and multi-OS maintenance scripts.
-- **[Windows](windows/README.md):** Windows diagnostics and system fixes.
+Pragmatic developer documentation with ready-to-run code snippets:
+- [AI API Providers Guide](ai-providers/README.md): Step-by-step API key generation, endpoints, and authentication headers.
+- [Developer Tools Guide](developer-tools/README.md): Installation and command lines for AGY, OpenCode, and git-tulkun.
+- [Creative and ASCII Design Guide](creative-ascii-design/README.md): Quick links and setup notes for web generators and Figma plugins.
 
 ---
 
-## Research and Contribution Standards
+## 3. Systems Engineering and Hardware Fixes
 
-- Every guide must contain reproducible steps and clear rollback options.
-- Avoid vague advice; specify exact file paths, configuration keys, and error strings.
-- Verify API endpoints, rate limits, and authentication formats before committing docs.
+Battle-tested diagnostic guides and scripts for physical hardware and operating systems:
+- [Linux Systems](linux/README.md): Arch Linux maintenance, unified kernel images (UKI), and Qualcomm QCA9377 driver fixes.
+- [Android Devices](android/README.md): Internal storage recovery, memory management, and Termux CLI workarounds.
+- [Network Infrastructure](network/README.md): Wi-Fi hotspot stability and mobile data consumption caps.
+- [Cross-Platform](cross-platform/README.md): Multi-OS command snippets and synchronization routines.
+- [Windows Systems](windows/README.md): System repair and registry tuning procedures.
+
+---
+
+## Engineering and Writing Standards
+
+- Every paper documents observed behavior, verified endpoints, and architectural mechanisms.
+- All prose follows strict human writing standards: no promotional filler, no em dashes, and no emoji.
+- Configurations must include exact file locations, parameter types, and rollback steps.
