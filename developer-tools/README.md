@@ -6,7 +6,7 @@ Reference guides for autonomous coding assistants, CLI workflows, and terminal-n
 
 | Tool | Focus Area | Interface | Link / Reference |
 | --- | --- | --- | --- |
-| AGY (Google Antigravity) | Agentic coding CLI, workflows, IDE integration | CLI (`agy`) | Built-in AGY environment |
+| AGY (Google Antigravity) | Agentic coding CLI, workflows, IDE integration | CLI (`agy`) | [antigravity.google](https://antigravity.google/product/antigravity-cli/)|
 | OpenCode | Open-source terminal agent and coding assistant | Terminal CLI | [github.com/opencode-ai](https://github.com/opencode-ai) |
 | OpenAI Codex / Coding Models | Code generation engines and agent backends | API / Editor extensions | [platform.openai.com](https://platform.openai.com/) |
 | git-tulkun | GitHub contribution activity visualizer (pixel art) | GitHub Action | [github.com/PramudithaN/git-tulkun](https://github.com/PramudithaN/git-tulkun) |
