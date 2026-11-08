@@ -4,12 +4,14 @@ Author and Maintainer: Dev Borah (bitzzdev)
 Repository: `devSubstrate`  
 Focus: Systems engineering, hardware-accelerated AI inference, developer agents, and graphics architectures.
 
+All entries link directly to internal research papers and verified system fix files.
+
 ---
 
-## Repository Structure
+## Repository Tree
 
 ```text
-├── papers/                    In-depth research papers for tools and architectures
+├── papers/                    In-depth technical research papers
 │   ├── groq-inference-analysis.md       Groq LPU speed, SRAM design, and API limits
 │   ├── cerebras-wse-inference.md        Cerebras Wafer-Scale Engine and token throughput
 │   ├── google-ai-studio-gemini.md       Gemini million-token context and function calling
@@ -22,11 +24,11 @@ Focus: Systems engineering, hardware-accelerated AI inference, developer agents,
 │   ├── ascii-rendering-engines.md       ascii.rest, ASCII Magic, and Asciify algorithms
 │   ├── asciicore-figma-dithering.md     VGA matrix dithering inside Figma
 │   └── paper-mono-typography.md         Paper Mono font anatomy, ligatures, and duospacing
-├── ai-providers/              Quick-start guides, curl snippets, and API endpoints
+├── ai-providers/              API endpoint documentation and curl integration
 ├── developer-tools/           Autonomous assistants, terminal utilities, and setup notes
-├── creative-ascii-design/     Frontend libraries, ASCII generators, and design plugins
-├── android/                   Device performance, storage reclamation, and Termux setup
-├── linux/                     Arch Linux health checks, UKI kernel boot, and Wi-Fi drivers
+├── creative-ascii-design/     Frontend components, ASCII engines, and typography guides
+├── android/                   Device performance, storage recovery, and Termux fixes
+├── linux/                     Arch Linux health checks, UKI boot, and driver repairs
 ├── network/                   Bandwidth reduction and Qualcomm Wi-Fi stability fixes
 ├── windows/                   Diagnostics and operating system troubleshooting
 └── cross-platform/            Shared cross-environment scripts and tools
@@ -36,20 +38,20 @@ Focus: Systems engineering, hardware-accelerated AI inference, developer agents,
 
 ## 1. Technical Research Papers
 
-Formal technical research papers detailing architecture, algorithms, and benchmark performance:
+Evaluations of hardware architectures, model inference runtimes, agent systems, and rendering pipelines:
 
 ### AI Inference and API Gateways
 - [Groq LPU Inference Architecture](papers/groq-inference-analysis.md): SRAM layout, deterministic instruction scheduling, and token latency.
 - [Cerebras Wafer-Scale Engine](papers/cerebras-wse-inference.md): Wafer-scale chip topology, 900,000 AI cores, and high token throughput.
-- [Google AI Studio & Gemini Architecture](papers/google-ai-studio-gemini.md): Long context windows, REST API usage, and structured JSON schemas.
+- [Google AI Studio and Gemini Architecture](papers/google-ai-studio-gemini.md): Long context windows, REST API usage, and structured JSON schemas.
 - [APInex Gateway and Third-Party Proxy Security](papers/apinex-gateway-proxy.md): Multi-model routing mechanics and API security trade-offs.
 
-### Developer Agents and Tooling
+### Developer Agents and Coding Tooling
 - [Google Antigravity (AGY) Agent Architecture](papers/agy-autonomous-agent.md): Orchestration runtime, subagent delegation, and artifact systems.
 - [Terminal-Native Agents: OpenCode and Codex](papers/opencode-codex-agents.md): Comparing shell-integrated agents with cloud model generators.
 - [Git-Tulkun Procedural Visualization](papers/git-tulkun-visualization.md): Logarithmic activity scaling and automated GitHub Actions workflows.
 
-### Creative, ASCII, and Frontend Systems
+### Creative, ASCII, and Typography Systems
 - [React Bits Modular UI Architecture](papers/react-bits-ui.md): Micro-interactions, Tailwind integration, and bundle optimization.
 - [Efecto AI-Collaborative Canvas](papers/efecto-ai-canvas.md): Real-time design canvas, WebGL shaders, and MCP tool protocols.
 - [ASCII Rendering Engines Analysis](papers/ascii-rendering-engines.md): Luminance quantization in ascii.rest, ASCII Magic, and Asciify.
@@ -58,23 +60,42 @@ Formal technical research papers detailing architecture, algorithms, and benchma
 
 ---
 
-## 2. Quick Integration Reference Manuals
+## 2. Resource Implementation Manuals
 
-Pragmatic developer documentation with ready-to-run code snippets:
-- [AI API Providers Guide](ai-providers/README.md): Step-by-step API key generation, endpoints, and authentication headers.
-- [Developer Tools Guide](developer-tools/README.md): Installation and command lines for AGY, OpenCode, and git-tulkun.
-- [Creative and ASCII Design Guide](creative-ascii-design/README.md): Quick links and setup notes for web generators and Figma plugins.
+Pragmatic developer documentation with command-line steps, configuration files, and API endpoints:
+- [AI API Providers Manual](ai-providers/README.md): Step-by-step API key generation, endpoints, and authentication headers.
+- [Developer Tools and Assistants Manual](developer-tools/README.md): Installation and command lines for AGY, OpenCode, and git-tulkun.
+- [Creative, ASCII, and Design Manual](creative-ascii-design/README.md): Feature breakdowns and setup notes for web generators and Figma plugins.
 
 ---
 
-## 3. Systems Engineering and Hardware Fixes
+## 3. Systems Engineering and Verified Fixes
 
-Battle-tested diagnostic guides and scripts for physical hardware and operating systems:
-- [Linux Systems](linux/README.md): Arch Linux maintenance, unified kernel images (UKI), and Qualcomm QCA9377 driver fixes.
-- [Android Devices](android/README.md): Internal storage recovery, memory management, and Termux CLI workarounds.
-- [Network Infrastructure](network/README.md): Wi-Fi hotspot stability and mobile data consumption caps.
-- [Cross-Platform](cross-platform/README.md): Multi-OS command snippets and synchronization routines.
-- [Windows Systems](windows/README.md): System repair and registry tuning procedures.
+Technical troubleshooting procedures, diagnostics, and recovery scripts:
+
+### Linux Systems and Boot Configurations
+- [Arch Linux Pre-Reboot Health Check](linux/arch/pre-reboot-health-check.md): Kernel verification, systemd checks, and bootloader integrity.
+- [Unified Kernel Image (UKI) QCA9377 Wi-Fi Fix](linux/arch/uki-qca9377-wifi-fix.md): Firmware module parameters and power management overrides.
+- [VLC H.264 Codec Playback Fix](linux/arch/vlc-h264-codec-fix.md): Hardware decoding and VAAPI configuration.
+- [Create Sudo User Guide](linux/arch/create-sudo-user.md): Secure user creation and wheel group privilege delegation.
+- [Legacy Launcher Installation Script](linux/scripts/install-legacy-launcher.sh): Automated shell script for client installation.
+- [Linux Troubleshooting Hub](linux/README.md): Index of distribution-specific maintenance guides.
+
+### Android Device Optimization and Termux
+- [Claude Code CLI on Android via Termux](android/termux/claude-code-cli-workaround.md): Node environment, termux-exec, and path workarounds.
+- [Realme C11 (RMX3231) Optimization](android/realme-c11-rmx3231-optimization.md): Background process control, RAM reclaim, and debloating.
+- [Storage Space Recovery Guide](android/storage-optimization.md): Deep cache cleaning, orphan file removal, and ADB storage inspection.
+- [Android Diagnostics Hub](android/README.md): Platform-level troubleshooting overview.
+
+### Network and Connectivity
+- [QCA9377 Wi-Fi Automated Fix](network/wifi/qca9377-auto-fix.md): Driver reload and systemd service creation.
+- [QCA9377 Hotspot Disconnect Fix](network/wifi/qca9377-hotspot-disconnect-fix.md): Packet drop mitigation and power save disabling.
+- [Linux & Android Data Consumption Reduction](network/linux-android-internet-usage-optimization.md): Metered connection rules and daemon traffic limits.
+- [Network Troubleshooting Hub](network/README.md): Wi-Fi and mobile interface maintenance index.
+
+### Windows and Cross-Platform Tools
+- [Windows Diagnostic Procedures](windows/README.md): DISM checks, SFC repairs, and driver conflict resolution.
+- [Cross-Platform Utilities](cross-platform/README.md): Shared maintenance patterns across operating systems.
 
 ---
 
