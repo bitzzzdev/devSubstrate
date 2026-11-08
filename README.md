@@ -112,6 +112,7 @@ Technical troubleshooting procedures, diagnostics, and recovery scripts.
 | Realme C11 (RMX3231) | [Realme C11 Optimization Guide](android/realme-c11-rmx3231-optimization.md) | Background process control, RAM reclaim, and debloating |
 | Storage Maintenance | [Storage Space Recovery Guide](android/storage-optimization.md) | Deep cache cleaning, orphan file removal, and ADB storage inspection |
 | Selective Data Control | [Cellular Traffic & Notification Saver](android/cellular-data-notification-saver.md) | Bash/Fish automation scripts to pause shopping traffic while keeping hotspot and messaging |
+| On-Device Termux Scripts | [Termux Mobile Fix Hub](android/termux-scripts/README.md) | Self-contained on-device Bash/Fish scripts with execution audits and fallback modes |
 | Android Overview | [Android Diagnostics Hub](android/README.md) | Platform-level troubleshooting overview |
 
 ### Network and Connectivity
