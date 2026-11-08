@@ -1,7 +1,7 @@
-# TechMaterials: Engineering Research, Technical Papers, and System Notes
+# DevSubstrate: Engineering Research, Technical Papers, and System Notes
 
 Author and Maintainer: Dev Borah (bitzzdev)  
-Repository: `techMaterials`  
+Repository: `devSubstrate`  
 Focus: Systems engineering, hardware-accelerated AI inference, developer agents, and graphics architectures.
 
 ---
