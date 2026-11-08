@@ -20,7 +20,8 @@ Focus: Systems engineering, hardware-accelerated AI inference, developer agents,
 │   ├── react-bits-ui.md                 Zero-dependency React components and animation
 │   ├── efecto-ai-canvas.md              AI-native design canvas and MCP agent integration
 │   ├── ascii-rendering-engines.md       ascii.rest, ASCII Magic, and Asciify algorithms
-│   └── asciicore-figma-dithering.md     VGA matrix dithering inside Figma
+│   ├── asciicore-figma-dithering.md     VGA matrix dithering inside Figma
+│   └── paper-mono-typography.md         Paper Mono font anatomy, ligatures, and duospacing
 ├── ai-providers/              Quick-start guides, curl snippets, and API endpoints
 ├── developer-tools/           Autonomous assistants, terminal utilities, and setup notes
 ├── creative-ascii-design/     Frontend libraries, ASCII generators, and design plugins
@@ -53,6 +54,7 @@ Formal technical research papers detailing architecture, algorithms, and benchma
 - [Efecto AI-Collaborative Canvas](papers/efecto-ai-canvas.md): Real-time design canvas, WebGL shaders, and MCP tool protocols.
 - [ASCII Rendering Engines Analysis](papers/ascii-rendering-engines.md): Luminance quantization in ascii.rest, ASCII Magic, and Asciify.
 - [Vector Dithering with Asciicore](papers/asciicore-figma-dithering.md): Bayer matrices and Floyd-Steinberg dithering within Figma.
+- [Paper Mono Typeface Anatomy](papers/paper-mono-typography.md): Coding ligatures, duospacing, and terminal ergonomics.
 
 ---
 
