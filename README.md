@@ -4,7 +4,7 @@ Author and Maintainer: Dev Borah (bitzzdev)
 Repository: `devSubstrate`  
 Focus: Systems engineering, hardware-accelerated AI inference, developer agents, and graphics architectures.
 
-All entries link directly to internal research papers and verified system fix files.
+All entries in the tables below link directly to internal research papers and verified system fix files.
 
 ---
 
@@ -38,64 +38,88 @@ All entries link directly to internal research papers and verified system fix fi
 
 ## 1. Technical Research Papers
 
-Evaluations of hardware architectures, model inference runtimes, agent systems, and rendering pipelines:
+Evaluations of hardware architectures, model inference runtimes, agent systems, and rendering pipelines.
 
 ### AI Inference and API Gateways
-- [Groq LPU Inference Architecture](papers/groq-inference-analysis.md): SRAM layout, deterministic instruction scheduling, and token latency.
-- [Cerebras Wafer-Scale Engine](papers/cerebras-wse-inference.md): Wafer-scale chip topology, 900,000 AI cores, and high token throughput.
-- [Google AI Studio and Gemini Architecture](papers/google-ai-studio-gemini.md): Long context windows, REST API usage, and structured JSON schemas.
-- [APInex Gateway and Third-Party Proxy Security](papers/apinex-gateway-proxy.md): Multi-model routing mechanics and API security trade-offs.
 
-### Developer Agents and Coding Tooling
-- [Google Antigravity (AGY) Agent Architecture](papers/agy-autonomous-agent.md): Orchestration runtime, subagent delegation, and artifact systems.
-- [Terminal-Native Agents: OpenCode and Codex](papers/opencode-codex-agents.md): Comparing shell-integrated agents with cloud model generators.
-- [Git-Tulkun Procedural Visualization](papers/git-tulkun-visualization.md): Logarithmic activity scaling and automated GitHub Actions workflows.
+| Topic / System | Research Paper | Focus Area |
+| --- | --- | --- |
+| Groq LPU | [Groq LPU Inference Architecture](papers/groq-inference-analysis.md) | SRAM layout, deterministic instruction scheduling, and token latency |
+| Cerebras WSE-3 | [Cerebras Wafer-Scale Engine](papers/cerebras-wse-inference.md) | Wafer-scale chip topology, 900,000 AI cores, and high token throughput |
+| Google AI Studio | [Google AI Studio and Gemini Architecture](papers/google-ai-studio-gemini.md) | Long context windows, REST API usage, and structured JSON schemas |
+| APInex Gateway | [APInex Gateway and Third-Party Proxy Security](papers/apinex-gateway-proxy.md) | Multi-model routing mechanics and API security trade-offs |
+
+### Developer Agents and Coding Tools
+
+| Topic / System | Research Paper | Focus Area |
+| --- | --- | --- |
+| Google Antigravity | [Google Antigravity (AGY) Agent Architecture](papers/agy-autonomous-agent.md) | Orchestration runtime, subagent delegation, and artifact systems |
+| OpenCode & Codex | [Terminal-Native Agents: OpenCode and Codex](papers/opencode-codex-agents.md) | Comparing shell-integrated agents with cloud model generators |
+| Git-Tulkun | [Git-Tulkun Procedural Visualization](papers/git-tulkun-visualization.md) | Logarithmic activity scaling and automated GitHub Actions workflows |
 
 ### Creative, ASCII, and Typography Systems
-- [React Bits Modular UI Architecture](papers/react-bits-ui.md): Micro-interactions, Tailwind integration, and bundle optimization.
-- [Efecto AI-Collaborative Canvas](papers/efecto-ai-canvas.md): Real-time design canvas, WebGL shaders, and MCP tool protocols.
-- [ASCII Rendering Engines Analysis](papers/ascii-rendering-engines.md): Luminance quantization in ascii.rest, ASCII Magic, and Asciify.
-- [Vector Dithering with Asciicore](papers/asciicore-figma-dithering.md): Bayer matrices and Floyd-Steinberg dithering within Figma.
-- [Paper Mono Typeface Anatomy](papers/paper-mono-typography.md): Coding ligatures, duospacing, and terminal ergonomics.
+
+| Topic / System | Research Paper | Focus Area |
+| --- | --- | --- |
+| React Bits | [React Bits Modular UI Architecture](papers/react-bits-ui.md) | Micro-interactions, Tailwind integration, and bundle optimization |
+| Efecto | [Efecto AI-Collaborative Canvas](papers/efecto-ai-canvas.md) | Real-time design canvas, WebGL shaders, and MCP tool protocols |
+| ASCII Web Engines | [ASCII Rendering Engines Analysis](papers/ascii-rendering-engines.md) | Luminance quantization in ascii.rest, ASCII Magic, and Asciify |
+| Asciicore Plugin | [Vector Dithering with Asciicore](papers/asciicore-figma-dithering.md) | Bayer matrices and Floyd-Steinberg dithering within Figma |
+| Paper Mono | [Paper Mono Typeface Anatomy](papers/paper-mono-typography.md) | Coding ligatures, duospacing, and terminal ergonomics |
 
 ---
 
 ## 2. Resource Implementation Manuals
 
-Pragmatic developer documentation with command-line steps, configuration files, and API endpoints:
-- [AI API Providers Manual](ai-providers/README.md): Step-by-step API key generation, endpoints, and authentication headers.
-- [Developer Tools and Assistants Manual](developer-tools/README.md): Installation and command lines for AGY, OpenCode, and git-tulkun.
-- [Creative, ASCII, and Design Manual](creative-ascii-design/README.md): Feature breakdowns and setup notes for web generators and Figma plugins.
+Pragmatic developer documentation with command-line steps, configuration files, and API endpoints.
+
+| Manual | Direct Link | Content Summary |
+| --- | --- | --- |
+| AI API Providers | [AI API Providers Guide](ai-providers/README.md) | Step-by-step API key generation, endpoints, and authentication headers |
+| Developer Tools | [Developer Tools and Assistants Guide](developer-tools/README.md) | Installation and command lines for AGY, OpenCode, and git-tulkun |
+| Creative & Design | [Creative, ASCII, and Design Guide](creative-ascii-design/README.md) | Feature breakdowns and setup notes for web generators and Figma plugins |
 
 ---
 
 ## 3. Systems Engineering and Verified Fixes
 
-Technical troubleshooting procedures, diagnostics, and recovery scripts:
+Technical troubleshooting procedures, diagnostics, and recovery scripts.
 
 ### Linux Systems and Boot Configurations
-- [Arch Linux Pre-Reboot Health Check](linux/arch/pre-reboot-health-check.md): Kernel verification, systemd checks, and bootloader integrity.
-- [Unified Kernel Image (UKI) QCA9377 Wi-Fi Fix](linux/arch/uki-qca9377-wifi-fix.md): Firmware module parameters and power management overrides.
-- [VLC H.264 Codec Playback Fix](linux/arch/vlc-h264-codec-fix.md): Hardware decoding and VAAPI configuration.
-- [Create Sudo User Guide](linux/arch/create-sudo-user.md): Secure user creation and wheel group privilege delegation.
-- [Legacy Launcher Installation Script](linux/scripts/install-legacy-launcher.sh): Automated shell script for client installation.
-- [Linux Troubleshooting Hub](linux/README.md): Index of distribution-specific maintenance guides.
+
+| Component | Verified Fix / Procedure | Target Issue |
+| --- | --- | --- |
+| Arch Linux Maintenance | [Arch Linux Pre-Reboot Health Check](linux/arch/pre-reboot-health-check.md) | Kernel verification, systemd checks, and bootloader integrity |
+| Qualcomm Wi-Fi / UKI | [Unified Kernel Image QCA9377 Wi-Fi Fix](linux/arch/uki-qca9377-wifi-fix.md) | Firmware module parameters and power management overrides |
+| Video Decoding | [VLC H.264 Codec Playback Fix](linux/arch/vlc-h264-codec-fix.md) | Hardware decoding and VAAPI configuration |
+| User Privileges | [Create Sudo User Guide](linux/arch/create-sudo-user.md) | Secure user creation and wheel group privilege delegation |
+| Launcher Script | [Legacy Launcher Installation Script](linux/scripts/install-legacy-launcher.sh) | Automated shell script for client installation |
+| Linux Overview | [Linux Troubleshooting Hub](linux/README.md) | Index of distribution-specific maintenance guides |
 
 ### Android Device Optimization and Termux
-- [Claude Code CLI on Android via Termux](android/termux/claude-code-cli-workaround.md): Node environment, termux-exec, and path workarounds.
-- [Realme C11 (RMX3231) Optimization](android/realme-c11-rmx3231-optimization.md): Background process control, RAM reclaim, and debloating.
-- [Storage Space Recovery Guide](android/storage-optimization.md): Deep cache cleaning, orphan file removal, and ADB storage inspection.
-- [Android Diagnostics Hub](android/README.md): Platform-level troubleshooting overview.
+
+| Device / Tool | Verified Fix / Procedure | Target Issue |
+| --- | --- | --- |
+| Claude Code on Android | [Claude Code CLI in Termux](android/termux/claude-code-cli-workaround.md) | Node environment, termux-exec, and path workarounds |
+| Realme C11 (RMX3231) | [Realme C11 Optimization Guide](android/realme-c11-rmx3231-optimization.md) | Background process control, RAM reclaim, and debloating |
+| Storage Maintenance | [Storage Space Recovery Guide](android/storage-optimization.md) | Deep cache cleaning, orphan file removal, and ADB storage inspection |
+| Android Overview | [Android Diagnostics Hub](android/README.md) | Platform-level troubleshooting overview |
 
 ### Network and Connectivity
-- [QCA9377 Wi-Fi Automated Fix](network/wifi/qca9377-auto-fix.md): Driver reload and systemd service creation.
-- [QCA9377 Hotspot Disconnect Fix](network/wifi/qca9377-hotspot-disconnect-fix.md): Packet drop mitigation and power save disabling.
-- [Linux & Android Data Consumption Reduction](network/linux-android-internet-usage-optimization.md): Metered connection rules and daemon traffic limits.
-- [Network Troubleshooting Hub](network/README.md): Wi-Fi and mobile interface maintenance index.
+
+| Protocol / Interface | Verified Fix / Procedure | Target Issue |
+| --- | --- | --- |
+| QCA9377 Service | [QCA9377 Wi-Fi Automated Fix](network/wifi/qca9377-auto-fix.md) | Driver reload and systemd service creation |
+| Mobile Hotspot | [QCA9377 Hotspot Disconnect Fix](network/wifi/qca9377-hotspot-disconnect-fix.md) | Packet drop mitigation and power save disabling |
+| Data Metering | [Linux & Android Data Consumption Reduction](network/linux-android-internet-usage-optimization.md) | Metered connection rules and daemon traffic limits |
+| Network Overview | [Network Troubleshooting Hub](network/README.md) | Wi-Fi and mobile interface maintenance index |
 
 ### Windows and Cross-Platform Tools
-- [Windows Diagnostic Procedures](windows/README.md): DISM checks, SFC repairs, and driver conflict resolution.
-- [Cross-Platform Utilities](cross-platform/README.md): Shared maintenance patterns across operating systems.
+
+| Environment | Verified Fix / Procedure | Target Issue |
+| --- | --- | --- |
+| Windows 10/11 | [Windows Diagnostic Procedures](windows/README.md) | DISM checks, SFC repairs, and driver conflict resolution |
+| Multi-Platform | [Cross-Platform Utilities](cross-platform/README.md) | Shared maintenance patterns across operating systems |
 
 ---
 
