@@ -23,7 +23,8 @@ All entries in the tables below link directly to internal research papers and ve
 │   ├── efecto-ai-canvas.md              AI-native design canvas and MCP agent integration
 │   ├── ascii-rendering-engines.md       ascii.rest, ASCII Magic, and Asciify algorithms
 │   ├── asciicore-figma-dithering.md     VGA matrix dithering inside Figma
-│   └── paper-mono-typography.md         Paper Mono font anatomy, ligatures, and duospacing
+│   ├── paper-mono-typography.md         Paper Mono font anatomy, ligatures, and duospacing
+│   └── cellular-data-hotspot-optimization.md Android cellular traffic control and hotspot preservation
 ├── ai-providers/              API endpoint documentation and curl integration
 ├── developer-tools/           Autonomous assistants, terminal utilities, and setup notes
 ├── creative-ascii-design/     Frontend components, ASCII engines, and typography guides
@@ -67,6 +68,12 @@ Evaluations of hardware architectures, model inference runtimes, agent systems, 
 | Asciicore Plugin | [Vector Dithering with Asciicore](papers/asciicore-figma-dithering.md) | Bayer matrices and Floyd-Steinberg dithering within Figma |
 | Paper Mono | [Paper Mono Typeface Anatomy](papers/paper-mono-typography.md) | Coding ligatures, duospacing, and terminal ergonomics |
 
+### Systems Engineering and Mobile Architectures
+
+| Topic / System | Research Paper | Focus Area |
+| --- | --- | --- |
+| Android Hotspot & Data | [Cellular Data & Hotspot Optimization](papers/cellular-data-hotspot-optimization.md) | Suppressing non-essential retail apps, NetPolicy blacklists, and tether offload |
+
 ---
 
 ## 2. Resource Implementation Manuals
@@ -104,6 +111,7 @@ Technical troubleshooting procedures, diagnostics, and recovery scripts.
 | Claude Code on Android | [Claude Code CLI in Termux](android/termux/claude-code-cli-workaround.md) | Node environment, termux-exec, and path workarounds |
 | Realme C11 (RMX3231) | [Realme C11 Optimization Guide](android/realme-c11-rmx3231-optimization.md) | Background process control, RAM reclaim, and debloating |
 | Storage Maintenance | [Storage Space Recovery Guide](android/storage-optimization.md) | Deep cache cleaning, orphan file removal, and ADB storage inspection |
+| Selective Data Control | [Cellular Traffic & Notification Saver](android/cellular-data-notification-saver.md) | Bash/Fish automation scripts to pause shopping traffic while keeping hotspot and messaging |
 | Android Overview | [Android Diagnostics Hub](android/README.md) | Platform-level troubleshooting overview |
 
 ### Network and Connectivity
