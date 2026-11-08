@@ -28,7 +28,7 @@ All entries in the tables below link directly to internal research papers and ve
 ├── developer-tools/           Autonomous assistants, terminal utilities, and setup notes
 ├── creative-ascii-design/     Frontend components, ASCII engines, and typography guides
 ├── android/                   Device performance, storage recovery, and Termux fixes
-├── linux/                     Arch Linux health checks, UKI boot, and driver repairs
+├── linux/                     Arch Linux health checks, UKI boot, SSH, and driver repairs
 ├── network/                   Bandwidth reduction and Qualcomm Wi-Fi stability fixes
 ├── windows/                   Diagnostics and operating system troubleshooting
 └── cross-platform/            Shared cross-environment scripts and tools
@@ -92,6 +92,7 @@ Technical troubleshooting procedures, diagnostics, and recovery scripts.
 | Arch Linux Maintenance | [Arch Linux Pre-Reboot Health Check](linux/arch/pre-reboot-health-check.md) | Kernel verification, systemd checks, and bootloader integrity |
 | Qualcomm Wi-Fi / UKI | [Unified Kernel Image QCA9377 Wi-Fi Fix](linux/arch/uki-qca9377-wifi-fix.md) | Firmware module parameters and power management overrides |
 | Video Decoding | [VLC H.264 Codec Playback Fix](linux/arch/vlc-h264-codec-fix.md) | Hardware decoding and VAAPI configuration |
+| Cloud Shell & SSH X11 | [Cloud Shell SSH X11 Clipboard Fix](linux/ssh/gcloud-ssh-x11-clipboard-fix.md) | Remote clipboard image paste, X11 forwarding, Fish/Bash aliases |
 | User Privileges | [Create Sudo User Guide](linux/arch/create-sudo-user.md) | Secure user creation and wheel group privilege delegation |
 | Launcher Script | [Legacy Launcher Installation Script](linux/scripts/install-legacy-launcher.sh) | Automated shell script for client installation |
 | Linux Overview | [Linux Troubleshooting Hub](linux/README.md) | Index of distribution-specific maintenance guides |
