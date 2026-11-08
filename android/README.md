@@ -10,3 +10,4 @@ Android device diagnostics, ADB workflows, app troubleshooting, storage cleanup,
 ## Termux
 
 - [Claude Code CLI workaround on Termux](termux/claude-code-cli-workaround.md)
+- [Google Cloud CLI and Cloud Shell setup on Termux](termux/gcloud-cli-termux-workaround.md)
