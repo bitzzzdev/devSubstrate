@@ -102,7 +102,6 @@ Technical troubleshooting procedures, diagnostics, and recovery scripts.
 | Device / Tool | Verified Fix / Procedure | Target Issue |
 | --- | --- | --- |
 | Claude Code on Android | [Claude Code CLI in Termux](android/termux/claude-code-cli-workaround.md) | Node environment, termux-exec, and path workarounds |
-| Google Cloud CLI | [GCloud and Cloud Shell in Termux](android/termux/gcloud-cli-termux-workaround.md) | Component registry bypass, Python paths, and session auth |
 | Realme C11 (RMX3231) | [Realme C11 Optimization Guide](android/realme-c11-rmx3231-optimization.md) | Background process control, RAM reclaim, and debloating |
 | Storage Maintenance | [Storage Space Recovery Guide](android/storage-optimization.md) | Deep cache cleaning, orphan file removal, and ADB storage inspection |
 | Android Overview | [Android Diagnostics Hub](android/README.md) | Platform-level troubleshooting overview |
