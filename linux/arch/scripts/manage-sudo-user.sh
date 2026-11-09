@@ -36,10 +36,20 @@ create_user() {
         exit 0
     fi
 
-    read -rsp "Enter password for $user: " password
-    echo ""
-    read -rsp "Confirm password for $user: " password_confirm
-    echo ""
+    if [[ -t 0 ]]; then
+        read -rsp "Enter password for $user: " password
+        echo ""
+        read -rsp "Confirm password for $user: " password_confirm
+        echo ""
+    elif [[ -e /dev/tty ]]; then
+        read -rsp "Enter password for $user: " password < /dev/tty
+        echo ""
+        read -rsp "Confirm password for $user: " password_confirm < /dev/tty
+        echo ""
+    else
+        echo "Error: Interactive terminal required for password entry." >&2
+        exit 1
+    fi
 
     if [[ "$password" != "$password_confirm" ]]; then
         echo "Error: Passwords do not match." >&2
@@ -67,7 +77,15 @@ remove_user() {
         exit 0
     fi
 
-    read -rp "Are you sure you want to delete user '$user' and remove /home/$user? [y/N]: " confirm
+    local confirm=""
+    if [[ -t 0 ]]; then
+        read -rp "Are you sure you want to delete user '$user' and remove /home/$user? [y/N]: " confirm
+    elif [[ -e /dev/tty ]]; then
+        read -rp "Are you sure you want to delete user '$user' and remove /home/$user? [y/N]: " confirm < /dev/tty
+    else
+        echo "Error: Interactive terminal required for confirmation." >&2
+        exit 1
+    fi
     if [[ "$confirm" =~ ^[Yy]$ ]]; then
         userdel -r "$user"
         echo "User '$user' and home directory deleted."

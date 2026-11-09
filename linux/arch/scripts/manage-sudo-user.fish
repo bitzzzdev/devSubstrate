@@ -35,10 +35,20 @@ function create_user -a user
         return 0
     end
 
-    read -sP "Enter password for $user: " password
-    echo ""
-    read -sP "Confirm password for $user: " password_confirm
-    echo ""
+    if test -t 0
+        read -sP "Enter password for $user: " password
+        echo ""
+        read -sP "Confirm password for $user: " password_confirm
+        echo ""
+    else if test -e /dev/tty
+        read -sP "Enter password for $user: " password </dev/tty
+        echo ""
+        read -sP "Confirm password for $user: " password_confirm </dev/tty
+        echo ""
+    else
+        echo "Error: Interactive terminal required for password entry." >&2
+        return 1
+    end
 
     if test "$password" != "$password_confirm"
         echo "Error: Passwords do not match." >&2
@@ -66,7 +76,15 @@ function remove_user -a user
         return 0
     end
 
-    read -P "Are you sure you want to delete user '$user' and remove /home/$user? [y/N]: " confirm
+    set -l confirm ""
+    if test -t 0
+        read -P "Are you sure you want to delete user '$user' and remove /home/$user? [y/N]: " confirm
+    else if test -e /dev/tty
+        read -P "Are you sure you want to delete user '$user' and remove /home/$user? [y/N]: " confirm </dev/tty
+    else
+        echo "Error: Interactive terminal required for confirmation." >&2
+        return 1
+    end
     if string match -ri '^[yY]$' "$confirm"
         userdel -r "$user"
         echo "User '$user' and home directory deleted."
