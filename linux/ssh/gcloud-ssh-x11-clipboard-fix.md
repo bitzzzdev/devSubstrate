@@ -69,7 +69,33 @@ ssh -X user@host
 
 ---
 
-## 4. Making Connection Persistent on Local Machine
+## 4. Automated Configuration (One-Line curl Commands)
+
+Apply, inspect, or revert persistent X11 forwarding rules in `~/.ssh/config` and shell aliases automatically:
+
+### Apply Configuration
+```bash
+curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/ssh/scripts/configure-ssh-x11-forwarding.sh | bash -s -- apply
+```
+
+### Check Configuration Status
+```bash
+curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/ssh/scripts/configure-ssh-x11-forwarding.sh | bash -s -- status
+```
+
+### Revert Configuration
+```bash
+curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/ssh/scripts/configure-ssh-x11-forwarding.sh | bash -s -- revert
+```
+
+Fish shell alternative:
+```fish
+curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/ssh/scripts/configure-ssh-x11-forwarding.fish | fish -s -- apply
+```
+
+---
+
+## 5. Manual Persistent Configuration on Local Machine
 
 Configure your local environment so you do not need to pass `--ssh-flag="-X"` manually every session.
 

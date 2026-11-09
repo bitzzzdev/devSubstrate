@@ -56,7 +56,33 @@ type: Boot Loader Specification Type #2 (UKI)
 linux: /boot/EFI/Linux/arch-linux.efi
 ```
 
-## Fix
+## Automated Fix (One-Line curl Commands)
+
+Apply, inspect, or revert the `pci=realloc=on` parameter in `/etc/kernel/cmdline` and regenerate the Unified Kernel Image with a single command:
+
+### Apply Fix
+```bash
+curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/arch/scripts/uki-qca9377-fix.sh | sudo bash -s -- apply
+```
+
+### Check Status
+```bash
+curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/arch/scripts/uki-qca9377-fix.sh | bash -s -- status
+```
+
+### Revert Fix
+```bash
+curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/arch/scripts/uki-qca9377-fix.sh | sudo bash -s -- revert
+```
+
+Fish shell alternative:
+```fish
+curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/arch/scripts/uki-qca9377-fix.fish | sudo fish -s -- apply
+```
+
+---
+
+## Manual Fix Procedure
 
 Edit:
 

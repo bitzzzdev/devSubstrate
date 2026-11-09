@@ -32,8 +32,8 @@ The display supports approximately 60.0024 Hz. The practical performance target 
 
 CPU policies:
 
-- policy0: CPUs 0–3, 768 MHz–1.2 GHz.
-- policy4: CPUs 4–7, 768 MHz–1.6 GHz.
+- policy0: CPUs 0-3, 768 MHz to 1.2 GHz.
+- policy4: CPUs 4-7, 768 MHz to 1.6 GHz.
 
 No CPU frequency or governor modifications have been applied.
 
@@ -53,8 +53,8 @@ Previous diagnostics showed:
 Observed snapshots:
 
 - Total RAM: approximately 1.91 GB.
-- Available RAM: approximately 792–843 MB in recent samples.
-- Swap usage: approximately 697–828 MB in recent samples.
+- Available RAM: approximately 792 to 843 MB in recent samples.
+- Swap usage: approximately 697 to 828 MB in recent samples.
 
 Swap usage alone does not prove memory thrashing.
 
@@ -63,7 +63,7 @@ Swap usage alone does not prove memory thrashing.
 Recent observations:
 
 - Battery health: Good.
-- Temperature: approximately 34–39°C in earlier snapshots.
+- Temperature: approximately 34 to 39°C in earlier snapshots.
 - Latest recorded level: 89%.
 - Latest voltage: 4,056 mV.
 - Latest temperature: 35.1°C.
@@ -278,8 +278,8 @@ Both CPU policies report the `schedutil` governor. Available governors are `user
 
 | Policy | CPU cluster | Minimum | Maximum | Current at inventory |
 |---|---|---:|---:|---:|
-| policy0 | CPUs 0–3 | 768 MHz | 1.2 GHz | 768 MHz |
-| policy4 | CPUs 4–7 | 768 MHz | 1.6 GHz | 1.6 GHz |
+| policy0 | CPUs 0-3 | 768 MHz | 1.2 GHz | 768 MHz |
+| policy4 | CPUs 4-7 | 768 MHz | 1.6 GHz | 1.6 GHz |
 
 These current-frequency values are single snapshots, not evidence of a sustained frequency state or a performance problem. No governor or frequency changes were made.
 
@@ -416,7 +416,7 @@ MemAvailable changed by approximately -4.5 MB during the interval. Reported Swap
 | pgscan_direct_throttle | 455,370,066 | 455,376,025 | +5,959 |
 | oom_kill | 334,611 | 334,617 | +6 |
 
-The reclaim/allocstall deltas are unusually large, and `oom_kill` increased by six. However, MemAvailable remained around 649–653 MB and swap I/O counters did not change. Vendor-kernel counter behavior or semantics may differ; one short sample is not enough to conclude that the phone is actively suffering OOM events or user-visible memory thrashing. Repeat the counters and compare them with available lmkd/kernel logs before diagnosing.
+The reclaim/allocstall deltas are unusually large, and `oom_kill` increased by six. However, MemAvailable remained around 649 to 653 MB and swap I/O counters did not change. Vendor-kernel counter behavior or semantics may differ; one short sample is not enough to conclude that the phone is actively suffering OOM events or user-visible memory thrashing. Repeat the counters and compare them with available lmkd/kernel logs before diagnosing.
 
 #### Android process memory snapshot
 
@@ -441,7 +441,7 @@ RSS includes shared pages and is not equivalent to private memory use. This is a
 
 1. The kernel has swap, zRAM, zsmalloc, zRAM writeback, PSI, memory-cgroup, compaction, migration, and VM-event-counter support compiled in.
 2. Live zRAM details, the swap table, and PSI readings remain inaccessible to the non-root ADB shell.
-3. MemAvailable remained around 649–653 MB during the short sample.
+3. MemAvailable remained around 649 to 653 MB during the short sample.
 4. SwapFree dropped by about 29 MB, but `pswpin` and `pswpout` did not change. This inconsistency needs verification.
 5. Reclaim/allocstall counters increased, and `oom_kill` rose by six. Treat this as an anomaly to validate, not a confirmed diagnosis.
 6. No memory, swap, zRAM, LMK, or kernel settings were changed.
@@ -451,7 +451,7 @@ RSS includes shared pages and is not equivalent to private memory use. This is a
 
 ### Stage 2 follow-up: repeat memory counters and OOM evidence
 
-**Time:** 30 October 2026, 11:59:56–12:00:17 IST  
+**Time:** 30 October 2026, 11:59:56 to 12:00:17 IST  
 **Method:** Two read-only samples 20 seconds apart, plus log and service checks.
 
 | Metric | Sample 1 | Sample 2 | Change |
@@ -549,7 +549,7 @@ At the end of this diagnostic, the counters were:
 | `pgscan_direct_throttle` | 456,163,318 |
 | `oom_kill` | 335,261 |
 
-These are cumulative counters, not rates. Their absolute magnitudes cannot be used to infer current pressure without a fresh timed delta. Earlier short samples showed rapid counter increases while MemAvailable remained roughly 628–653 MB and swap I/O counters stayed unchanged. The new killinfo records now establish that some LMKD kills did occur, but a controlled before/after workload is still needed to quantify how often this happens and whether it affects responsiveness.
+These are cumulative counters, not rates. Their absolute magnitudes cannot be used to infer current pressure without a fresh timed delta. Earlier short samples showed rapid counter increases while MemAvailable remained roughly 628 to 653 MB and swap I/O counters stayed unchanged. The new killinfo records now establish that some LMKD kills did occur, but a controlled before/after workload is still needed to quantify how often this happens and whether it affects responsiveness.
 
 #### Stage 2 interpretation and decision
 
@@ -564,7 +564,7 @@ These are cumulative counters, not rates. Their absolute magnitudes cannot be us
 
 ### Stage 2 follow-up: 90-second normal-use memory test
 
-**Date:** 30 October 2026, 12:05:07–12:06:37 IST  
+**Date:** 30 October 2026, 12:05:07 to 12:06:37 IST  
 **Method:** Read-only memory snapshots and Android event-log review before and after approximately 90 seconds of ordinary app switching.
 
 #### Memory snapshot
@@ -587,7 +587,7 @@ During the 90-second interval, the follow-up event log showed:
 
 - Android removed empty cached Google processes.
 - At approximately 12:05:42, LMKD emitted five `killinfo` records. Matching process-death records included `android.process.media`, `com.google.android.permissioncontroller`, `com.facebook.services`, `com.github.android`, and `com.openai.chatgpt`.
-- At approximately 12:06:13–12:06:32, further vendor `rampolicy` kills affected HeyTap, Spreadtrum, Facebook App Manager, Google extension services, TalkBack, Flipkart, Google background processes and other vendor processes.
+- At approximately 12:06:13 to 12:06:32, further vendor `rampolicy` kills affected HeyTap, Spreadtrum, Facebook App Manager, Google extension services, TalkBack, Flipkart, Google background processes and other vendor processes.
 - A further LMKD batch at approximately 12:06:17 had matching process-death records for Facebook System, Android Contacts/People (`android.process.acore`) and Gmail.
 
 This confirms that process reclamation continued during the normal-use test. The event records distinguish LMKD `killinfo` batches from ActivityManager `rampolicy` and `empty #4` kills; these mechanisms should not be treated as identical.
@@ -626,8 +626,8 @@ The result does not prove that all app switching is unaffected or that memory pr
 
 | Policy | CPUs | Governor | Minimum | Maximum | Reported current at both ends |
 |---|---|---|---:|---:|---:|
-| policy0 | 0–3 | schedutil | 768 MHz | 1.2 GHz | 768 MHz |
-| policy4 | 4–7 | schedutil | 768 MHz | 1.6 GHz | 1.6 GHz |
+| policy0 | 0-3 | schedutil | 768 MHz | 1.2 GHz | 768 MHz |
+| policy4 | 4-7 | schedutil | 768 MHz | 1.6 GHz | 1.6 GHz |
 
 The big-cluster policy reported 1.6 GHz at both the beginning and end of the 15-second sample, even though the aggregate CPU utilization was low. A `scaling_cur_freq` read is only a point-in-time driver-reported value and may not represent the actual frequency throughout the interval. This needs a repeated time-in-state delta before concluding that the big cluster is staying at maximum frequency.
 
@@ -679,8 +679,8 @@ The usage and residency values returned by sysfs are cumulative counters. They c
 
 | Policy | CPUs | Governor | Current frequency at both endpoint reads |
 |---|---|---|---:|
-| policy0 | 0–3 | schedutil | 768 MHz |
-| policy4 | 4–7 | schedutil | 1.6 GHz |
+| policy0 | 0-3 | schedutil | 768 MHz |
+| policy4 | 4-7 | schedutil | 1.6 GHz |
 
 Raw `time_in_state` counter deltas during the interval:
 

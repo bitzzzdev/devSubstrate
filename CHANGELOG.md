@@ -7,11 +7,22 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [Unreleased]
 
 ### Added
+- One-line direct curl execution commands across every fix and diagnostic guide in `linux/`, `android/`, and `network/`.
+- Pre-reboot `/boot` validation scripts `linux/arch/scripts/pre-reboot-health-check.sh` and `pre-reboot-health-check.fish`.
+- Installation guide `linux/scripts/install-legacy-launcher.md` for Minecraft Legacy Launcher with desktop entry registration and one-line curl installer.
+- Termux automated setup scripts `android/termux/scripts/install-claude-code-termux.sh` and `install-claude-code-termux.fish` for Claude Code v2.1.47 compatibility.
+- Termux Google Cloud SDK setup scripts `android/termux/scripts/setup-gcloud-termux.sh` and `setup-gcloud-termux.fish` with automatic PATH, component overrides, and shell aliases.
+- Quick Execution Hub table index in `README.md` and regional category index hubs (`linux/README.md`, `android/README.md`, `network/README.md`).
 - Technical research paper `papers/cellular-data-hotspot-optimization.md` analyzing Android cellular traffic reduction, hotspot mutual exclusion with system Data Saver, and granular background socket controls.
 - Technical guide `android/cellular-data-notification-saver.md` with complete ADB manual commands, AppOps parameters, and NetPolicy configurations.
 - Automation script `android/scripts/manage-shopping-traffic.sh` (POSIX/Bash) to pause and resume non-essential app notifications and background data.
 - Automation script `android/scripts/manage-shopping-traffic.fish` (Fish shell) with persistent command execution and syntax verification.
+- Termux mobile fix hub `android/termux-scripts/` with self-contained on-device scripts for traffic control, storage auditing, and cache trimming.
 - Community and repository governance standards: `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, and `SECURITY.md`.
+
+### Changed
+- Updated `linux/arch/scripts/manage-sudo-user.sh` and `manage-sudo-user.fish` to query `/dev/tty` for interactive password input when executed through piped curl streams.
+- Replaced non-standard typographical dashes and emoji symbols across documentation files to satisfy strict human writing standards.
 
 ## [0.2.0] - 2026-11-08
 

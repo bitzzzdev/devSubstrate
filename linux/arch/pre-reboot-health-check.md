@@ -16,7 +16,26 @@ It intentionally does not fail because of unrelated Wi-Fi, firmware, D-Bus, noti
 
 The commands use `sudo` when reading `/boot` because this system's `/boot` permissions prevent the normal user from reading those files directly.
 
-## Bash
+---
+
+## Automated Health Check (One-Line curl Command)
+
+Run the full pre-reboot audit in a single command without copying shell blocks:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/arch/scripts/pre-reboot-health-check.sh | bash
+```
+
+Fish shell alternative:
+```fish
+curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/arch/scripts/pre-reboot-health-check.fish | fish
+```
+
+---
+
+## Manual Execution Blocks
+
+### Bash
 
 Copy and paste the entire block directly into Bash:
 

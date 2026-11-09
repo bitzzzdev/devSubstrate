@@ -4,7 +4,7 @@ Author and Maintainer: Dev Borah (bitzzdev)
 Repository: `devSubstrate`  
 Focus: Systems engineering, hardware-accelerated AI inference, developer agents, and graphics architectures.
 
-All entries in the tables below link directly to internal research papers and verified system fix files.
+All entries in the tables below link directly to internal research papers, verified system fix files, and direct curl one-liners.
 
 ---
 
@@ -101,7 +101,7 @@ Technical troubleshooting procedures, diagnostics, and recovery scripts.
 | Video Decoding | [VLC H.264 Codec Playback Fix](linux/arch/vlc-h264-codec-fix.md) | Hardware decoding and VAAPI configuration |
 | Cloud Shell & SSH X11 | [Cloud Shell SSH X11 Clipboard Fix](linux/ssh/gcloud-ssh-x11-clipboard-fix.md) | Remote clipboard image paste, X11 forwarding, Fish/Bash aliases |
 | User Privileges | [Create Sudo User Guide](linux/arch/create-sudo-user.md) | Secure user creation and wheel group privilege delegation |
-| Launcher Script | [Legacy Launcher Installation Script](linux/scripts/install-legacy-launcher.sh) | Automated shell script for client installation |
+| Launcher Script | [Legacy Launcher Installation Guide](linux/scripts/install-legacy-launcher.md) | Automated shell script for client installation |
 | Linux Overview | [Linux Troubleshooting Hub](linux/README.md) | Index of distribution-specific maintenance guides |
 
 ### Android Device Optimization and Termux
@@ -109,10 +109,11 @@ Technical troubleshooting procedures, diagnostics, and recovery scripts.
 | Device / Tool | Verified Fix / Procedure | Target Issue |
 | --- | --- | --- |
 | Claude Code on Android | [Claude Code CLI in Termux](android/termux/claude-code-cli-workaround.md) | Node environment, termux-exec, and path workarounds |
+| Google Cloud CLI on Android | [Google Cloud CLI on Termux](android/termux/gcloud-cli-termux-workaround.md) | Bionic libc compatibility, component overrides, and shell aliases |
 | Realme C11 (RMX3231) | [Realme C11 Optimization Guide](android/realme-c11-rmx3231-optimization.md) | Background process control, RAM reclaim, and debloating |
 | Storage Maintenance | [Storage Space Recovery Guide](android/storage-optimization.md) | Deep cache cleaning, orphan file removal, and ADB storage inspection |
-| Selective Data Control | [Cellular Traffic & Notification Saver](android/cellular-data-notification-saver.md) | Bash/Fish automation scripts to pause shopping traffic while keeping hotspot and messaging |
-| On-Device Termux Scripts | [Termux Mobile Fix Hub](android/termux-scripts/README.md) | Self-contained on-device Bash/Fish scripts with execution audits and fallback modes |
+| Selective Data Control | [Cellular Traffic & Notification Saver](android/cellular-data-notification-saver.md) | Automation scripts to pause shopping traffic while keeping hotspot and messaging |
+| On-Device Termux Scripts | [Termux Mobile Fix Hub](android/termux-scripts/README.md) | Self-contained on-device scripts with execution audits and fallback modes |
 | Android Overview | [Android Diagnostics Hub](android/README.md) | Platform-level troubleshooting overview |
 
 ### Network and Connectivity
@@ -133,7 +134,50 @@ Technical troubleshooting procedures, diagnostics, and recovery scripts.
 
 ---
 
-## Engineering and Writing Standards
+## 4. Quick Execution Hub (One-Line curl Commands)
+
+Run any fix directly without cloning the repository. Every script supports status checks, applying fixes, and safe reversion where applicable.
+
+### Linux and Boot Repairs
+
+| Operation | Direct One-Line curl Command |
+| --- | --- |
+| Pre-Reboot Health Check | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/arch/scripts/pre-reboot-health-check.sh \| bash` |
+| Apply UKI Wi-Fi Fix | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/arch/scripts/uki-qca9377-fix.sh \| sudo bash -s -- apply` |
+| Revert UKI Wi-Fi Fix | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/arch/scripts/uki-qca9377-fix.sh \| sudo bash -s -- revert` |
+| Apply VLC H.264 Plugin | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/arch/scripts/vlc-ffmpeg-plugin-fix.sh \| sudo bash -s -- apply` |
+| Revert VLC H.264 Plugin | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/arch/scripts/vlc-ffmpeg-plugin-fix.sh \| sudo bash -s -- revert` |
+| Create Sudo User | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/arch/scripts/manage-sudo-user.sh \| sudo bash -s -- create <user>` |
+| Apply SSH X11 Persistence | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/ssh/scripts/configure-ssh-x11-forwarding.sh \| bash -s -- apply` |
+| Revert SSH X11 Persistence | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/ssh/scripts/configure-ssh-x11-forwarding.sh \| bash -s -- revert` |
+| Install Legacy Launcher | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/scripts/install-legacy-launcher.sh \| bash` |
+
+### Android Diagnostics, Traffic Control, and Termux
+
+| Operation | Direct One-Line curl Command |
+| --- | --- |
+| Pause Shopping Traffic (ADB) | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/scripts/manage-shopping-traffic.sh \| bash -s -- pause` |
+| Resume Shopping Traffic (ADB) | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/scripts/manage-shopping-traffic.sh \| bash -s -- resume` |
+| Audit Storage (ADB) | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/scripts/audit-android-storage.sh \| bash -s -- status` |
+| Trim Package Caches (ADB) | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/scripts/audit-android-storage.sh \| bash -s -- trim` |
+| Termux Shopping Traffic Pause | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/termux-scripts/termux-manage-shopping-traffic.sh \| bash -s -- pause` |
+| Termux Hotspot Background Saver | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/termux-scripts/termux-hotspot-traffic-control.sh \| bash -s -- apply` |
+| Termux Storage Audit & Trim | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/termux-scripts/termux-audit-storage.sh \| bash -s -- status` |
+| Install Claude Code in Termux | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/termux/scripts/install-claude-code-termux.sh \| bash` |
+| Setup Google Cloud SDK in Termux | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/termux/scripts/setup-gcloud-termux.sh \| bash -s -- apply` |
+
+### Network and Connectivity
+
+| Operation | Direct One-Line curl Command |
+| --- | --- |
+| Disable Wi-Fi Powersave (Apply) | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/network/wifi/scripts/qca9377-powersave-fix.sh \| sudo bash -s -- apply` |
+| Restore Wi-Fi Powersave (Revert) | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/network/wifi/scripts/qca9377-powersave-fix.sh \| sudo bash -s -- revert` |
+| Hotspot Background Saver (Apply) | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/network/scripts/hotspot-background-traffic-control.sh \| bash -s -- apply` |
+| Hotspot Background Saver (Revert) | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/network/scripts/hotspot-background-traffic-control.sh \| bash -s -- revert` |
+
+---
+
+## 5. Engineering and Writing Standards
 
 - Every paper documents observed behavior, verified endpoints, and architectural mechanisms.
 - All prose follows strict human writing standards: no promotional filler, no em dashes, and no emoji.

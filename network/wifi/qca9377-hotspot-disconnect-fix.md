@@ -56,6 +56,30 @@ Now reconnect to the problematic hotspot and use the laptop normally.
 
 **Do not make the change permanent until you confirm that it actually improves stability.**
 
+### Automated Fix (One-Line curl Commands)
+
+Apply or revert the power saving fix and persistent NetworkManager configuration directly:
+
+#### Apply Fix
+```bash
+curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/network/wifi/scripts/qca9377-powersave-fix.sh | sudo bash -s -- apply
+```
+
+#### Check Status
+```bash
+curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/network/wifi/scripts/qca9377-powersave-fix.sh | bash -s -- status
+```
+
+#### Revert Fix
+```bash
+curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/network/wifi/scripts/qca9377-powersave-fix.sh | sudo bash -s -- revert
+```
+
+Fish shell alternative:
+```fish
+curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/network/wifi/scripts/qca9377-powersave-fix.fish | sudo fish -s -- apply
+```
+
 ---
 
 ## 1. Install Wi-Fi Diagnostic Tools

@@ -24,7 +24,33 @@ Termux uses a non-standard filesystem prefix (`/data/data/com.termux/files/usr/`
 
 ---
 
-## Installation Walkthrough
+## Automated Setup (One-Line curl Commands)
+
+Install prerequisites, download Google Cloud SDK, and configure environment exports and aliases automatically:
+
+### Apply Setup
+```bash
+curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/termux/scripts/setup-gcloud-termux.sh | bash -s -- apply
+```
+
+### Check Status
+```bash
+curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/termux/scripts/setup-gcloud-termux.sh | bash -s -- status
+```
+
+### Revert Configuration
+```bash
+curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/termux/scripts/setup-gcloud-termux.sh | bash -s -- revert
+```
+
+Fish shell alternative:
+```fish
+curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/termux/scripts/setup-gcloud-termux.fish | fish -s -- apply
+```
+
+---
+
+## Manual Installation Walkthrough
 
 ### 1. Install Prerequisites
 

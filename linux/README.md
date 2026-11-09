@@ -1,16 +1,29 @@
 # Linux Fixes
 
-Linux distribution, desktop, boot, package, application, and maintenance guides.
+Linux distribution, desktop, boot, package, application, and maintenance guides with verified execution scripts and curl one-liners.
 
 ## Arch Linux
 
-- [UKI boot parameters and QCA9377 Wi-Fi fix](arch/uki-qca9377-wifi-fix.md)
-- [VLC H.264 codec fix](arch/vlc-h264-codec-fix.md)
-- [Create a sudo user](arch/create-sudo-user.md)
-- [Pre-reboot boot health check](arch/pre-reboot-health-check.md)
+- [UKI boot parameters and QCA9377 Wi-Fi fix](arch/uki-qca9377-wifi-fix.md): Kernel cmdline overrides and UKI regeneration.
+- [VLC H.264 codec fix](arch/vlc-h264-codec-fix.md): Missing FFmpeg plugin package installation.
+- [Create a sudo user](arch/create-sudo-user.md): Interactive user creation and wheel group delegation.
+- [Pre-reboot boot health check](arch/pre-reboot-health-check.md): Kernel, UKI, and `/boot` mount verification.
 
-## Scripts
+## Remote & Cloud Shell
 
-- [Install Legacy Launcher](scripts/install-legacy-launcher.sh)
+- [Cloud Shell SSH X11 Clipboard Fix](ssh/gcloud-ssh-x11-clipboard-fix.md): Persistent X11 forwarding and alias setup.
 
-Add new Linux-specific guides under the relevant distribution folder. Keep reusable scripts under `scripts/` when they are not tied to one narrow guide.
+## Desktop Applications
+
+- [Legacy Launcher Installation Guide](scripts/install-legacy-launcher.md): Desktop entry and launcher deployment.
+
+## Quick Execution One-Liners
+
+| Target Fix | Direct One-Line curl Command |
+| --- | --- |
+| UKI Wi-Fi Fix (Apply) | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/arch/scripts/uki-qca9377-fix.sh \| sudo bash -s -- apply` |
+| VLC H.264 Plugin (Apply) | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/arch/scripts/vlc-ffmpeg-plugin-fix.sh \| sudo bash -s -- apply` |
+| Sudo User Setup | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/arch/scripts/manage-sudo-user.sh \| sudo bash -s -- create <user>` |
+| Pre-Reboot Health Check | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/arch/scripts/pre-reboot-health-check.sh \| bash` |
+| SSH X11 Clipboard (Apply) | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/ssh/scripts/configure-ssh-x11-forwarding.sh \| bash -s -- apply` |
+| Legacy Launcher Install | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/scripts/install-legacy-launcher.sh \| bash` |

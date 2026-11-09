@@ -18,7 +18,37 @@ It:
 
 It intentionally does not automatically replace firmware, downgrade the kernel, change PCIe ASPM settings, or unload/reload the Wi-Fi driver.
 
-## Bash
+---
+
+## Automated Fix (One-Line curl Commands)
+
+Execute the power saving disable and NetworkManager persistent configuration in a single command:
+
+### Apply Fix (Disable Wi-Fi Power Saving)
+```bash
+curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/network/wifi/scripts/qca9377-powersave-fix.sh | sudo bash -s -- apply
+```
+
+### Check Power Save Status
+```bash
+curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/network/wifi/scripts/qca9377-powersave-fix.sh | bash -s -- status
+```
+
+### Revert Fix (Restore Default Power Saving)
+```bash
+curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/network/wifi/scripts/qca9377-powersave-fix.sh | sudo bash -s -- revert
+```
+
+Fish shell alternative:
+```fish
+curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/network/wifi/scripts/qca9377-powersave-fix.fish | sudo fish -s -- apply
+```
+
+---
+
+## Manual Execution Blocks
+
+### Bash
 
 ```bash
 # QCA9377 / ath10k Wi-Fi auto-fix for Arch Linux

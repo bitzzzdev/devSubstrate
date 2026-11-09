@@ -1,10 +1,27 @@
-Claude Code CLI on Android (Termux) Workaround
+# Claude Code CLI on Android (Termux) Workaround
 
-«Tested with: Claude Code v2.1.47
+Tested with: Claude Code v2.1.47
 
-Newer versions of "@anthropic-ai/claude-code" no longer include the JavaScript CLI ("cli.js") and currently do not work natively in Termux. This guide explains how to install a compatible version that works on Android.»
+Newer versions of "@anthropic-ai/claude-code" no longer include the JavaScript CLI ("cli.js") and currently do not work natively in Termux. This guide explains how to install a compatible version that works on Android.
 
-Prerequisites
+---
+
+## Automated Installation (One-Line curl Command)
+
+Install Node.js, Git, and Claude Code v2.1.47 in Termux with a single command:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/termux/scripts/install-claude-code-termux.sh | bash
+```
+
+Fish shell alternative:
+```fish
+curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/termux/scripts/install-claude-code-termux.fish | fish
+```
+
+---
+
+## Prerequisites
 
 - Termux
 - Node.js 22 or newer

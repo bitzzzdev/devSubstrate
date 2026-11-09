@@ -49,7 +49,33 @@ If this prints **nothing**, the FFmpeg plugin is missing.
 
 ---
 
-## Fix
+## Automated Fix (One-Line curl Commands)
+
+Install, check, or remove the required `vlc-plugin-ffmpeg` package with a single command:
+
+### Apply Fix (Install FFmpeg Plugin)
+```bash
+curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/arch/scripts/vlc-ffmpeg-plugin-fix.sh | sudo bash -s -- apply
+```
+
+### Check Status
+```bash
+curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/arch/scripts/vlc-ffmpeg-plugin-fix.sh | bash -s -- status
+```
+
+### Revert Fix (Remove FFmpeg Plugin)
+```bash
+curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/arch/scripts/vlc-ffmpeg-plugin-fix.sh | sudo bash -s -- revert
+```
+
+Fish shell alternative:
+```fish
+curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/arch/scripts/vlc-ffmpeg-plugin-fix.fish | sudo fish -s -- apply
+```
+
+---
+
+## Manual Fix Procedure
 
 Install the FFmpeg plugin:
 
@@ -118,9 +144,9 @@ ffprobe /path/to/video.mp4
 
 ## Root Cause Summary
 
-- ❌ Not a corrupt video
-- ❌ Not a broken FFmpeg installation
-- ❌ Not missing system libraries
-- ✅ Missing `vlc-plugin-ffmpeg` package
+- Not a corrupt video
+- Not a broken FFmpeg installation
+- Not missing system libraries
+- Root cause: Missing `vlc-plugin-ffmpeg` package
 
 Installing `vlc-plugin-ffmpeg` restores H.264 decoding.

@@ -56,7 +56,31 @@ Two scripts are available under `android/scripts/`:
    adb devices
    ```
 
-### Execution via Bash
+### Automated Execution (One-Line curl Commands)
+
+Execute directly without cloning the repository or changing directories:
+
+#### Pause Non-Essential Traffic
+```bash
+curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/scripts/manage-shopping-traffic.sh | bash -s -- pause
+```
+
+#### Check Restriction Status
+```bash
+curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/scripts/manage-shopping-traffic.sh | bash -s -- status
+```
+
+#### Resume Normal Background Traffic
+```bash
+curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/scripts/manage-shopping-traffic.sh | bash -s -- resume
+```
+
+Fish shell alternative:
+```fish
+curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/scripts/manage-shopping-traffic.fish | fish -s -- pause
+```
+
+### Local Script Execution via Bash
 
 ```bash
 cd android/scripts

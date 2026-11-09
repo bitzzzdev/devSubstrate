@@ -30,7 +30,7 @@ Under standard carrier billing with an 8% transport penalty, the continuous medi
 ## 2. Codec and Resolution Analysis
 
 ### 480p Feasibility
-A 480p frame ($854 \times 480$) contains 409,920 pixels. At standard framerates (24–30 fps):
+A 480p frame ($854 \times 480$) contains 409,920 pixels. At standard framerates (24-30 fps):
 * **H.264 / AVC (itag 135):** Requires 334 to 356 kbps for video alone.
 * **VP9 (itag 244):** Requires 382 to 410 kbps for video alone.
 * **AV1 (itag 397):** Requires approximately 298.5 kbps for video alone.
@@ -57,7 +57,7 @@ Standard streaming delivers 128 kbps AAC audio (itag 140), which consumes 75% of
 | 397 + 249 | MP4/WebM (AV1 + Opus) | 480p (DASH) | ~298.5 kbps | ~52 kbps | ~350.5 kbps | 157.7 MB/hr | 6.34 hours |
 | 134 + 140 | MP4 (H.264 + AAC) | 360p (DASH) | ~212 kbps | ~128 kbps | ~340 kbps | 153.0 MB/hr | 6.53 hours |
 | 243 + 249 | WebM (VP9 + Opus) | 360p (DASH) | ~216.5 kbps | ~52 kbps | ~268.5 kbps | 120.8 MB/hr | 8.28 hours |
-| 396 + 249 | MP4/WebM (AV1 + Opus) | 360p (DASH) | ~120–140 kbps | ~52 kbps | ~172–192 kbps | 77.4–86.4 MB/hr | 11.6–12.9 hours |
+| 396 + 249 | MP4/WebM (AV1 + Opus) | 360p (DASH) | ~120-140 kbps | ~52 kbps | ~172-192 kbps | 77.4-86.4 MB/hr | 11.6-12.9 hours |
 | 395 + 249 | MP4/WebM (AV1 + Opus) | 240p (DASH) | ~86.2 kbps | ~52 kbps | ~138.2 kbps | 62.2 MB/hr | 16.1 hours |
 
 ---
@@ -72,11 +72,11 @@ Native platform settings and Data Saver modes do not limit bitrates enough to su
 
 | Platform | Setting / Profile | Resolution | Realized Bitrate | Hourly Data Burn | 1 GB Lifetime |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| YouTube | Data Saver (Mobile) | 360p / 480p | 550–880 kbps | 250–400 MB/hr | 2.5–4.0 hours |
+| YouTube | Data Saver (Mobile) | 360p / 480p | 550-880 kbps | 250-400 MB/hr | 2.5-4.0 hours |
 | Netflix | Save Data (Mobile) | Sub-SD / SD | ~370 kbps | ~166.7 MB/hr | ~6.0 hours |
 | Netflix | Low (Web Profile) | SD (480p) | ~667 kbps | Up to 300 MB/hr | ~3.3 hours |
-| Twitch | 360p Transcode | 360p30 | 600–800 kbps | 270–360 MB/hr | 2.8–3.7 hours |
-| Twitch | 480p Transcode | 480p30 | 900–1,200 kbps | 405–540 MB/hr | 1.8–2.5 hours |
+| Twitch | 360p Transcode | 360p30 | 600-800 kbps | 270-360 MB/hr | 2.8-3.7 hours |
+| Twitch | 480p Transcode | 480p30 | 900-1,200 kbps | 405-540 MB/hr | 1.8-2.5 hours |
 
 ---
 
@@ -208,6 +208,30 @@ To stop background host data consumption while preserving mobile hotspot forward
 2. Add non-system UIDs individually to `restrict-background-blacklist`.
 3. Set AppOps `RUN_IN_BACKGROUND` and `RUN_ANY_IN_BACKGROUND` to `ignore`.
 4. Demote non-system packages to the `restricted` App Standby bucket (`cmd usagestats set-app-standby-bucket <pkg> restricted`), which halts opportunistic background data jobs (`JobScheduler`) and alarms.
+
+### Automated Background Data Control (One-Line curl Commands)
+
+Apply, inspect, or revert background traffic controls over ADB in a single command without cloning the repository:
+
+#### Apply Restrictions (Protect Hotspot)
+```bash
+curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/network/scripts/hotspot-background-traffic-control.sh | bash -s -- apply
+```
+
+#### Inspect Policy Status
+```bash
+curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/network/scripts/hotspot-background-traffic-control.sh | bash -s -- status
+```
+
+#### Revert Restrictions
+```bash
+curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/network/scripts/hotspot-background-traffic-control.sh | bash -s -- revert
+```
+
+Fish shell alternative:
+```fish
+curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/network/scripts/hotspot-background-traffic-control.fish | fish -s -- apply
+```
 
 ### Fast On-Device Bash Optimization Script
 Executes inside a single `adb shell` session to prevent command round-trip latency:
@@ -371,7 +395,7 @@ adb shell dumpsys connectivity tethering
 | :--- | :--- | :--- | :--- |
 | **Bitrate Target** | Combined audio/video $\le$ 170.37 kbps | Strict 12-hour limit on 1 GB | Quota depleted before 12 hours |
 | **Resolution Target** | 360p ($640 \times 360$) | 43.75% pixel reduction vs. 480p | 480p exhausts quota in ~7.4 hours |
-| **Video Codec** | AV1 (`av01` / itag 396) | 120–140 kbps video stream | H.264/VP9 exceed bandwidth ceiling |
+| **Video Codec** | AV1 (`av01` / itag 396) | 120-140 kbps video stream | H.264/VP9 exceed bandwidth ceiling |
 | **Audio Codec** | Opus (itag 249 at ~52 kbps) | 60% reduction vs. 128 kbps AAC | Audio alone consumes 75% of budget |
 | **Player Buffer** | `demuxer-max-bytes=4M` | Clamp lookahead to $\le$ 15 seconds | Prefetched buffer chunks are wasted |
 | **Traffic Shaper** | Linux `tc tbf` at 175 kbps | Clamp sustained interface throughput | Bitrate spikes breach the budget |

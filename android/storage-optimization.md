@@ -63,7 +63,26 @@ Capture:
 
 The first pass is read-only. Directory sizes can take time to calculate. Permission-denied output is an access limitation, not proof that a directory is empty.
 
-### Fish-compatible ADB diagnostic
+### Automated Diagnostics and Cache Trim (One-Line curl Commands)
+
+Ensure your device is connected via ADB (`adb devices`), then run directly:
+
+#### Inspect Storage Accounting and Large Files
+```bash
+curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/scripts/audit-android-storage.sh | bash -s -- status
+```
+
+#### Safe Non-Destructive Cache Trim
+```bash
+curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/scripts/audit-android-storage.sh | bash -s -- trim
+```
+
+Fish shell alternative:
+```fish
+curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/scripts/audit-android-storage.fish | fish -s -- status
+```
+
+### Manual Fish-compatible ADB diagnostic
 
 The remote command intentionally uses simple commands rather than a shell loop. The earlier storage diagnostic failed because it sent fish's `end` keyword to Android's `/system/bin/sh`, which expects a different loop syntax. No storage changes were made by that failed attempt.
 
@@ -104,7 +123,7 @@ For each large app, record:
 
 | App | App size | User data | Cache | Keep / remove / investigate |
 |---|---:|---:|---:|---|
-| To be measured | — | — | — | — |
+| To be measured | - | - | - | - |
 
 Prioritize apps with unusually large user data or cache, not simply the largest APK. App data may contain offline files, media, databases, and user-created content.
 

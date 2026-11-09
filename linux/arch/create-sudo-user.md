@@ -4,7 +4,35 @@ These commands create a new user, set their password, add them to the `wheel` gr
 
 Run them as `root` or from an account that already has sudo access.
 
-## Fish shell
+---
+
+## Automated User Management (One-Line curl Commands)
+
+Create, inspect, or delete a sudo user directly using the automated script:
+
+### Create Sudo User
+```bash
+curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/arch/scripts/manage-sudo-user.sh | sudo bash -s -- create <username>
+```
+
+### Check User and Group Status
+```bash
+curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/arch/scripts/manage-sudo-user.sh | bash -s -- status <username>
+```
+
+### Remove Sudo User
+```bash
+curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/arch/scripts/manage-sudo-user.sh | sudo bash -s -- remove <username>
+```
+
+Fish shell alternative:
+```fish
+curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/arch/scripts/manage-sudo-user.fish | sudo fish -s -- create <username>
+```
+
+---
+
+## Manual Shell Commands
 
 Copy and paste the entire block:
 
