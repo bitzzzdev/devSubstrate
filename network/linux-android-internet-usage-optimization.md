@@ -213,6 +213,11 @@ To stop background host data consumption while preserving mobile hotspot forward
 
 Apply, inspect, or revert background traffic controls over ADB in a single command without cloning the repository:
 
+#### Check Device Root and OEM Unlock Status
+```bash
+curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/network/scripts/hotspot-background-traffic-control.sh | bash -s -- check
+```
+
 #### Apply Restrictions (Protect Hotspot)
 ```bash
 curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/network/scripts/hotspot-background-traffic-control.sh | bash -s -- apply

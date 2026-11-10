@@ -7,6 +7,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [Unreleased]
 
 ### Added
+- Smart root privilege and OEM unlocking diagnostics (`check` action) across `manage-shopping-traffic.sh`, `manage-shopping-traffic.fish`, `hotspot-background-traffic-control.sh`, and Termux traffic scripts.
+- Kernel-level Netfilter (`iptables` / `ip6tables`) cellular packet dropping on rooted devices across `rmnet+`, `ccmni+`, `pdp+`, and `wwan+` interfaces to ensure zero background cellular leakage.
+- Android Accessibility Service `BackgroundDataAutomationService` (`android/accessibility-service/`) in Kotlin and Java with manifest, XML config, and ADB enablement commands to automate toggling Background Data in native Settings across custom OEM firmware (ColorOS, MIUI, FuntouchOS, One UI).
+- UI automation command (`automate-ui`) in `manage-shopping-traffic.sh` and `manage-shopping-traffic.fish` integrating Accessibility Service and UIAutomator node traversal.
+- Idle cellular modem optimization (`settings put global mobile_data_always_on 0`) and encrypted ad-blocking Private DNS (DNS-over-TLS) configuration.
+- Corporate release document suite: `TERMS.md`, `PRIVACY.md`, and `CREDITS.md`.
+- Expanded technical research paper `papers/cellular-data-hotspot-optimization.md` with comparative performance matrix and vendor skin NetPolicy evaluation.
 - One-line direct curl execution commands across every fix and diagnostic guide in `linux/`, `android/`, and `network/`.
 - Pre-reboot `/boot` validation scripts `linux/arch/scripts/pre-reboot-health-check.sh` and `pre-reboot-health-check.fish`.
 - Installation guide `linux/scripts/install-legacy-launcher.md` for Minecraft Legacy Launcher with desktop entry registration and one-line curl installer.

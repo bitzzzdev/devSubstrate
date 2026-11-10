@@ -113,6 +113,7 @@ Technical troubleshooting procedures, diagnostics, and recovery scripts.
 | Realme C11 (RMX3231) | [Realme C11 Optimization Guide](android/realme-c11-rmx3231-optimization.md) | Background process control, RAM reclaim, and debloating |
 | Storage Maintenance | [Storage Space Recovery Guide](android/storage-optimization.md) | Deep cache cleaning, orphan file removal, and ADB storage inspection |
 | Selective Data Control | [Cellular Traffic & Notification Saver](android/cellular-data-notification-saver.md) | Automation scripts to pause shopping traffic while keeping hotspot and messaging |
+| Background Data Automation | [Accessibility Service & UI Traversal](android/accessibility-service/README.md) | Native settings traversal service to toggle background data across OEM skins |
 | On-Device Termux Scripts | [Termux Mobile Fix Hub](android/termux-scripts/README.md) | Self-contained on-device scripts with execution audits and fallback modes |
 | Android Overview | [Android Diagnostics Hub](android/README.md) | Platform-level troubleshooting overview |
 
@@ -156,10 +157,13 @@ Run any fix directly without cloning the repository. Every script supports statu
 
 | Operation | Direct One-Line curl Command |
 | --- | --- |
+| Check Root & OEM Unlock (ADB) | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/scripts/manage-shopping-traffic.sh \| bash -s -- check` |
 | Pause Shopping Traffic (ADB) | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/scripts/manage-shopping-traffic.sh \| bash -s -- pause` |
 | Resume Shopping Traffic (ADB) | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/scripts/manage-shopping-traffic.sh \| bash -s -- resume` |
+| UI Automate Data Toggle (ADB) | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/scripts/manage-shopping-traffic.sh \| bash -s -- automate-ui` |
 | Audit Storage (ADB) | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/scripts/audit-android-storage.sh \| bash -s -- status` |
 | Trim Package Caches (ADB) | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/scripts/audit-android-storage.sh \| bash -s -- trim` |
+| Termux Root & OEM Check | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/termux-scripts/termux-manage-shopping-traffic.sh \| bash -s -- check` |
 | Termux Shopping Traffic Pause | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/termux-scripts/termux-manage-shopping-traffic.sh \| bash -s -- pause` |
 | Termux Hotspot Background Saver | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/termux-scripts/termux-hotspot-traffic-control.sh \| bash -s -- apply` |
 | Termux Storage Audit & Trim | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/termux-scripts/termux-audit-storage.sh \| bash -s -- status` |
@@ -172,6 +176,7 @@ Run any fix directly without cloning the repository. Every script supports statu
 | --- | --- |
 | Disable Wi-Fi Powersave (Apply) | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/network/wifi/scripts/qca9377-powersave-fix.sh \| sudo bash -s -- apply` |
 | Restore Wi-Fi Powersave (Revert) | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/network/wifi/scripts/qca9377-powersave-fix.sh \| sudo bash -s -- revert` |
+| Hotspot Background Saver (Check) | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/network/scripts/hotspot-background-traffic-control.sh \| bash -s -- check` |
 | Hotspot Background Saver (Apply) | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/network/scripts/hotspot-background-traffic-control.sh \| bash -s -- apply` |
 | Hotspot Background Saver (Revert) | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/network/scripts/hotspot-background-traffic-control.sh \| bash -s -- revert` |
 
