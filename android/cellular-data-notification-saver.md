@@ -15,7 +15,7 @@ This guide provides automated scripts in **Bash** and **Fish** shell to:
 - Halt arbitrary background tasks and broadcast wakeups (`RUN_ANY_IN_BACKGROUND ignore`).
 - Blacklist specific app UIDs from background cellular data (`netpolicy add restrict-background-blacklist <UID>`).
 - Keep WhatsApp, Instagram direct messages, Telegram, and incoming VoIP calls active in real time.
-- Verify that Wi-Fi hotspot hardware offload remains enabled (`tether_offload_disabled 0`).
+- Attempt to preserve the device's existing Wi-Fi hotspot offload behavior. Some Android builds reject writes to `tether_offload_disabled`; that optional failure does not stop the per-app restrictions.
 
 For the complete architectural evaluation and benchmarking analysis, see the research paper:  
 [`papers/cellular-data-hotspot-optimization.md`](../../papers/cellular-data-hotspot-optimization.md).
@@ -140,6 +140,10 @@ adb shell cmd netpolicy add restrict-background-blacklist $UID
 adb shell settings put global tether_offload_disabled 0
 adb shell settings put global tether_dun_required 0
 ```
+
+These settings are optional and device-dependent. If Android reports
+`WRITE_SECURE_SETTINGS` permission denial, leave the values unchanged and
+continue with the AppOps and NetPolicy commands above.
 
 ---
 

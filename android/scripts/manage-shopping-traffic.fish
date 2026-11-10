@@ -44,12 +44,20 @@ function is_package_installed -a pkg
     adb shell pm list packages $pkg 2>/dev/null | string match -q "package:$pkg"
 end
 
+function set_tethering_offload
+    if adb shell settings put global tether_offload_disabled 0 >/dev/null 2>&1
+        set -l current (adb shell settings get global tether_offload_disabled 2>/dev/null | string trim)
+        if test "$current" = "0"
+            echo "Confirmed tethering hardware offload enabled (0)."
+            return 0
+        end
+    end
+    echo "Warning: Android denied the tethering offload setting. Continuing with app restrictions." >&2
+end
+
 function pause_traffic
     echo "Applying selective background and notification restrictions..."
-
-    # Ensure tethering hardware offload is enabled
-    adb shell settings put global tether_offload_disabled 0
-    echo "Confirmed tethering hardware offload enabled (0)."
+    set_tethering_offload
 
     for pkg in $TARGET_PACKAGES
         if is_package_installed $pkg

@@ -72,6 +72,17 @@ function is_package_installed -a pkg
     end
 end
 
+function set_tethering_offload
+    if exec_android_cmd "settings put global tether_offload_disabled 0" >/dev/null 2>&1
+        set -l current (exec_android_cmd "settings get global tether_offload_disabled" 2>/dev/null | string trim)
+        if test "$current" = "0"
+            echo "  - Tethering hardware offload enabled (0)."
+            return 0
+        end
+    end
+    echo "  - Tethering offload setting was not writable; existing device behavior is unchanged."
+end
+
 function pause_traffic
     echo "=========================================================="
     echo "Executing Pause: Shopping Traffic & Notification Control"
@@ -82,8 +93,7 @@ function pause_traffic
     set -l fallback_used 0
 
     if test "$DETECTED_BACKEND" != "userland"
-        exec_android_cmd "settings put global tether_offload_disabled 0"; or true
-        echo "[+] Verified tethering hardware offload enabled (0)."
+        set_tethering_offload
 
         for pkg in $TARGET_PACKAGES
             if is_package_installed $pkg
@@ -119,7 +129,6 @@ function pause_traffic
         echo "  - POST_NOTIFICATION disabled for retail apps."
         echo "  - RUN_ANY_IN_BACKGROUND blocked via AppOps."
         echo "  - NetPolicy cellular background sockets blacklisted."
-        echo "  - Tethering hardware offload confirmed active."
         echo "  - WhatsApp, Instagram, Telegram, and hotspot remain unaffected."
     else if test $fallback_used -eq 1
         echo "COMPLETED IN TERMUX NON-ROOT USERLAND:"
