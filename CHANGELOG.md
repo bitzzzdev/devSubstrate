@@ -23,6 +23,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Changed
 - Updated `linux/arch/scripts/manage-sudo-user.sh` and `manage-sudo-user.fish` to query `/dev/tty` for interactive password input when executed through piped curl streams.
 - Replaced non-standard typographical dashes and emoji symbols across documentation files to satisfy strict human writing standards.
+- Added BigBasket, JioMart, Nykaa, Snapdeal, and Tata CLiQ to the shopping traffic restriction targets.
 
 ### Fixed
 - Made Android tethering offload writes optional in the shopping traffic scripts. Devices that deny `WRITE_SECURE_SETTINGS` now receive a warning while per-app restrictions continue.

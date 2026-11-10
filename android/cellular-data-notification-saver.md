@@ -38,6 +38,11 @@ Two scripts are available under `android/scripts/`:
 - Zepto (`com.zeptoconsumerapp`)
 - Swiggy (`in.swiggy.android`)
 - Zomato (`com.application.zomato`)
+- BigBasket (`com.bigbasket.mobileapp`)
+- JioMart (`com.jpl.jiomart`)
+- Nykaa (`com.fsn.nykaa`)
+- Snapdeal (`com.snapdeal.main`)
+- Tata CLiQ (`com.tul.tatacliq`)
 
 ### Whitelisted Applications (Untouched)
 - WhatsApp (`com.whatsapp`)

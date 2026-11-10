@@ -23,7 +23,12 @@ set -l TARGET_PACKAGES \
     com.grofers.customerapp \
     com.zeptoconsumerapp \
     in.swiggy.android \
-    com.application.zomato
+    com.application.zomato \
+    com.bigbasket.mobileapp \
+    com.jpl.jiomart \
+    com.fsn.nykaa \
+    com.snapdeal.main \
+    com.tul.tatacliq
 
 set -g DETECTED_BACKEND "none"
 

@@ -20,7 +20,12 @@ set -l TARGET_PACKAGES \
     com.grofers.customerapp \
     com.zeptoconsumerapp \
     in.swiggy.android \
-    com.application.zomato
+    com.application.zomato \
+    com.bigbasket.mobileapp \
+    com.jpl.jiomart \
+    com.fsn.nykaa \
+    com.snapdeal.main \
+    com.tul.tatacliq
 
 function check_adb
     if not command -v adb >/dev/null 2>&1

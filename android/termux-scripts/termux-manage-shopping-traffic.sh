@@ -26,6 +26,11 @@ TARGET_PACKAGES=(
     "com.zeptoconsumerapp"
     "in.swiggy.android"
     "com.application.zomato"
+    "com.bigbasket.mobileapp"
+    "com.jpl.jiomart"
+    "com.fsn.nykaa"
+    "com.snapdeal.main"
+    "com.tul.tatacliq"
 )
 
 DETECTED_BACKEND="none"
