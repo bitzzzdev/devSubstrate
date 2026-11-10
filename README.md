@@ -1,184 +1,91 @@
-# DevSubstrate: Engineering Research, Technical Papers, and System Notes
+# DevSubstrate Smart Curl Scripts
 
-Author and Maintainer: Dev Borah (bitzzdev)  
-Repository: `devSubstrate`  
-Focus: Systems engineering, hardware-accelerated AI inference, developer agents, and graphics architectures.
+This branch contains two curl launchers. They combine the Android, Linux, and
+network fixes from the full repository into numbered commands.
 
-All entries in the tables below link directly to internal research papers, verified system fix files, and direct curl one-liners.
+The launchers fetch the implementation scripts from the `dev` branch. Set
+`DEVSUBSTRATE_REF` to a commit or another branch when reproducible pinning is
+needed.
 
----
+## Android
 
-## Repository Tree
+Run the menu:
 
-```text
-├── papers/                    In-depth technical research papers
-│   ├── groq-inference-analysis.md       Groq LPU speed, SRAM design, and API limits
-│   ├── cerebras-wse-inference.md        Cerebras Wafer-Scale Engine and token throughput
-│   ├── google-ai-studio-gemini.md       Gemini million-token context and function calling
-│   ├── apinex-gateway-proxy.md          Multi-model API proxying and security boundaries
-│   ├── agy-autonomous-agent.md          Google Antigravity CLI agent runtime architecture
-│   ├── opencode-codex-agents.md         Terminal-native coding agents vs cloud code models
-│   ├── git-tulkun-visualization.md      Procedural pixel art and GitHub Actions automation
-│   ├── react-bits-ui.md                 Zero-dependency React components and animation
-│   ├── efecto-ai-canvas.md              AI-native design canvas and MCP agent integration
-│   ├── ascii-rendering-engines.md       ascii.rest, ASCII Magic, and Asciify algorithms
-│   ├── asciicore-figma-dithering.md     VGA matrix dithering inside Figma
-│   ├── paper-mono-typography.md         Paper Mono font anatomy, ligatures, and duospacing
-│   └── cellular-data-hotspot-optimization.md Android cellular traffic control and hotspot preservation
-├── ai-providers/              API endpoint documentation and curl integration
-├── developer-tools/           Autonomous assistants, terminal utilities, and setup notes
-├── creative-ascii-design/     Frontend components, ASCII engines, and typography guides
-├── android/                   Device performance, storage recovery, and Termux fixes
-├── linux/                     Arch Linux health checks, UKI boot, SSH, and driver repairs
-├── network/                   Bandwidth reduction and Qualcomm Wi-Fi stability fixes
-├── windows/                   Diagnostics and operating system troubleshooting
-└── cross-platform/            Shared cross-environment scripts and tools
+```bash
+curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/smartCurlScripts/androidCurlScripts.sh | bash
 ```
 
----
+Run a selection directly:
 
-## 1. Technical Research Papers
+```bash
+# 1: device information
+curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/smartCurlScripts/androidCurlScripts.sh | bash -s -- 1
 
-Evaluations of hardware architectures, model inference runtimes, agent systems, and rendering pipelines.
+# 2: reduce shopping traffic
+curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/smartCurlScripts/androidCurlScripts.sh | bash -s -- 2 shopping
 
-### AI Inference and API Gateways
+# 3: revert shopping restrictions
+curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/smartCurlScripts/androidCurlScripts.sh | bash -s -- 3 shopping
+```
 
-| Topic / System | Research Paper | Focus Area |
+Android option targets:
+
+| Option | Target | Direct argument |
 | --- | --- | --- |
-| Groq LPU | [Groq LPU Inference Architecture](papers/groq-inference-analysis.md) | SRAM layout, deterministic instruction scheduling, and token latency |
-| Cerebras WSE-3 | [Cerebras Wafer-Scale Engine](papers/cerebras-wse-inference.md) | Wafer-scale chip topology, 900,000 AI cores, and high token throughput |
-| Google AI Studio | [Google AI Studio and Gemini Architecture](papers/google-ai-studio-gemini.md) | Long context windows, REST API usage, and structured JSON schemas |
-| APInex Gateway | [APInex Gateway and Third-Party Proxy Security](papers/apinex-gateway-proxy.md) | Multi-model routing mechanics and API security trade-offs |
+| 1 | Device information and storage status | `1` |
+| 2 | Reduce shopping or hotspot traffic | `2 shopping`, `2 hotspot`, `2 all` |
+| 3 | Revert shopping, hotspot, or Google Cloud changes | `3 shopping`, `3 hotspot`, `3 gcloud` |
+| 4 | Inspect or trim storage | `4 status`, `4 trim` |
+| 5 | Install Claude Code or configure Google Cloud in Termux | `5 claude`, `5 gcloud` |
 
-### Developer Agents and Coding Tools
+The Android launcher uses ADB when an authorized device is connected. Without
+ADB it uses the Termux implementation.
 
-| Topic / System | Research Paper | Focus Area |
+## Linux
+
+Run the menu:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/smartCurlScripts/linuxCurlScripts.sh | bash
+```
+
+Run a selection directly:
+
+```bash
+# 1: pre-reboot device and boot information
+curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/smartCurlScripts/linuxCurlScripts.sh | bash -s -- 1
+
+# 2: reduce hotspot background traffic
+curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/smartCurlScripts/linuxCurlScripts.sh | bash -s -- 2 hotspot
+
+# 3: revert a Wi-Fi power setting
+curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/smartCurlScripts/linuxCurlScripts.sh | bash -s -- 3 wifi
+```
+
+Linux option targets:
+
+| Option | Target | Direct argument |
 | --- | --- | --- |
-| Google Antigravity | [Google Antigravity (AGY) Agent Architecture](papers/agy-autonomous-agent.md) | Orchestration runtime, subagent delegation, and artifact systems |
-| OpenCode & Codex | [Terminal-Native Agents: OpenCode and Codex](papers/opencode-codex-agents.md) | Comparing shell-integrated agents with cloud model generators |
-| Git-Tulkun | [Git-Tulkun Procedural Visualization](papers/git-tulkun-visualization.md) | Logarithmic activity scaling and automated GitHub Actions workflows |
+| 1 | Pre-reboot device and boot health check | `1` |
+| 2 | Reduce hotspot or Wi-Fi network drainage | `2 hotspot`, `2 wifi` |
+| 3 | Revert a named change | `3 hotspot`, `3 wifi`, `3 uki`, `3 vlc`, `3 ssh` |
+| 4 | Apply a named system fix | `4 uki`, `4 vlc`, `4 ssh` |
+| 5 | Create, inspect, or remove a sudo user | `5 create <username>` |
+| 6 | Install Legacy Launcher | `6` |
 
-### Creative, ASCII, and Typography Systems
+Some Linux operations require `sudo`, an Arch Linux system, or an authorized
+ADB device. Read the underlying guide before running a system-changing option.
 
-| Topic / System | Research Paper | Focus Area |
-| --- | --- | --- |
-| React Bits | [React Bits Modular UI Architecture](papers/react-bits-ui.md) | Micro-interactions, Tailwind integration, and bundle optimization |
-| Efecto | [Efecto AI-Collaborative Canvas](papers/efecto-ai-canvas.md) | Real-time design canvas, WebGL shaders, and MCP tool protocols |
-| ASCII Web Engines | [ASCII Rendering Engines Analysis](papers/ascii-rendering-engines.md) | Luminance quantization in ascii.rest, ASCII Magic, and Asciify |
-| Asciicore Plugin | [Vector Dithering with Asciicore](papers/asciicore-figma-dithering.md) | Bayer matrices and Floyd-Steinberg dithering within Figma |
-| Paper Mono | [Paper Mono Typeface Anatomy](papers/paper-mono-typography.md) | Coding ligatures, duospacing, and terminal ergonomics |
+## Full non-curl scripts
 
-### Systems Engineering and Mobile Architectures
+The implementation scripts, Fish versions, guides, research papers, and
+project history remain in the full `dev` branch:
 
-| Topic / System | Research Paper | Focus Area |
-| --- | --- | --- |
-| Android Hotspot & Data | [Cellular Data & Hotspot Optimization](papers/cellular-data-hotspot-optimization.md) | Suppressing non-essential retail apps, NetPolicy blacklists, and tether offload |
+https://github.com/bitzzdev/devSubstrate/tree/dev
 
----
+Inspect a fetched script before running it. These launchers execute remote
+shell code by design.
 
-## 2. Resource Implementation Manuals
+## License
 
-Pragmatic developer documentation with command-line steps, configuration files, and API endpoints.
-
-| Manual | Direct Link | Content Summary |
-| --- | --- | --- |
-| AI API Providers | [AI API Providers Guide](ai-providers/README.md) | Step-by-step API key generation, endpoints, and authentication headers |
-| Developer Tools | [Developer Tools and Assistants Guide](developer-tools/README.md) | Installation and command lines for AGY, OpenCode, and git-tulkun |
-| Creative & Design | [Creative, ASCII, and Design Guide](creative-ascii-design/README.md) | Feature breakdowns and setup notes for web generators and Figma plugins |
-
----
-
-## 3. Systems Engineering and Verified Fixes
-
-Technical troubleshooting procedures, diagnostics, and recovery scripts.
-
-### Linux Systems and Boot Configurations
-
-| Component | Verified Fix / Procedure | Target Issue |
-| --- | --- | --- |
-| Arch Linux Maintenance | [Arch Linux Pre-Reboot Health Check](linux/arch/pre-reboot-health-check.md) | Kernel verification, systemd checks, and bootloader integrity |
-| Qualcomm Wi-Fi / UKI | [Unified Kernel Image QCA9377 Wi-Fi Fix](linux/arch/uki-qca9377-wifi-fix.md) | Firmware module parameters and power management overrides |
-| Video Decoding | [VLC H.264 Codec Playback Fix](linux/arch/vlc-h264-codec-fix.md) | Hardware decoding and VAAPI configuration |
-| Cloud Shell & SSH X11 | [Cloud Shell SSH X11 Clipboard Fix](linux/ssh/gcloud-ssh-x11-clipboard-fix.md) | Remote clipboard image paste, X11 forwarding, Fish/Bash aliases |
-| User Privileges | [Create Sudo User Guide](linux/arch/create-sudo-user.md) | Secure user creation and wheel group privilege delegation |
-| Launcher Script | [Legacy Launcher Installation Guide](linux/scripts/install-legacy-launcher.md) | Automated shell script for client installation |
-| Linux Overview | [Linux Troubleshooting Hub](linux/README.md) | Index of distribution-specific maintenance guides |
-
-### Android Device Optimization and Termux
-
-| Device / Tool | Verified Fix / Procedure | Target Issue |
-| --- | --- | --- |
-| Claude Code on Android | [Claude Code CLI in Termux](android/termux/claude-code-cli-workaround.md) | Node environment, termux-exec, and path workarounds |
-| Google Cloud CLI on Android | [Google Cloud CLI on Termux](android/termux/gcloud-cli-termux-workaround.md) | Bionic libc compatibility, component overrides, and shell aliases |
-| Realme C11 (RMX3231) | [Realme C11 Optimization Guide](android/realme-c11-rmx3231-optimization.md) | Background process control, RAM reclaim, and debloating |
-| Storage Maintenance | [Storage Space Recovery Guide](android/storage-optimization.md) | Deep cache cleaning, orphan file removal, and ADB storage inspection |
-| Selective Data Control | [Cellular Traffic & Notification Saver](android/cellular-data-notification-saver.md) | Automation scripts to pause shopping traffic while keeping hotspot and messaging |
-| On-Device Termux Scripts | [Termux Mobile Fix Hub](android/termux-scripts/README.md) | Self-contained on-device scripts with execution audits and fallback modes |
-| Android Overview | [Android Diagnostics Hub](android/README.md) | Platform-level troubleshooting overview |
-
-### Network and Connectivity
-
-| Protocol / Interface | Verified Fix / Procedure | Target Issue |
-| --- | --- | --- |
-| QCA9377 Service | [QCA9377 Wi-Fi Automated Fix](network/wifi/qca9377-auto-fix.md) | Driver reload and systemd service creation |
-| Mobile Hotspot | [QCA9377 Hotspot Disconnect Fix](network/wifi/qca9377-hotspot-disconnect-fix.md) | Packet drop mitigation and power save disabling |
-| Data Metering | [Linux & Android Data Consumption Reduction](network/linux-android-internet-usage-optimization.md) | Metered connection rules and daemon traffic limits |
-| Network Overview | [Network Troubleshooting Hub](network/README.md) | Wi-Fi and mobile interface maintenance index |
-
-### Windows and Cross-Platform Tools
-
-| Environment | Verified Fix / Procedure | Target Issue |
-| --- | --- | --- |
-| Windows 10/11 | [Windows Diagnostic Procedures](windows/README.md) | DISM checks, SFC repairs, and driver conflict resolution |
-| Multi-Platform | [Cross-Platform Utilities](cross-platform/README.md) | Shared maintenance patterns across operating systems |
-
----
-
-## 4. Quick Execution Hub (One-Line curl Commands)
-
-Run any fix directly without cloning the repository. Every script supports status checks, applying fixes, and safe reversion where applicable.
-
-### Linux and Boot Repairs
-
-| Operation | Direct One-Line curl Command |
-| --- | --- |
-| Pre-Reboot Health Check | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/arch/scripts/pre-reboot-health-check.sh \| bash` |
-| Apply UKI Wi-Fi Fix | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/arch/scripts/uki-qca9377-fix.sh \| sudo bash -s -- apply` |
-| Revert UKI Wi-Fi Fix | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/arch/scripts/uki-qca9377-fix.sh \| sudo bash -s -- revert` |
-| Apply VLC H.264 Plugin | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/arch/scripts/vlc-ffmpeg-plugin-fix.sh \| sudo bash -s -- apply` |
-| Revert VLC H.264 Plugin | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/arch/scripts/vlc-ffmpeg-plugin-fix.sh \| sudo bash -s -- revert` |
-| Create Sudo User | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/arch/scripts/manage-sudo-user.sh \| sudo bash -s -- create <user>` |
-| Apply SSH X11 Persistence | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/ssh/scripts/configure-ssh-x11-forwarding.sh \| bash -s -- apply` |
-| Revert SSH X11 Persistence | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/ssh/scripts/configure-ssh-x11-forwarding.sh \| bash -s -- revert` |
-| Install Legacy Launcher | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/scripts/install-legacy-launcher.sh \| bash` |
-
-### Android Diagnostics, Traffic Control, and Termux
-
-| Operation | Direct One-Line curl Command |
-| --- | --- |
-| Pause Shopping Traffic (ADB) | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/scripts/manage-shopping-traffic.sh \| bash -s -- pause` |
-| Resume Shopping Traffic (ADB) | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/scripts/manage-shopping-traffic.sh \| bash -s -- resume` |
-| Audit Storage (ADB) | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/scripts/audit-android-storage.sh \| bash -s -- status` |
-| Trim Package Caches (ADB) | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/scripts/audit-android-storage.sh \| bash -s -- trim` |
-| Termux Shopping Traffic Pause | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/termux-scripts/termux-manage-shopping-traffic.sh \| bash -s -- pause` |
-| Termux Hotspot Background Saver | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/termux-scripts/termux-hotspot-traffic-control.sh \| bash -s -- apply` |
-| Termux Storage Audit & Trim | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/termux-scripts/termux-audit-storage.sh \| bash -s -- status` |
-| Install Claude Code in Termux | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/termux/scripts/install-claude-code-termux.sh \| bash` |
-| Setup Google Cloud SDK in Termux | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/termux/scripts/setup-gcloud-termux.sh \| bash -s -- apply` |
-
-### Network and Connectivity
-
-| Operation | Direct One-Line curl Command |
-| --- | --- |
-| Disable Wi-Fi Powersave (Apply) | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/network/wifi/scripts/qca9377-powersave-fix.sh \| sudo bash -s -- apply` |
-| Restore Wi-Fi Powersave (Revert) | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/network/wifi/scripts/qca9377-powersave-fix.sh \| sudo bash -s -- revert` |
-| Hotspot Background Saver (Apply) | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/network/scripts/hotspot-background-traffic-control.sh \| bash -s -- apply` |
-| Hotspot Background Saver (Revert) | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/network/scripts/hotspot-background-traffic-control.sh \| bash -s -- revert` |
-
----
-
-## 5. Engineering and Writing Standards
-
-- Every paper documents observed behavior, verified endpoints, and architectural mechanisms.
-- All prose follows strict human writing standards: no promotional filler, no em dashes, and no emoji.
-- Configurations must include exact file locations, parameter types, and rollback steps.
+MIT. See [LICENSE](LICENSE).

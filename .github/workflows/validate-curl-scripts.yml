@@ -1,0 +1,21 @@
+name: Validate curl scripts
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  shell-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check launcher syntax
+        run: bash -n androidCurlScripts.sh linuxCurlScripts.sh
+      - name: Check launcher names
+        run: |
+          test -x androidCurlScripts.sh
+          test -x linuxCurlScripts.sh
+      - name: Check source references
+        run: |
+          grep -q 'raw.githubusercontent.com/bitzzdev/devSubstrate/dev/' androidCurlScripts.sh
+          grep -q 'raw.githubusercontent.com/bitzzdev/devSubstrate/dev/' linuxCurlScripts.sh
