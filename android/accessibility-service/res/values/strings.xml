@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Substrate Data Automation</string>
+    <string name="accessibility_service_label">Background Data Automation Service</string>
+    <string name="accessibility_service_description">Automates navigating to App Info settings and turning off the Background Data toggle for selected high-drain applications.</string>
+</resources>

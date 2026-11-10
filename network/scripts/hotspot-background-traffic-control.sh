@@ -3,12 +3,16 @@
 # hotspot-background-traffic-control.sh: Restricts or restores background traffic
 # for non-essential third-party apps on Android to protect mobile hotspot bandwidth.
 #
+# Supports smart root and OEM unlocking diagnostics, kernel-level iptables filtering,
+# NetPolicy cellular blacklisting, standby bucketing, and modem idle power optimization.
+#
 # Preserves essential messengers (WhatsApp, Telegram, Signal) and hotspot routing.
 #
 # Usage:
 #   ./hotspot-background-traffic-control.sh apply   # Restricts background data on third-party apps
 #   ./hotspot-background-traffic-control.sh revert  # Restores default background execution states
 #   ./hotspot-background-traffic-control.sh status  # Lists currently restricted packages
+#   ./hotspot-background-traffic-control.sh check   # Checks root and OEM unlocking compatibility
 #
 
 set -euo pipefail
@@ -19,6 +23,8 @@ WHITELIST=(
     "org.thoughtcrime.securesms"
     "com.google.android.gms"
 )
+
+CELLULAR_INTERFACES=("rmnet+" "ccmni+" "pdp+" "wwan+")
 
 check_adb() {
     if ! command -v adb >/dev/null 2>&1; then
@@ -32,6 +38,93 @@ check_adb() {
     fi
 }
 
+check_root() {
+    if adb shell "id" 2>/dev/null | grep -q "uid=0(root)"; then
+        return 0
+    fi
+    if adb shell "command -v su >/dev/null 2>&1 && su -c id 2>/dev/null" | grep -q "uid=0"; then
+        return 0
+    fi
+    return 1
+}
+
+run_as_root() {
+    local cmd="$1"
+    if adb shell "id" 2>/dev/null | grep -q "uid=0(root)"; then
+        adb shell "$cmd"
+    else
+        adb shell "su -c \"$cmd\""
+    fi
+}
+
+check_oem_and_root_compatibility() {
+    echo "=========================================================="
+    echo "Device Compatibility: Root and Bootloader Lock Diagnostics"
+    echo "=========================================================="
+
+    local has_root=0
+    if check_root; then
+        has_root=1
+    fi
+
+    local oem_unlock_allowed
+    oem_unlock_allowed=$(adb shell getprop sys.oem_unlock_allowed 2>/dev/null | tr -d '\r\n')
+    local bootloader_locked
+    bootloader_locked=$(adb shell getprop ro.boot.flash.locked 2>/dev/null | tr -d '\r\n')
+    local verified_boot
+    verified_boot=$(adb shell getprop ro.boot.verifiedbootstate 2>/dev/null | tr -d '\r\n')
+    local oem_unlock_supported
+    oem_unlock_supported=$(adb shell getprop ro.oem_unlock_supported 2>/dev/null | tr -d '\r\n')
+
+    echo "Diagnostic Properties:"
+    echo "  - Root Privilege:               $([[ $has_root -eq 1 ]] && echo 'Available (uid 0)' || echo 'Not present')"
+    echo "  - OEM Unlocking (sys):          ${oem_unlock_allowed:-unknown} (1=allowed, 0=blocked)"
+    echo "  - Bootloader Lock (flash):      ${bootloader_locked:-unknown} (1=locked, 0=unlocked)"
+    echo "  - Verified Boot State:          ${verified_boot:-unknown}"
+    echo "  - OEM Unlock Supported:         ${oem_unlock_supported:-unknown}"
+    echo ""
+
+    if [[ $has_root -eq 1 ]]; then
+        echo "[+] ROOT DETECTED: Full kernel-level iptables socket filtering enabled."
+        echo "    Cellular packets will be filtered directly via kernel Netfilter hooks."
+        return 0
+    fi
+
+    if [[ "$bootloader_locked" == "0" ]]; then
+        echo "[i] Bootloader is UNLOCKED (ro.boot.flash.locked=0)."
+        echo "    Device has an unlocked bootloader. For maximum compatibility and kernel-level"
+        echo "    iptables packet filtering, install Magisk or KernelSU to grant root privileges."
+        echo "    Continuing in standard ADB mode (AppOps + NetPolicy + Standby Buckets)..."
+        return 0
+    fi
+
+    if [[ "$oem_unlock_allowed" != "1" ]]; then
+        echo "[!] COMPATIBILITY WARNING: OEM Unlocking is DISABLED on this device."
+        echo "    Current status: sys.oem_unlock_allowed=${oem_unlock_allowed:-0}"
+        echo ""
+        echo "    Why this matters:"
+        echo "    Certain customized OEM skins (ColorOS, MIUI, FuntouchOS) occasionally reset"
+        echo "    or ignore background NetPolicy blacklists when apps are restarted."
+        echo "    Enabling OEM unlocking allows bootloader unlocking and root access, which grants"
+        echo "    hardware-level packet dropping via iptables and persistent background isolation."
+        echo ""
+        echo "    How to enable OEM Unlocking:"
+        echo "      1. Open Settings -> About Phone (or 'About Device')."
+        echo "      2. Tap 'Build Number' 7 times rapidly until 'You are now a developer' appears."
+        echo "      3. Navigate to Settings -> System -> Developer Options."
+        echo "      4. Toggle 'OEM unlocking' to ON (and ensure 'USB debugging' remains active)."
+        echo "      5. (Optional for root) Unlock bootloader in fastboot mode and flash Magisk."
+        echo "      6. Run this script again for enhanced compatibility."
+        echo ""
+        echo "    Proceeding in standard ADB mode (AppOps + NetPolicy + Standby Buckets)..."
+    else
+        echo "[i] OEM Unlocking is ENABLED (sys.oem_unlock_allowed=1)."
+        echo "    Your bootloader can be unlocked whenever you choose to obtain root access."
+        echo "    Proceeding in standard ADB mode (AppOps + NetPolicy + Standby Buckets)..."
+    fi
+    echo "=========================================================="
+}
+
 is_whitelisted() {
     local pkg="$1"
     for w in "${WHITELIST[@]}"; do
@@ -42,17 +135,52 @@ is_whitelisted() {
     return 1
 }
 
+optimize_cellular_idle_settings() {
+    adb shell settings put global mobile_data_always_on 0 >/dev/null 2>&1 || true
+    adb shell settings put global tether_dun_required 0 >/dev/null 2>&1 || true
+    adb shell settings put global tether_offload_disabled 0 >/dev/null 2>&1 || true
+}
+
+apply_iptables_uid_drop() {
+    local uid="$1"
+    for iface in "${CELLULAR_INTERFACES[@]}"; do
+        run_as_root "iptables -C OUTPUT -o $iface -m owner --uid-owner $uid -j DROP 2>/dev/null || iptables -I OUTPUT -o $iface -m owner --uid-owner $uid -j DROP" >/dev/null 2>&1 || true
+        run_as_root "ip6tables -C OUTPUT -o $iface -m owner --uid-owner $uid -j DROP 2>/dev/null || ip6tables -I OUTPUT -o $iface -m owner --uid-owner $uid -j DROP" >/dev/null 2>&1 || true
+    done
+}
+
+remove_iptables_uid_drop() {
+    local uid="$1"
+    for iface in "${CELLULAR_INTERFACES[@]}"; do
+        run_as_root "iptables -D OUTPUT -o $iface -m owner --uid-owner $uid -j DROP 2>/dev/null || true" >/dev/null 2>&1 || true
+        run_as_root "ip6tables -D OUTPUT -o $iface -m owner --uid-owner $uid -j DROP 2>/dev/null || true" >/dev/null 2>&1 || true
+    done
+}
+
 status_restrictions() {
-    echo "=== Current Network Policy Blacklist ==="
-    adb shell cmd netpolicy list restrict-background-blacklist 2>/dev/null || echo "Empty or unavailable."
+    echo "=========================================================="
+    echo "Current Network Policy and Background Status"
+    echo "=========================================================="
+    check_oem_and_root_compatibility
     echo ""
     echo "=== Data Saver State ==="
     adb shell cmd netpolicy get restrict-background 2>/dev/null || echo "Unavailable."
+    echo ""
+    echo "=== Network Policy Blacklist ==="
+    adb shell cmd netpolicy list restrict-background-blacklist 2>/dev/null || echo "Empty or unavailable."
 }
 
 apply_restrictions() {
     echo "Ensuring global Data Saver remains off so hotspot functions..."
     adb shell cmd netpolicy set restrict-background false
+    check_oem_and_root_compatibility
+    optimize_cellular_idle_settings
+
+    local is_rooted=0
+    if check_root; then
+        is_rooted=1
+        echo "Root detected: Kernel Netfilter rules will be applied to drop cellular packets."
+    fi
 
     echo "Optimizing third-party application background limits..."
     while IFS= read -r line; do
@@ -71,16 +199,26 @@ apply_restrictions() {
             adb shell cmd appops set "$pkg" RUN_IN_BACKGROUND ignore >/dev/null 2>&1 || true
             adb shell cmd appops set "$pkg" RUN_ANY_IN_BACKGROUND ignore >/dev/null 2>&1 || true
             adb shell cmd usagestats set-app-standby-bucket "$pkg" restricted >/dev/null 2>&1 || true
+            if [[ $is_rooted -eq 1 ]]; then
+                apply_iptables_uid_drop "$uid"
+            fi
             echo "Restricted: $pkg (UID: $uid)"
         fi
     done < <(adb shell pm list packages -3 2>/dev/null)
 
+    echo ""
     echo "Done. Background data restricted while hotspot remains active."
 }
 
 revert_restrictions() {
     echo "Restoring third-party packages to Android defaults..."
     adb shell cmd netpolicy set restrict-background false
+
+    local is_rooted=0
+    if check_root; then
+        is_rooted=1
+        echo "Root detected: Flushing kernel Netfilter rules."
+    fi
 
     while IFS= read -r line; do
         pkg="${line#package:}"
@@ -93,10 +231,14 @@ revert_restrictions() {
             adb shell cmd appops set "$pkg" RUN_IN_BACKGROUND default >/dev/null 2>&1 || true
             adb shell cmd appops set "$pkg" RUN_ANY_IN_BACKGROUND default >/dev/null 2>&1 || true
             adb shell cmd usagestats set-app-standby-bucket "$pkg" active >/dev/null 2>&1 || true
+            if [[ $is_rooted -eq 1 ]]; then
+                remove_iptables_uid_drop "$uid"
+            fi
             echo "Restored: $pkg (UID: $uid)"
         fi
     done < <(adb shell pm list packages -3 2>/dev/null)
 
+    echo ""
     echo "Done. All packages restored to default states."
 }
 
@@ -114,8 +256,11 @@ case "$action" in
     status)
         status_restrictions
         ;;
+    check)
+        check_oem_and_root_compatibility
+        ;;
     *)
-        echo "Usage: $0 {apply|revert|status}"
+        echo "Usage: $0 {apply|revert|status|check}"
         exit 1
         ;;
 esac

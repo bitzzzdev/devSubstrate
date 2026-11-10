@@ -12,6 +12,7 @@
 #   ./termux-manage-shopping-traffic.sh pause   # Restricts shopping apps
 #   ./termux-manage-shopping-traffic.sh resume  # Restores shopping apps
 #   ./termux-manage-shopping-traffic.sh status  # Inspects current restrictions
+#   ./termux-manage-shopping-traffic.sh check   # Checks root and OEM unlocking status
 #
 
 set -euo pipefail
@@ -97,6 +98,63 @@ set_tethering_offload() {
     else
         echo "  - Tethering offload setting was not writable; existing device behavior is unchanged."
     fi
+}
+
+check_oem_and_root_compatibility() {
+    echo "=========================================================="
+    echo "Device Compatibility: Root and Bootloader Lock Diagnostics"
+    echo "=========================================================="
+
+    local has_root=0
+    if [[ "$DETECTED_BACKEND" == "root" || "$DETECTED_BACKEND" == "su" ]]; then
+        has_root=1
+    fi
+
+    local oem_unlock_allowed
+    oem_unlock_allowed=$(getprop sys.oem_unlock_allowed 2>/dev/null | tr -d '\r\n')
+    local bootloader_locked
+    bootloader_locked=$(getprop ro.boot.flash.locked 2>/dev/null | tr -d '\r\n')
+    local verified_boot
+    verified_boot=$(getprop ro.boot.verifiedbootstate 2>/dev/null | tr -d '\r\n')
+    local oem_unlock_supported
+    oem_unlock_supported=$(getprop ro.oem_unlock_supported 2>/dev/null | tr -d '\r\n')
+
+    echo "Diagnostic Properties:"
+    echo "  - Detected Backend:             $DETECTED_BACKEND"
+    echo "  - Root Privilege:               $([[ $has_root -eq 1 ]] && echo 'Available (uid 0)' || echo 'Not present')"
+    echo "  - OEM Unlocking (sys):          ${oem_unlock_allowed:-unknown} (1=allowed, 0=blocked)"
+    echo "  - Bootloader Lock (flash):      ${bootloader_locked:-unknown} (1=locked, 0=unlocked)"
+    echo "  - Verified Boot State:          ${verified_boot:-unknown}"
+    echo "  - OEM Unlock Supported:         ${oem_unlock_supported:-unknown}"
+    echo ""
+
+    if [[ $has_root -eq 1 ]]; then
+        echo "[+] ROOT DETECTED: Privileged execution and Netfilter controls enabled."
+        return 0
+    fi
+
+    if [[ "$bootloader_locked" == "0" ]]; then
+        echo "[i] Bootloader is UNLOCKED (ro.boot.flash.locked=0)."
+        echo "    Install Magisk or KernelSU to obtain full root capabilities in Termux."
+        return 0
+    fi
+
+    if [[ "$oem_unlock_allowed" != "1" ]]; then
+        echo "[!] COMPATIBILITY WARNING: OEM Unlocking is DISABLED on this device."
+        echo "    Current status: sys.oem_unlock_allowed=${oem_unlock_allowed:-0}"
+        echo ""
+        echo "    To enable OEM Unlocking for enhanced root capabilities:"
+        echo "      1. Open Settings -> About Phone."
+        echo "      2. Tap 'Build Number' 7 times rapidly until Developer options unlock."
+        echo "      3. Go to Settings -> System -> Developer Options."
+        echo "      4. Toggle 'OEM unlocking' to ON (and keep 'USB debugging' active)."
+        echo "      5. (Optional) Unlock bootloader in fastboot and install Magisk."
+        echo "      6. Run this script again for enhanced compatibility."
+    else
+        echo "[i] OEM Unlocking is ENABLED (sys.oem_unlock_allowed=1)."
+        echo "    Device bootloader can be unlocked for root access whenever desired."
+    fi
+    echo "=========================================================="
 }
 
 pause_traffic() {
@@ -229,8 +287,11 @@ case "$action" in
     status)
         show_status
         ;;
+    check)
+        check_oem_and_root_compatibility
+        ;;
     *)
-        echo "Usage: $0 {pause|resume|status}"
+        echo "Usage: $0 {pause|resume|status|check}"
         exit 1
         ;;
 esac
