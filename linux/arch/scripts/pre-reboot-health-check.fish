@@ -5,6 +5,7 @@
 # Usage:
 #   fish pre-reboot-health-check.fish
 #   curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/arch/scripts/pre-reboot-health-check.fish | fish
+#   curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/linux/arch/scripts/pre-reboot-health-check.fish | fish
 #
 
 echo "===== ARCH /BOOT PRE-REBOOT HEALTH CHECK ====="

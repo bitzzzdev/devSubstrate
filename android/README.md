@@ -19,10 +19,18 @@ Android device diagnostics, ADB workflows, app troubleshooting, storage cleanup,
 | Target Fix / Tool | Direct One-Line curl Command |
 | --- | --- |
 | Shopping Traffic (Pause via ADB) | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/scripts/manage-shopping-traffic.sh \| bash -s -- pause` |
+| Shopping Traffic (Pause via ADB) (GitLab) | `curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/android/scripts/manage-shopping-traffic.sh \| bash -s -- pause` |
 | Storage Audit (via ADB) | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/scripts/audit-android-storage.sh \| bash -s -- status` |
+| Storage Audit (via ADB) (GitLab) | `curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/android/scripts/audit-android-storage.sh \| bash -s -- status` |
 | Cache Trim (via ADB) | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/scripts/audit-android-storage.sh \| bash -s -- trim` |
+| Cache Trim (via ADB) (GitLab) | `curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/android/scripts/audit-android-storage.sh \| bash -s -- trim` |
 | Termux Shopping Traffic Pause | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/termux-scripts/termux-manage-shopping-traffic.sh \| bash -s -- pause` |
+| Termux Shopping Traffic Pause (GitLab) | `curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/android/termux-scripts/termux-manage-shopping-traffic.sh \| bash -s -- pause` |
 | Termux Hotspot Background Saver | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/termux-scripts/termux-hotspot-traffic-control.sh \| bash -s -- apply` |
+| Termux Hotspot Background Saver (GitLab) | `curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/android/termux-scripts/termux-hotspot-traffic-control.sh \| bash -s -- apply` |
 | Termux Storage Audit & Trim | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/termux-scripts/termux-audit-storage.sh \| bash -s -- status` |
+| Termux Storage Audit & Trim (GitLab) | `curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/android/termux-scripts/termux-audit-storage.sh \| bash -s -- status` |
 | Termux Claude Code Install | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/termux/scripts/install-claude-code-termux.sh \| bash` |
+| Termux Claude Code Install (GitLab) | `curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/android/termux/scripts/install-claude-code-termux.sh \| bash` |
 | Termux Google Cloud SDK Setup | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/termux/scripts/setup-gcloud-termux.sh \| bash -s -- apply` |
+| Termux Google Cloud SDK Setup (GitLab) | `curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/android/termux/scripts/setup-gcloud-termux.sh \| bash -s -- apply` |

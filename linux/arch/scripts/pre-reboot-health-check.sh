@@ -5,6 +5,7 @@
 # Usage:
 #   ./pre-reboot-health-check.sh
 #   curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/arch/scripts/pre-reboot-health-check.sh | bash
+#   curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/linux/arch/scripts/pre-reboot-health-check.sh | bash
 #
 
 set -euo pipefail

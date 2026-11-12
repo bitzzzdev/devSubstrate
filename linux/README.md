@@ -22,8 +22,14 @@ Linux distribution, desktop, boot, package, application, and maintenance guides 
 | Target Fix | Direct One-Line curl Command |
 | --- | --- |
 | UKI Wi-Fi Fix (Apply) | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/arch/scripts/uki-qca9377-fix.sh \| sudo bash -s -- apply` |
+| UKI Wi-Fi Fix (Apply) (GitLab) | `curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/linux/arch/scripts/uki-qca9377-fix.sh \| sudo bash -s -- apply` |
 | VLC H.264 Plugin (Apply) | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/arch/scripts/vlc-ffmpeg-plugin-fix.sh \| sudo bash -s -- apply` |
+| VLC H.264 Plugin (Apply) (GitLab) | `curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/linux/arch/scripts/vlc-ffmpeg-plugin-fix.sh \| sudo bash -s -- apply` |
 | Sudo User Setup | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/arch/scripts/manage-sudo-user.sh \| sudo bash -s -- create <user>` |
+| Sudo User Setup (GitLab) | `curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/linux/arch/scripts/manage-sudo-user.sh \| sudo bash -s -- create <user>` |
 | Pre-Reboot Health Check | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/arch/scripts/pre-reboot-health-check.sh \| bash` |
+| Pre-Reboot Health Check (GitLab) | `curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/linux/arch/scripts/pre-reboot-health-check.sh \| bash` |
 | SSH X11 Clipboard (Apply) | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/ssh/scripts/configure-ssh-x11-forwarding.sh \| bash -s -- apply` |
+| SSH X11 Clipboard (Apply) (GitLab) | `curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/linux/ssh/scripts/configure-ssh-x11-forwarding.sh \| bash -s -- apply` |
 | Legacy Launcher Install | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/scripts/install-legacy-launcher.sh \| bash` |
+| Legacy Launcher Install (GitLab) | `curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/linux/scripts/install-legacy-launcher.sh \| bash` |

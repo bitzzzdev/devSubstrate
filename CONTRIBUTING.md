@@ -21,4 +21,4 @@ Contributions of technical research papers, hardware diagnostics, and systems en
    git checkout -b feature/topic-name
    ```
 2. Commit changes with clear, structured messages explaining what was added, what changed, and the rationale.
-3. Open a Pull Request on GitHub against branch `main`.
+3. Open a Pull Request on GitHub or a Merge Request on GitLab against branch `main`.

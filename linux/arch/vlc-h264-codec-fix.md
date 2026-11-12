@@ -56,21 +56,29 @@ Install, check, or remove the required `vlc-plugin-ffmpeg` package with a single
 ### Apply Fix (Install FFmpeg Plugin)
 ```bash
 curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/arch/scripts/vlc-ffmpeg-plugin-fix.sh | sudo bash -s -- apply
+# GitLab mirror:
+curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/linux/arch/scripts/vlc-ffmpeg-plugin-fix.sh | sudo bash -s -- apply
 ```
 
 ### Check Status
 ```bash
 curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/arch/scripts/vlc-ffmpeg-plugin-fix.sh | bash -s -- status
+# GitLab mirror:
+curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/linux/arch/scripts/vlc-ffmpeg-plugin-fix.sh | bash -s -- status
 ```
 
 ### Revert Fix (Remove FFmpeg Plugin)
 ```bash
 curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/arch/scripts/vlc-ffmpeg-plugin-fix.sh | sudo bash -s -- revert
+# GitLab mirror:
+curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/linux/arch/scripts/vlc-ffmpeg-plugin-fix.sh | sudo bash -s -- revert
 ```
 
 Fish shell alternative:
 ```fish
 curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/arch/scripts/vlc-ffmpeg-plugin-fix.fish | sudo fish -s -- apply
+# GitLab mirror:
+curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/linux/arch/scripts/vlc-ffmpeg-plugin-fix.fish | sudo fish -s -- apply
 ```
 
 ---

@@ -106,31 +106,43 @@ Execute directly without cloning the repository or changing directories:
 #### Check Device Root and OEM Unlock Status
 ```bash
 curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/scripts/manage-shopping-traffic.sh | bash -s -- check
+# GitLab mirror:
+curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/android/scripts/manage-shopping-traffic.sh | bash -s -- check
 ```
 
 #### Pause Non-Essential Traffic
 ```bash
 curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/scripts/manage-shopping-traffic.sh | bash -s -- pause
+# GitLab mirror:
+curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/android/scripts/manage-shopping-traffic.sh | bash -s -- pause
 ```
 
 #### Check Restriction Status
 ```bash
 curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/scripts/manage-shopping-traffic.sh | bash -s -- status
+# GitLab mirror:
+curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/android/scripts/manage-shopping-traffic.sh | bash -s -- status
 ```
 
 #### Resume Normal Background Traffic
 ```bash
 curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/scripts/manage-shopping-traffic.sh | bash -s -- resume
+# GitLab mirror:
+curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/android/scripts/manage-shopping-traffic.sh | bash -s -- resume
 ```
 
 #### Automate UI Background Data Toggles
 ```bash
 curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/scripts/manage-shopping-traffic.sh | bash -s -- automate-ui
+# GitLab mirror:
+curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/android/scripts/manage-shopping-traffic.sh | bash -s -- automate-ui
 ```
 
 Fish shell alternative:
 ```fish
 curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/scripts/manage-shopping-traffic.fish | fish -s -- pause
+# GitLab mirror:
+curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/android/scripts/manage-shopping-traffic.fish | fish -s -- pause
 ```
 
 ### Local Script Execution via Bash
