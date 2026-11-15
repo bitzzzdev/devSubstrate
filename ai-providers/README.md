@@ -10,6 +10,9 @@ Direct reference for accessible AI model APIs, free key tiers, fast inference en
 | Cerebras | Free developer tier | High-speed inference on Wafer-Scale Engine | [cloud.cerebras.ai](https://cloud.cerebras.ai/) |
 | Google AI Studio | Free tier with Google account | Gemini API keys, prompt prototyping, multi-modal | [aistudio.google.com](https://aistudio.google.com/) |
 | APInex | Free and multi-model gateway | Multi-provider API proxy (DeepSeek, GLM, Qwen) | [apinex.bond](https://apinex.bond/) |
+| Flash and free-tier provider guide | Free tiers and no-cost model routes, subject to provider limits | Zhipu, Gemini, Cloudflare, Groq, Kilo, OpenRouter, SiliconFlow, Cerebras, SambaNova, Mistral | [OpenCode and coding-agent integration guide](free-ai-api-providers-opencode-guide.md) |
+
+> Free-tier quotas, model identifiers, context windows, and billing rules are time-sensitive. Verify current terms with the provider before use. The linked Flash provider guide is a research snapshot, not a live quota guarantee.
 
 ---
 
