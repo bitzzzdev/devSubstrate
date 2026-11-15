@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [Unreleased]
 
 ### Added
+- Free-tier Flash model and coding-agent integration reference `ai-providers/free-ai-api-providers-opencode-guide.md`, covering provider endpoints, model catalogs, quota snapshots, OpenCode, Kilo CLI, Continue.dev, Aider, and OpenAI SDK configuration.
 - Smart root privilege and OEM unlocking diagnostics (`check` action) across `manage-shopping-traffic.sh`, `manage-shopping-traffic.fish`, `hotspot-background-traffic-control.sh`, and Termux traffic scripts.
 - Kernel-level Netfilter (`iptables` / `ip6tables`) cellular packet dropping on rooted devices across `rmnet+`, `ccmni+`, `pdp+`, and `wwan+` interfaces to ensure zero background cellular leakage.
 - Android Accessibility Service `BackgroundDataAutomationService` (`android/accessibility-service/`) in Kotlin and Java with manifest, XML config, and ADB enablement commands to automate toggling Background Data in native Settings across custom OEM firmware (ColorOS, MIUI, FuntouchOS, One UI).
@@ -31,6 +32,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Updated `linux/arch/scripts/manage-sudo-user.sh` and `manage-sudo-user.fish` to query `/dev/tty` for interactive password input when executed through piped curl streams.
 - Replaced non-standard typographical dashes and emoji symbols across documentation files to satisfy strict human writing standards.
 - Added BigBasket, JioMart, Nykaa, Snapdeal, and Tata CLiQ to the shopping traffic restriction targets.
+- Added the Flash provider guide to `ai-providers/README.md` and marked its quota/model data as a dated research snapshot requiring provider-side verification.
 
 ### Fixed
 - Made Android tethering offload writes optional in the shopping traffic scripts. Devices that deny `WRITE_SECURE_SETTINGS` now receive a warning while per-app restrictions continue.
@@ -58,6 +60,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   - `react-bits-ui.md` (Zero-dependency React component library architecture)
   - `efecto-ai-canvas.md` (AI-native collaborative design canvas with MCP support)
   - `ascii-rendering-engines.md` (Luminance quantization in ascii.rest and Asciify)
-  - `asciicore-figma-dithering.md` (VGA matrix dithering inside Figma)
+  - `asciicore-figma-dithering.md` (VGA matrix dithering within Figma)
 - Resource implementation manuals: `ai-providers/README.md`, `developer-tools/README.md`, and `creative-ascii-design/README.md`.
 - Preserved system diagnostics for Linux, Android, Network, and Windows platforms.
