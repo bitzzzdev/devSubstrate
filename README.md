@@ -5,7 +5,28 @@ network fixes from the full repository into numbered commands.
 
 The launchers fetch the implementation scripts from the `dev` branch. Set
 `DEVSUBSTRATE_REF` to a commit or another branch when reproducible pinning is
-needed.
+needed. Set `DEVSUBSTRATE_REMOTE` to `github` (the default) or `gitlab` to
+choose which mirror the launchers fetch from.
+
+## GitLab
+
+Every command below also works from the GitLab mirror. Fetch the launchers
+directly from GitLab:
+
+```bash
+curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/smartCurlScripts/androidCurlScripts.sh | bash
+```
+
+```bash
+curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/smartCurlScripts/linuxCurlScripts.sh | bash
+```
+
+Or pin the runtime fetches to GitLab with the remote switch:
+
+```bash
+# 2: reduce shopping traffic, fetched from GitLab
+curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/smartCurlScripts/androidCurlScripts.sh | DEVSUBSTRATE_REMOTE=gitlab bash -s -- 2 shopping
+```
 
 ## Android
 
@@ -82,6 +103,8 @@ The implementation scripts, Fish versions, guides, research papers, and
 project history remain in the full `dev` branch:
 
 https://github.com/bitzzdev/devSubstrate/tree/dev
+
+https://gitlab.com/bitzzdev/devSubstrate/tree/dev
 
 Inspect a fetched script before running it. These launchers execute remote
 shell code by design.

@@ -3,7 +3,19 @@
 set -euo pipefail
 
 SOURCE_REF="${DEVSUBSTRATE_REF:-dev}"
-BASE_URL="https://raw.githubusercontent.com/bitzzdev/devSubstrate/${SOURCE_REF}"
+REMOTE="${DEVSUBSTRATE_REMOTE:-github}"
+case "$REMOTE" in
+    github)
+        BASE_URL="https://raw.githubusercontent.com/bitzzdev/devSubstrate/${SOURCE_REF}"
+        ;;
+    gitlab)
+        BASE_URL="https://gitlab.com/bitzzdev/devSubstrate/-/raw/${SOURCE_REF}"
+        ;;
+    *)
+        echo "Error: DEVSUBSTRATE_REMOTE must be 'github' or 'gitlab' (got '$REMOTE')." >&2
+        exit 1
+        ;;
+esac
 
 run_remote() {
     local path="$1"

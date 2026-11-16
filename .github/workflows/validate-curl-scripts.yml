@@ -19,5 +19,9 @@ jobs:
         run: |
           grep -q 'raw.githubusercontent.com/bitzzdev/devSubstrate/' androidCurlScripts.sh
           grep -q 'raw.githubusercontent.com/bitzzdev/devSubstrate/' linuxCurlScripts.sh
+          grep -q 'gitlab.com/bitzzdev/devSubstrate/-/raw/' androidCurlScripts.sh
+          grep -q 'gitlab.com/bitzzdev/devSubstrate/-/raw/' linuxCurlScripts.sh
           grep -q 'SOURCE_REF' androidCurlScripts.sh
           grep -q 'SOURCE_REF' linuxCurlScripts.sh
+          grep -q 'DEVSUBSTRATE_REMOTE' androidCurlScripts.sh
+          grep -q 'DEVSUBSTRATE_REMOTE' linuxCurlScripts.sh
