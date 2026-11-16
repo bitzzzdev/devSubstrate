@@ -136,11 +136,12 @@ end
 
 function get_package_uid -a pkg
     set -l raw (adb shell cmd package list packages -U $pkg 2>/dev/null)
-    string match -r 'uid:([0-9]+)' $raw | tail -n 1
+    string match -rg 'uid:([0-9]+)' $raw | tail -n 1
 end
 
 function is_package_installed -a pkg
-    adb shell pm list packages $pkg 2>/dev/null | string match -q "package:$pkg"
+    # adb appends CR to every line; strip it or the exact match never succeeds.
+    adb shell pm list packages $pkg 2>/dev/null | string replace -a -r '\r' '' | string match -q "package:$pkg"
 end
 
 function set_tethering_offload
@@ -173,6 +174,61 @@ function remove_iptables_uid_drop -a uid
         run_as_root "iptables -D OUTPUT -o $iface -m owner --uid-owner $uid -j DROP 2>/dev/null || true" >/dev/null 2>&1
         run_as_root "ip6tables -D OUTPUT -o $iface -m owner --uid-owner $uid -j DROP 2>/dev/null || true" >/dev/null 2>&1
     end
+end
+
+# Magisk and KernelSU run every /data/adb/service.d/*.sh as root at the late_start
+# service phase. The hook re-applies AppOps, standby bucket, NetPolicy blacklist and
+# iptables rules after every reboot so the restrictions survive restarts. The hook is
+# deleted by the resume/revert action, or by a factory reset, which wipes /data.
+function install_boot_hook -a hook_path with_post_notification
+    set -l packages $argv[3..-1]
+    if not run_as_root "test -d /data/adb/service.d" >/dev/null 2>&1
+        echo "[i] /data/adb/service.d is missing. Install Magisk or KernelSU to persist restrictions across reboots."
+        return 1
+    end
+    set -l hook_tmp (mktemp /tmp/devsubstrate-boot-hook.XXXXXX.sh)
+    set -l remote "/data/local/tmp/"(basename $hook_path)
+    begin
+        echo '#!/system/bin/sh'
+        echo '# devSubstrate boot hook. Re-applies background restrictions after reboot.'
+        echo '# Managed by this script; removed by its resume/revert action.'
+        echo "PACKAGES=\"$packages\""
+        echo 'INTERFACES="rmnet+ ccmni+ pdp+ wwan+"'
+        echo 'for pkg in $PACKAGES; do'
+        echo '    uid=$(cmd package list packages -U "$pkg" 2>/dev/null | sed -n "s/.*uid:\([0-9]*\).*/\1/p" | head -n 1)'
+        echo '    [ -z "$uid" ] && continue'
+        if test "$with_post_notification" = "1"
+            echo '    cmd appops set "$pkg" POST_NOTIFICATION ignore 2>/dev/null'
+        end
+        echo '    cmd appops set "$pkg" RUN_ANY_IN_BACKGROUND ignore 2>/dev/null'
+        echo '    cmd appops set "$pkg" RUN_IN_BACKGROUND ignore 2>/dev/null'
+        echo '    cmd usagestats set-app-standby-bucket "$pkg" restricted 2>/dev/null'
+        echo '    cmd netpolicy add restrict-background-blacklist "$uid" 2>/dev/null'
+        echo '    for iface in $INTERFACES; do'
+        echo '        iptables -C OUTPUT -o "$iface" -m owner --uid-owner "$uid" -j DROP 2>/dev/null || iptables -I OUTPUT -o "$iface" -m owner --uid-owner "$uid" -j DROP 2>/dev/null'
+        echo '        ip6tables -C OUTPUT -o "$iface" -m owner --uid-owner "$uid" -j DROP 2>/dev/null || ip6tables -I OUTPUT -o "$iface" -m owner --uid-owner "$uid" -j DROP 2>/dev/null'
+        echo '    done'
+        echo 'done'
+    end > $hook_tmp
+    if not adb push $hook_tmp $remote >/dev/null 2>&1
+        rm -f $hook_tmp
+        echo "[!] Could not push boot hook to device." >&2
+        return 1
+    end
+    if run_as_root "cp $remote $hook_path && chmod 755 $hook_path && rm -f $remote" >/dev/null 2>&1
+        echo "[+] Boot hook installed at $hook_path. It survives reboots until the resume/revert action runs."
+    else
+        rm -f $hook_tmp $remote
+        echo "[!] Could not install boot hook at $hook_path." >&2
+        return 1
+    end
+    rm -f $hook_tmp
+end
+
+function remove_boot_hook -a hook_path
+    set -l remote "/data/local/tmp/"(basename $hook_path)
+    run_as_root "rm -f $hook_path $remote" >/dev/null 2>&1
+    echo "[i] Boot hook removed if present: $hook_path"
 end
 
 function pause_traffic
@@ -209,6 +265,10 @@ function pause_traffic
         end
     end
 
+    if test $is_rooted -eq 1
+        install_boot_hook "/data/adb/service.d/devsubstrate-shopping-restrictions.sh" 1 $TARGET_PACKAGES
+    end
+
     echo ""
     echo "Finished. WhatsApp, Instagram, Telegram, and Hotspot routing remain unhindered."
 end
@@ -241,6 +301,10 @@ function resume_traffic
         else
             echo "Skipping uninstalled package: $pkg"
         end
+    end
+
+    if test $is_rooted -eq 1
+        remove_boot_hook "/data/adb/service.d/devsubstrate-shopping-restrictions.sh"
     end
 
     echo ""
@@ -313,9 +377,10 @@ function automate_ui
             if string match -q -i "*Mobile data*" "$dump_content"
                 set -l bounds (echo "$dump_content" | grep -i -B 2 -A 2 "Mobile data" | grep -o 'bounds="\[[0-9]*,[0-9]*\]\[[0-9]*,[0-9]*\]"' | head -n 1)
                 if test -n "$bounds"
-                    set -l coords (string match -r 'bounds="\[(\d+),(\d+)\]\[(\d+),(\d+)\]"' $bounds)
-                    set -l click_x (math "($coords[2] + $coords[4]) / 2")
-                    set -l click_y (math "($coords[3] + $coords[5]) / 2")
+                    set -l coords (string match -rg 'bounds="\[(\d+),(\d+)\]\[(\d+),(\d+)\]"' $bounds)
+                    # -g prints only the capture groups: x1 y1 x2 y2 in elements 1-4.
+                    set -l click_x (math "($coords[1] + $coords[3]) / 2")
+                    set -l click_y (math "($coords[2] + $coords[4]) / 2")
                     echo "  -> Navigating into Mobile data & Wi-Fi ($click_x, $click_y)..."
                     adb shell input tap $click_x $click_y
                     sleep 1.2
@@ -328,9 +393,9 @@ function automate_ui
                         set -l is_checked (echo "$sub_dump" | grep -i -B 3 -A 3 "Background data" | grep 'class="android.widget.Switch"' | grep -o 'checked="[^"]*"' | head -n 1)
 
                         if test "$is_checked" = 'checked="true"' -a -n "$switch_bounds"
-                            set -l scoords (string match -r 'bounds="\[(\d+),(\d+)\]\[(\d+),(\d+)\]"' $switch_bounds)
-                            set -l switch_x (math "($scoords[2] + $scoords[4]) / 2")
-                            set -l switch_y (math "($scoords[3] + $scoords[5]) / 2")
+                            set -l scoords (string match -rg 'bounds="\[(\d+),(\d+)\]\[(\d+),(\d+)\]"' $switch_bounds)
+                            set -l switch_x (math "($scoords[1] + $scoords[3]) / 2")
+                            set -l switch_y (math "($scoords[2] + $scoords[4]) / 2")
                             echo "  -> Background data switch is active. Toggling OFF ($switch_x, $switch_y)..."
                             adb shell input tap $switch_x $switch_y
                             sleep 0.5

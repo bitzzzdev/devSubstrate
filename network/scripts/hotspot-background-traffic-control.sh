@@ -157,6 +157,65 @@ remove_iptables_uid_drop() {
     done
 }
 
+# Magisk and KernelSU run every /data/adb/service.d/*.sh as root at the late_start
+# service phase. The hook re-applies AppOps, standby bucket, NetPolicy blacklist and
+# iptables rules after every reboot so the restrictions survive restarts. The hook is
+# deleted by the revert action, or by a factory reset, which wipes /data.
+# shellcheck disable=SC2016,SC2028
+install_boot_hook() {
+    local hook_path="$1"
+    shift
+    local packages="$*"
+    if ! run_as_root "test -d /data/adb/service.d" >/dev/null 2>&1; then
+        echo "[i] /data/adb/service.d is missing. Install Magisk or KernelSU to persist restrictions across reboots."
+        return 1
+    fi
+    local hook_tmp
+    hook_tmp="$(mktemp /tmp/devsubstrate-boot-hook.XXXXXX.sh)"
+    {
+        echo '#!/system/bin/sh'
+        echo '# devSubstrate boot hook. Re-applies background restrictions after reboot.'
+        echo '# Managed by this script; removed by its revert action.'
+        echo "PACKAGES=\"$packages\""
+        echo 'INTERFACES="rmnet+ ccmni+ pdp+ wwan+"'
+        echo 'for pkg in $PACKAGES; do'
+        echo '    uid=$(cmd package list packages -U "$pkg" 2>/dev/null | sed -n "s/.*uid:\([0-9]*\).*/\1/p" | head -n 1)'
+        echo '    [ -z "$uid" ] && continue'
+        echo '    cmd appops set "$pkg" RUN_ANY_IN_BACKGROUND ignore 2>/dev/null'
+        echo '    cmd appops set "$pkg" RUN_IN_BACKGROUND ignore 2>/dev/null'
+        echo '    cmd usagestats set-app-standby-bucket "$pkg" restricted 2>/dev/null'
+        echo '    cmd netpolicy add restrict-background-blacklist "$uid" 2>/dev/null'
+        echo '    for iface in $INTERFACES; do'
+        echo '        iptables -C OUTPUT -o "$iface" -m owner --uid-owner "$uid" -j DROP 2>/dev/null || iptables -I OUTPUT -o "$iface" -m owner --uid-owner "$uid" -j DROP 2>/dev/null'
+        echo '        ip6tables -C OUTPUT -o "$iface" -m owner --uid-owner "$uid" -j DROP 2>/dev/null || ip6tables -I OUTPUT -o "$iface" -m owner --uid-owner "$uid" -j DROP 2>/dev/null'
+        echo '    done'
+        echo 'done'
+    } > "$hook_tmp"
+    local remote
+    remote="/data/local/tmp/$(basename "$hook_path")"
+    if ! adb push "$hook_tmp" "$remote" >/dev/null 2>&1; then
+        rm -f "$hook_tmp"
+        echo "[!] Could not push boot hook to device." >&2
+        return 1
+    fi
+    if run_as_root "cp $remote $hook_path && chmod 755 $hook_path && rm -f $remote" >/dev/null 2>&1; then
+        echo "[+] Boot hook installed at $hook_path. It survives reboots until the revert action runs."
+    else
+        rm -f "$hook_tmp" "$remote"
+        echo "[!] Could not install boot hook at $hook_path." >&2
+        return 1
+    fi
+    rm -f "$hook_tmp"
+}
+
+remove_boot_hook() {
+    local hook_path="$1"
+    local remote
+    remote="/data/local/tmp/$(basename "$hook_path")"
+    run_as_root "rm -f $hook_path $remote" >/dev/null 2>&1 || true
+    echo "[i] Boot hook removed if present: $hook_path"
+}
+
 status_restrictions() {
     echo "=========================================================="
     echo "Current Network Policy and Background Status"
@@ -182,9 +241,11 @@ apply_restrictions() {
         echo "Root detected: Kernel Netfilter rules will be applied to drop cellular packets."
     fi
 
+    local restricted_pkgs=()
     echo "Optimizing third-party application background limits..."
     while IFS= read -r line; do
         pkg="${line#package:}"
+        pkg="${pkg%$'\r'}"
         [[ -z "$pkg" ]] && continue
 
         if is_whitelisted "$pkg"; then
@@ -201,10 +262,19 @@ apply_restrictions() {
             adb shell cmd usagestats set-app-standby-bucket "$pkg" restricted >/dev/null 2>&1 || true
             if [[ $is_rooted -eq 1 ]]; then
                 apply_iptables_uid_drop "$uid"
+                restricted_pkgs+=("$pkg")
             fi
             echo "Restricted: $pkg (UID: $uid)"
         fi
     done < <(adb shell pm list packages -3 2>/dev/null)
+
+    if [[ $is_rooted -eq 1 ]]; then
+        if [[ ${#restricted_pkgs[@]} -gt 0 ]]; then
+            install_boot_hook "/data/adb/service.d/devsubstrate-hotspot-restrictions.sh" "${restricted_pkgs[@]}"
+        else
+            echo "[i] No third-party packages were restricted; skipping boot hook install."
+        fi
+    fi
 
     echo ""
     echo "Done. Background data restricted while hotspot remains active."
@@ -222,6 +292,7 @@ revert_restrictions() {
 
     while IFS= read -r line; do
         pkg="${line#package:}"
+        pkg="${pkg%$'\r'}"
         [[ -z "$pkg" ]] && continue
 
         uid=$(adb shell dumpsys package "$pkg" 2>/dev/null | grep -m1 "userId=" | sed -E 's/.*userId=([0-9]+).*/\1/' || true)
@@ -237,6 +308,10 @@ revert_restrictions() {
             echo "Restored: $pkg (UID: $uid)"
         fi
     done < <(adb shell pm list packages -3 2>/dev/null)
+
+    if [[ $is_rooted -eq 1 ]]; then
+        remove_boot_hook "/data/adb/service.d/devsubstrate-hotspot-restrictions.sh"
+    fi
 
     echo ""
     echo "Done. All packages restored to default states."

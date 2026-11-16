@@ -96,6 +96,7 @@ apply_restrictions() {
 
         while IFS= read -r line; do
             pkg="${line#package:}"
+            pkg="${pkg%$'\r'}"
             [[ -z "$pkg" ]] && continue
 
             if is_whitelisted "$pkg"; then
@@ -122,6 +123,7 @@ apply_restrictions() {
 
         while IFS= read -r line; do
             pkg="${line#package:}"
+            pkg="${pkg%$'\r'}"
             [[ -z "$pkg" ]] && continue
             if is_whitelisted "$pkg"; then
                 continue
@@ -164,6 +166,7 @@ revert_restrictions() {
 
         while IFS= read -r line; do
             pkg="${line#package:}"
+            pkg="${pkg%$'\r'}"
             [[ -z "$pkg" ]] && continue
 
             local uid

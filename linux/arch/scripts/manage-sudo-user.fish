@@ -58,9 +58,18 @@ function create_user -a user
     useradd -m -G wheel -s /bin/bash "$user"
     echo "$user:$password" | chpasswd
 
+    # Enable wheel in sudoers if commented. Keep a backup and validate with
+    # visudo; a broken sudoers file would lock out all sudo access.
     if grep -q "^# %wheel ALL=(ALL:ALL) ALL" /etc/sudoers
+        set -l backup "/etc/sudoers.devsubstrate.bak."(date +%Y%m%d%H%M%S)
+        cp -a /etc/sudoers "$backup"
         sed -i 's/^# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/' /etc/sudoers
-        echo "Enabled wheel group privilege in /etc/sudoers."
+        if command -v visudo >/dev/null 2>&1; and not visudo -cf /etc/sudoers >/dev/null
+            cp -a "$backup" /etc/sudoers
+            echo "Error: sudoers validation failed after edit. Restored $backup." >&2
+            return 1
+        end
+        echo "Enabled wheel group privilege in /etc/sudoers (backup: $backup)."
     end
 
     echo "User '$user' created successfully with sudo access."

@@ -62,19 +62,19 @@ function get_package_uid -a pkg
     switch "$DETECTED_BACKEND"
         case "root" "su" "adb"
             set -l raw (exec_android_cmd "cmd package list packages -U $pkg 2>/dev/null")
-            string match -r 'uid:([0-9]+)' $raw | tail -n 1
+            string match -rg 'uid:([0-9]+)' $raw | tail -n 1
         case "userland"
             set -l raw (pm list packages -U "$pkg" 2>/dev/null)
-            string match -r 'uid:([0-9]+)' $raw | tail -n 1
+            string match -rg 'uid:([0-9]+)' $raw | tail -n 1
     end
 end
 
 function is_package_installed -a pkg
     switch "$DETECTED_BACKEND"
         case "root" "su" "adb"
-            exec_android_cmd "pm list packages $pkg 2>/dev/null" | string match -q "package:$pkg"
+            exec_android_cmd "pm list packages $pkg 2>/dev/null" | string replace -a -r '\r' '' | string match -q "package:$pkg"
         case "userland"
-            pm list packages "$pkg" 2>/dev/null | string match -q "package:$pkg"
+            pm list packages "$pkg" 2>/dev/null | string replace -a -r '\r' '' | string match -q "package:$pkg"
     end
 end
 

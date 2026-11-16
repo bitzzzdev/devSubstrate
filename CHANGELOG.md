@@ -36,6 +36,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Fixed
 - Made Android tethering offload writes optional in the shopping traffic scripts. Devices that deny `WRITE_SECURE_SETTINGS` now receive a warning while per-app restrictions continue.
+- Fixed `pm list packages` output carrying CR line endings so exact-match package checks silently failed. Package matching now strips CR before comparison in `manage-shopping-traffic.sh`, `manage-shopping-traffic.fish`, `termux-manage-shopping-traffic.sh`, `termux-manage-shopping-traffic.fish`, and `audit-android-storage.sh`.
+- Fixed `hotspot-background-traffic-control.sh` and `termux-hotspot-traffic-control.sh` keeping the trailing CR on package names parsed from `pm list packages`, which made every downstream `dumpsys`/`appops`/`netpolicy` call fail silently for every third-party app.
+- Fixed Fish scripts passing `uid:NNN` (the whole regex match) to `netpolicy` and `iptables` instead of the numeric UID. All Fish UID extractions now use `string match -rg`.
+- Fixed Fish coordinate parsing in `manage-shopping-traffic.fish` (`automate-ui`) reading wrong capture group indices after switching to `-rg`; taps now target the correct element bounds.
+- Fixed `termux-audit-storage.sh` and `termux-audit-storage.fish` deleting `"$TMPDIR"/*` when `TMPDIR` is unset, which crashed bash under `set -u` and could expand to `rm -rf /*` in fish. Both now resolve a safe default and use `find -mindepth 1 -xdev -delete` with an explicit guard against unsafe paths.
+- Added Magisk/KernelSU boot hooks at `/data/adb/service.d/devsubstrate-shopping-restrictions.sh` and `/data/adb/service.d/devsubstrate-hotspot-restrictions.sh` so rooted devices re-apply AppOps modes, standby buckets, NetPolicy blacklists and `iptables`/`ip6tables` DROP rules after every reboot. The `resume`/`revert` actions remove the hook. On non-rooted devices the restrictions persist natively via the Android settings/AppOps/NetPolicy stores.
+- Hardened the `/etc/sudoers` edit in `manage-sudo-user.sh` and `manage-sudo-user.fish` with a timestamped backup and `visudo -cf` validation; the backup is restored automatically when validation fails.
 
 ## [0.2.0] - 2026-11-08
 

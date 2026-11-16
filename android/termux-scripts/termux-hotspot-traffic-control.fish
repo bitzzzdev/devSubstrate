@@ -95,7 +95,7 @@ function apply_restrictions
             end
 
             set -l raw (exec_android_cmd "cmd package list packages -U $pkg 2>/dev/null")
-            set -l uid (string match -r 'uid:([0-9]+)' $raw | tail -n 1)
+            set -l uid (string match -rg 'uid:([0-9]+)' $raw | tail -n 1)
 
             if test -n "$uid"
                 exec_android_cmd "cmd netpolicy add restrict-background-blacklist $uid 2>/dev/null"; or true
@@ -158,7 +158,7 @@ function revert_restrictions
             test -z "$pkg"; and continue
 
             set -l raw (exec_android_cmd "cmd package list packages -U $pkg 2>/dev/null")
-            set -l uid (string match -r 'uid:([0-9]+)' $raw | tail -n 1)
+            set -l uid (string match -rg 'uid:([0-9]+)' $raw | tail -n 1)
 
             if test -n "$uid"
                 exec_android_cmd "cmd netpolicy remove restrict-background-blacklist $uid 2>/dev/null"; or true
