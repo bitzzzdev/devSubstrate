@@ -5,7 +5,7 @@
 ### Added
 
 - `DEVSUBSTRATE_REMOTE` switch in `androidCurlScripts.sh` and `linuxCurlScripts.sh`. Set it to `gitlab` to fetch the implementation scripts from `gitlab.com/bitzzdev/devSubstrate/-/raw`; `github` remains the default. Invalid values exit with an error.
-- GitLab section in `README.md` with the GitLab raw launcher one-liners and a GitLab link to the full repository, plus `.gitlab-ci.yml` with the same launcher validation the GitHub Action performs.
+- Inline GitLab mirror lines in every `README.md` launcher one-liner (fetched from GitLab with `DEVSUBSTRATE_REMOTE=gitlab`), a GitLab link to the full repository, and `.gitlab-ci.yml` with the same launcher validation the GitHub Action performs.
 
 ### Fixed
 

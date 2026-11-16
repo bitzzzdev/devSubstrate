@@ -8,32 +8,14 @@ The launchers fetch the implementation scripts from the `dev` branch. Set
 needed. Set `DEVSUBSTRATE_REMOTE` to `github` (the default) or `gitlab` to
 choose which mirror the launchers fetch from.
 
-## GitLab
-
-Every command below also works from the GitLab mirror. Fetch the launchers
-directly from GitLab:
-
-```bash
-curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/smartCurlScripts/androidCurlScripts.sh | bash
-```
-
-```bash
-curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/smartCurlScripts/linuxCurlScripts.sh | bash
-```
-
-Or pin the runtime fetches to GitLab with the remote switch:
-
-```bash
-# 2: reduce shopping traffic, fetched from GitLab
-curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/smartCurlScripts/androidCurlScripts.sh | DEVSUBSTRATE_REMOTE=gitlab bash -s -- 2 shopping
-```
-
 ## Android
 
 Run the menu:
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/smartCurlScripts/androidCurlScripts.sh | bash
+# GitLab mirror:
+curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/smartCurlScripts/androidCurlScripts.sh | DEVSUBSTRATE_REMOTE=gitlab bash
 ```
 
 Run a selection directly:
@@ -41,12 +23,18 @@ Run a selection directly:
 ```bash
 # 1: device information
 curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/smartCurlScripts/androidCurlScripts.sh | bash -s -- 1
+# GitLab mirror:
+curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/smartCurlScripts/androidCurlScripts.sh | DEVSUBSTRATE_REMOTE=gitlab bash -s -- 1
 
 # 2: reduce shopping traffic
 curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/smartCurlScripts/androidCurlScripts.sh | bash -s -- 2 shopping
+# GitLab mirror:
+curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/smartCurlScripts/androidCurlScripts.sh | DEVSUBSTRATE_REMOTE=gitlab bash -s -- 2 shopping
 
 # 3: revert shopping restrictions
 curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/smartCurlScripts/androidCurlScripts.sh | bash -s -- 3 shopping
+# GitLab mirror:
+curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/smartCurlScripts/androidCurlScripts.sh | DEVSUBSTRATE_REMOTE=gitlab bash -s -- 3 shopping
 ```
 
 Android option targets:
@@ -68,6 +56,8 @@ Run the menu:
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/smartCurlScripts/linuxCurlScripts.sh | bash
+# GitLab mirror:
+curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/smartCurlScripts/linuxCurlScripts.sh | DEVSUBSTRATE_REMOTE=gitlab bash
 ```
 
 Run a selection directly:
@@ -75,12 +65,18 @@ Run a selection directly:
 ```bash
 # 1: pre-reboot device and boot information
 curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/smartCurlScripts/linuxCurlScripts.sh | bash -s -- 1
+# GitLab mirror:
+curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/smartCurlScripts/linuxCurlScripts.sh | DEVSUBSTRATE_REMOTE=gitlab bash -s -- 1
 
 # 2: reduce hotspot background traffic
 curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/smartCurlScripts/linuxCurlScripts.sh | bash -s -- 2 hotspot
+# GitLab mirror:
+curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/smartCurlScripts/linuxCurlScripts.sh | DEVSUBSTRATE_REMOTE=gitlab bash -s -- 2 hotspot
 
 # 3: revert a Wi-Fi power setting
 curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/smartCurlScripts/linuxCurlScripts.sh | bash -s -- 3 wifi
+# GitLab mirror:
+curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/smartCurlScripts/linuxCurlScripts.sh | DEVSUBSTRATE_REMOTE=gitlab bash -s -- 3 wifi
 ```
 
 Linux option targets:
