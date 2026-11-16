@@ -59,7 +59,7 @@ Codex pioneered large-scale code synthesis, powering tools like GitHub Copilot a
 
 ## 4. git-tulkun
 
-`git-tulkun` is an automated GitHub Action created by Pramuditha Nadun that generates a dynamic, looping pixel-art Tulkun whale for your GitHub profile README.
+`git-tulkun` is an automated GitHub Action created by Pramuditha Nadun that generates a looping pixel-art Tulkun whale for your GitHub profile README.
 
 ### Project Link
 - Repository: [github.com/PramudithaN/git-tulkun](https://github.com/PramudithaN/git-tulkun)

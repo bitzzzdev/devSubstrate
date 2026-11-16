@@ -203,7 +203,7 @@ ADB commands execute on the phone when an authorised ADB connection exists. A no
 - Keep a log and do not run `pm clear`, `rm -rf`, or app-specific data deletion.
 - Use a conservative cadence such as weekly, not every few hours. A free-space threshold means the command normally does nothing when the phone already has enough free space.
 
-A host timer cannot clean the phone while the phone is disconnected. It only runs when the Arch computer is awake and the ADB connection is available at the scheduled time. A more robust implementation can retry on a short cadence while connected, but should still enforce a minimum interval between successful trim attempts.
+A host timer cannot clean the phone while the phone is disconnected. It only runs when the Arch computer is awake and the ADB connection is available at the scheduled time. A future version can retry on a short cadence while connected, but it should still enforce a minimum interval between successful trim attempts.
 
 ### Current device context
 
