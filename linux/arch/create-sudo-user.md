@@ -13,21 +13,29 @@ Create, inspect, or delete a sudo user directly using the automated script:
 ### Create Sudo User
 ```bash
 curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/arch/scripts/manage-sudo-user.sh | sudo bash -s -- create <username>
+# GitLab mirror:
+curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/linux/arch/scripts/manage-sudo-user.sh | sudo bash -s -- create <username>
 ```
 
 ### Check User and Group Status
 ```bash
 curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/arch/scripts/manage-sudo-user.sh | bash -s -- status <username>
+# GitLab mirror:
+curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/linux/arch/scripts/manage-sudo-user.sh | bash -s -- status <username>
 ```
 
 ### Remove Sudo User
 ```bash
 curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/arch/scripts/manage-sudo-user.sh | sudo bash -s -- remove <username>
+# GitLab mirror:
+curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/linux/arch/scripts/manage-sudo-user.sh | sudo bash -s -- remove <username>
 ```
 
 Fish shell alternative:
 ```fish
 curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/arch/scripts/manage-sudo-user.fish | sudo fish -s -- create <username>
+# GitLab mirror:
+curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/linux/arch/scripts/manage-sudo-user.fish | sudo fish -s -- create <username>
 ```
 
 ---

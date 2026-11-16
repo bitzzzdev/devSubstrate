@@ -76,21 +76,29 @@ Apply, inspect, or revert persistent X11 forwarding rules in `~/.ssh/config` and
 ### Apply Configuration
 ```bash
 curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/ssh/scripts/configure-ssh-x11-forwarding.sh | bash -s -- apply
+# GitLab mirror:
+curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/linux/ssh/scripts/configure-ssh-x11-forwarding.sh | bash -s -- apply
 ```
 
 ### Check Configuration Status
 ```bash
 curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/ssh/scripts/configure-ssh-x11-forwarding.sh | bash -s -- status
+# GitLab mirror:
+curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/linux/ssh/scripts/configure-ssh-x11-forwarding.sh | bash -s -- status
 ```
 
 ### Revert Configuration
 ```bash
 curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/ssh/scripts/configure-ssh-x11-forwarding.sh | bash -s -- revert
+# GitLab mirror:
+curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/linux/ssh/scripts/configure-ssh-x11-forwarding.sh | bash -s -- revert
 ```
 
 Fish shell alternative:
 ```fish
 curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/ssh/scripts/configure-ssh-x11-forwarding.fish | fish -s -- apply
+# GitLab mirror:
+curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/linux/ssh/scripts/configure-ssh-x11-forwarding.fish | fish -s -- apply
 ```
 
 ---

@@ -143,37 +143,59 @@ Run any fix directly without cloning the repository. Every script supports statu
 | Operation | Direct One-Line curl Command |
 | --- | --- |
 | Pre-Reboot Health Check | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/arch/scripts/pre-reboot-health-check.sh \| bash` |
+| Pre-Reboot Health Check (GitLab) | `curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/linux/arch/scripts/pre-reboot-health-check.sh \| bash` |
 | Apply UKI Wi-Fi Fix | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/arch/scripts/uki-qca9377-fix.sh \| sudo bash -s -- apply` |
+| Apply UKI Wi-Fi Fix (GitLab) | `curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/linux/arch/scripts/uki-qca9377-fix.sh \| sudo bash -s -- apply` |
 | Revert UKI Wi-Fi Fix | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/arch/scripts/uki-qca9377-fix.sh \| sudo bash -s -- revert` |
+| Revert UKI Wi-Fi Fix (GitLab) | `curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/linux/arch/scripts/uki-qca9377-fix.sh \| sudo bash -s -- revert` |
 | Apply VLC H.264 Plugin | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/arch/scripts/vlc-ffmpeg-plugin-fix.sh \| sudo bash -s -- apply` |
+| Apply VLC H.264 Plugin (GitLab) | `curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/linux/arch/scripts/vlc-ffmpeg-plugin-fix.sh \| sudo bash -s -- apply` |
 | Revert VLC H.264 Plugin | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/arch/scripts/vlc-ffmpeg-plugin-fix.sh \| sudo bash -s -- revert` |
+| Revert VLC H.264 Plugin (GitLab) | `curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/linux/arch/scripts/vlc-ffmpeg-plugin-fix.sh \| sudo bash -s -- revert` |
 | Create Sudo User | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/arch/scripts/manage-sudo-user.sh \| sudo bash -s -- create <user>` |
+| Create Sudo User (GitLab) | `curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/linux/arch/scripts/manage-sudo-user.sh \| sudo bash -s -- create <user>` |
 | Apply SSH X11 Persistence | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/ssh/scripts/configure-ssh-x11-forwarding.sh \| bash -s -- apply` |
+| Apply SSH X11 Persistence (GitLab) | `curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/linux/ssh/scripts/configure-ssh-x11-forwarding.sh \| bash -s -- apply` |
 | Revert SSH X11 Persistence | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/ssh/scripts/configure-ssh-x11-forwarding.sh \| bash -s -- revert` |
+| Revert SSH X11 Persistence (GitLab) | `curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/linux/ssh/scripts/configure-ssh-x11-forwarding.sh \| bash -s -- revert` |
 | Install Legacy Launcher | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/scripts/install-legacy-launcher.sh \| bash` |
+| Install Legacy Launcher (GitLab) | `curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/linux/scripts/install-legacy-launcher.sh \| bash` |
 
 ### Android Diagnostics, Traffic Control, and Termux
 
 | Operation | Direct One-Line curl Command |
 | --- | --- |
 | Pause Shopping Traffic (ADB) | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/scripts/manage-shopping-traffic.sh \| bash -s -- pause` |
+| Pause Shopping Traffic (ADB) (GitLab) | `curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/android/scripts/manage-shopping-traffic.sh \| bash -s -- pause` |
 | Resume Shopping Traffic (ADB) | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/scripts/manage-shopping-traffic.sh \| bash -s -- resume` |
+| Resume Shopping Traffic (ADB) (GitLab) | `curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/android/scripts/manage-shopping-traffic.sh \| bash -s -- resume` |
 | Audit Storage (ADB) | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/scripts/audit-android-storage.sh \| bash -s -- status` |
+| Audit Storage (ADB) (GitLab) | `curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/android/scripts/audit-android-storage.sh \| bash -s -- status` |
 | Trim Package Caches (ADB) | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/scripts/audit-android-storage.sh \| bash -s -- trim` |
+| Trim Package Caches (ADB) (GitLab) | `curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/android/scripts/audit-android-storage.sh \| bash -s -- trim` |
 | Termux Shopping Traffic Pause | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/termux-scripts/termux-manage-shopping-traffic.sh \| bash -s -- pause` |
+| Termux Shopping Traffic Pause (GitLab) | `curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/android/termux-scripts/termux-manage-shopping-traffic.sh \| bash -s -- pause` |
 | Termux Hotspot Background Saver | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/termux-scripts/termux-hotspot-traffic-control.sh \| bash -s -- apply` |
+| Termux Hotspot Background Saver (GitLab) | `curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/android/termux-scripts/termux-hotspot-traffic-control.sh \| bash -s -- apply` |
 | Termux Storage Audit & Trim | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/termux-scripts/termux-audit-storage.sh \| bash -s -- status` |
+| Termux Storage Audit & Trim (GitLab) | `curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/android/termux-scripts/termux-audit-storage.sh \| bash -s -- status` |
 | Install Claude Code in Termux | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/termux/scripts/install-claude-code-termux.sh \| bash` |
+| Install Claude Code in Termux (GitLab) | `curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/android/termux/scripts/install-claude-code-termux.sh \| bash` |
 | Setup Google Cloud SDK in Termux | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/termux/scripts/setup-gcloud-termux.sh \| bash -s -- apply` |
+| Setup Google Cloud SDK in Termux (GitLab) | `curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/android/termux/scripts/setup-gcloud-termux.sh \| bash -s -- apply` |
 
 ### Network and Connectivity
 
 | Operation | Direct One-Line curl Command |
 | --- | --- |
 | Disable Wi-Fi Powersave (Apply) | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/network/wifi/scripts/qca9377-powersave-fix.sh \| sudo bash -s -- apply` |
+| Disable Wi-Fi Powersave (Apply) (GitLab) | `curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/network/wifi/scripts/qca9377-powersave-fix.sh \| sudo bash -s -- apply` |
 | Restore Wi-Fi Powersave (Revert) | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/network/wifi/scripts/qca9377-powersave-fix.sh \| sudo bash -s -- revert` |
+| Restore Wi-Fi Powersave (Revert) (GitLab) | `curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/network/wifi/scripts/qca9377-powersave-fix.sh \| sudo bash -s -- revert` |
 | Hotspot Background Saver (Apply) | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/network/scripts/hotspot-background-traffic-control.sh \| bash -s -- apply` |
+| Hotspot Background Saver (Apply) (GitLab) | `curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/network/scripts/hotspot-background-traffic-control.sh \| bash -s -- apply` |
 | Hotspot Background Saver (Revert) | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/network/scripts/hotspot-background-traffic-control.sh \| bash -s -- revert` |
+| Hotspot Background Saver (Revert) (GitLab) | `curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/network/scripts/hotspot-background-traffic-control.sh \| bash -s -- revert` |
 
 ---
 

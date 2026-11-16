@@ -70,16 +70,22 @@ Ensure your device is connected via ADB (`adb devices`), then run directly:
 #### Inspect Storage Accounting and Large Files
 ```bash
 curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/scripts/audit-android-storage.sh | bash -s -- status
+# GitLab mirror:
+curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/android/scripts/audit-android-storage.sh | bash -s -- status
 ```
 
 #### Safe Non-Destructive Cache Trim
 ```bash
 curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/scripts/audit-android-storage.sh | bash -s -- trim
+# GitLab mirror:
+curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/android/scripts/audit-android-storage.sh | bash -s -- trim
 ```
 
 Fish shell alternative:
 ```fish
 curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/scripts/audit-android-storage.fish | fish -s -- status
+# GitLab mirror:
+curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/android/scripts/audit-android-storage.fish | fish -s -- status
 ```
 
 ### Manual Fish-compatible ADB diagnostic

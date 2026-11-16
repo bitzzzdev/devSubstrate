@@ -216,21 +216,29 @@ Apply, inspect, or revert background traffic controls over ADB in a single comma
 #### Apply Restrictions (Protect Hotspot)
 ```bash
 curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/network/scripts/hotspot-background-traffic-control.sh | bash -s -- apply
+# GitLab mirror:
+curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/network/scripts/hotspot-background-traffic-control.sh | bash -s -- apply
 ```
 
 #### Inspect Policy Status
 ```bash
 curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/network/scripts/hotspot-background-traffic-control.sh | bash -s -- status
+# GitLab mirror:
+curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/network/scripts/hotspot-background-traffic-control.sh | bash -s -- status
 ```
 
 #### Revert Restrictions
 ```bash
 curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/network/scripts/hotspot-background-traffic-control.sh | bash -s -- revert
+# GitLab mirror:
+curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/network/scripts/hotspot-background-traffic-control.sh | bash -s -- revert
 ```
 
 Fish shell alternative:
 ```fish
 curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/network/scripts/hotspot-background-traffic-control.fish | fish -s -- apply
+# GitLab mirror:
+curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/network/scripts/hotspot-background-traffic-control.fish | fish -s -- apply
 ```
 
 ### Fast On-Device Bash Optimization Script

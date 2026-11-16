@@ -7,6 +7,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [Unreleased]
 
 ### Added
+- GitLab raw URL mirrors alongside every GitHub raw curl one-liner in the READMEs, guides, and script header comments, matching the layout already used on the `dev` branch. `scripts/update-readme.py` emits the GitLab rows and `README.md` is regenerated from it.
+- `.gitlab-ci.yml` with the same `update-readme` maintenance pipeline used on `dev`.
 - One-line direct curl execution commands across every fix and diagnostic guide in `linux/`, `android/`, and `network/`.
 - Pre-reboot `/boot` validation scripts `linux/arch/scripts/pre-reboot-health-check.sh` and `pre-reboot-health-check.fish`.
 - Installation guide `linux/scripts/install-legacy-launcher.md` for Minecraft Legacy Launcher with desktop entry registration and one-line curl installer.

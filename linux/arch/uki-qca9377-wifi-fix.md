@@ -63,21 +63,29 @@ Apply, inspect, or revert the `pci=realloc=on` parameter in `/etc/kernel/cmdline
 ### Apply Fix
 ```bash
 curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/arch/scripts/uki-qca9377-fix.sh | sudo bash -s -- apply
+# GitLab mirror:
+curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/linux/arch/scripts/uki-qca9377-fix.sh | sudo bash -s -- apply
 ```
 
 ### Check Status
 ```bash
 curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/arch/scripts/uki-qca9377-fix.sh | bash -s -- status
+# GitLab mirror:
+curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/linux/arch/scripts/uki-qca9377-fix.sh | bash -s -- status
 ```
 
 ### Revert Fix
 ```bash
 curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/arch/scripts/uki-qca9377-fix.sh | sudo bash -s -- revert
+# GitLab mirror:
+curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/linux/arch/scripts/uki-qca9377-fix.sh | sudo bash -s -- revert
 ```
 
 Fish shell alternative:
 ```fish
 curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/arch/scripts/uki-qca9377-fix.fish | sudo fish -s -- apply
+# GitLab mirror:
+curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/linux/arch/scripts/uki-qca9377-fix.fish | sudo fish -s -- apply
 ```
 
 ---

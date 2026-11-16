@@ -24,6 +24,8 @@ Run the installation script directly:
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/linux/scripts/install-legacy-launcher.sh | bash
+# GitLab mirror:
+curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/linux/scripts/install-legacy-launcher.sh | bash
 ```
 
 ---

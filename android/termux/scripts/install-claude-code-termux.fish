@@ -5,6 +5,7 @@
 # Usage:
 #   fish install-claude-code-termux.fish
 #   curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/termux/scripts/install-claude-code-termux.fish | fish
+#   curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/android/termux/scripts/install-claude-code-termux.fish | fish
 #
 
 echo "===== Termux Claude Code Installer ====="

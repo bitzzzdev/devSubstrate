@@ -7,6 +7,7 @@
 #   ./setup-gcloud-termux.sh status   # Verifies installation, Python path, and CLI version
 #   ./setup-gcloud-termux.sh revert   # Removes shell configuration blocks and aliases
 #   curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/termux/scripts/setup-gcloud-termux.sh | bash
+#   curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/android/termux/scripts/setup-gcloud-termux.sh | bash
 #
 
 set -euo pipefail

@@ -64,33 +64,49 @@ Run any mobile optimization tool directly in Termux without cloning the reposito
 ```bash
 # Pause non-essential retail apps
 curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/termux-scripts/termux-manage-shopping-traffic.sh | bash -s -- pause
+# GitLab mirror:
+curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/android/termux-scripts/termux-manage-shopping-traffic.sh | bash -s -- pause
 
 # Inspect restriction state
 curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/termux-scripts/termux-manage-shopping-traffic.sh | bash -s -- status
+# GitLab mirror:
+curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/android/termux-scripts/termux-manage-shopping-traffic.sh | bash -s -- status
 
 # Restore default background state
 curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/termux-scripts/termux-manage-shopping-traffic.sh | bash -s -- resume
+# GitLab mirror:
+curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/android/termux-scripts/termux-manage-shopping-traffic.sh | bash -s -- resume
 ```
 
 ### Hotspot Background Data Saver
 ```bash
 # Apply background data restrictions across third-party apps
 curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/termux-scripts/termux-hotspot-traffic-control.sh | bash -s -- apply
+# GitLab mirror:
+curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/android/termux-scripts/termux-hotspot-traffic-control.sh | bash -s -- apply
 
 # Check current restrictions
 curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/termux-scripts/termux-hotspot-traffic-control.sh | bash -s -- status
+# GitLab mirror:
+curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/android/termux-scripts/termux-hotspot-traffic-control.sh | bash -s -- status
 
 # Revert restrictions
 curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/termux-scripts/termux-hotspot-traffic-control.sh | bash -s -- revert
+# GitLab mirror:
+curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/android/termux-scripts/termux-hotspot-traffic-control.sh | bash -s -- revert
 ```
 
 ### Storage Audit and Cache Trim
 ```bash
 # Inspect internal storage partition and cache candidates
 curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/termux-scripts/termux-audit-storage.sh | bash -s -- status
+# GitLab mirror:
+curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/android/termux-scripts/termux-audit-storage.sh | bash -s -- status
 
 # Trigger safe system-wide cache trim
 curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/termux-scripts/termux-audit-storage.sh | bash -s -- trim
+# GitLab mirror:
+curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/android/termux-scripts/termux-audit-storage.sh | bash -s -- trim
 ```
 
 ---

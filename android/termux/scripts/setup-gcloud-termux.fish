@@ -7,6 +7,7 @@
 #   fish setup-gcloud-termux.fish status
 #   fish setup-gcloud-termux.fish revert
 #   curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/termux/scripts/setup-gcloud-termux.fish | fish -s -- apply
+#   curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/android/termux/scripts/setup-gcloud-termux.fish | fish -s -- apply
 #
 
 set -l FISH_CONF "$HOME/.config/fish/config.fish"

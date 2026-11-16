@@ -1,0 +1,38 @@
+stages:
+  - maintenance
+
+update-readme:
+  stage: maintenance
+  image: python:3.12-slim
+  before_script:
+    - apt-get update --quiet
+    - apt-get install --quiet --yes --no-install-recommends git
+  script:
+    - python3 scripts/update-readme.py
+    - git config user.name "gitlab-ci[bot]"
+    - git config user.email "gitlab-ci[bot]@users.noreply.gitlab.com"
+    - git add README.md
+    - |
+      if git diff --cached --quiet; then
+        echo "README is already up to date."
+      elif [ -z "${GITLAB_PUSH_TOKEN:-}" ]; then
+        echo "README changed. Set a masked GITLAB_PUSH_TOKEN CI variable to let CI commit it."
+        exit 1
+      else
+        git commit -m "Auto-update README index for new research papers and fix files"
+        git push "https://oauth2:${GITLAB_PUSH_TOKEN}@gitlab.com/${CI_PROJECT_PATH}.git" "HEAD:${CI_COMMIT_BRANCH}"
+      fi
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH == "main"
+      changes:
+        - papers/**/*
+        - linux/**/*
+        - android/**/*
+        - network/**/*
+        - windows/**/*
+        - cross-platform/**/*
+        - ai-providers/**/*
+        - developer-tools/**/*
+        - creative-ascii-design/**/*
+        - scripts/update-readme.py
+    - if: $CI_PIPELINE_SOURCE == "web"

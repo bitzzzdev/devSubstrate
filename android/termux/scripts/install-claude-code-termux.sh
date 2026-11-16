@@ -5,6 +5,7 @@
 # Usage:
 #   ./install-claude-code-termux.sh
 #   curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/android/termux/scripts/install-claude-code-termux.sh | bash
+#   curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/android/termux/scripts/install-claude-code-termux.sh | bash
 #
 
 set -euo pipefail
