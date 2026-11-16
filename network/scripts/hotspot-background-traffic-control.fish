@@ -63,7 +63,7 @@ function apply_restrictions
         end
 
         set -l raw (adb shell cmd package list packages -U $pkg 2>/dev/null)
-        set -l uid (string match -r 'uid:([0-9]+)' $raw | tail -n 1)
+        set -l uid (string match -rg 'uid:([0-9]+)' $raw | tail -n 1)
 
         if test -n "$uid"
             adb shell cmd netpolicy add restrict-background-blacklist $uid >/dev/null 2>&1; or true
@@ -87,7 +87,7 @@ function revert_restrictions
         test -z "$pkg"; and continue
 
         set -l raw (adb shell cmd package list packages -U $pkg 2>/dev/null)
-        set -l uid (string match -r 'uid:([0-9]+)' $raw | tail -n 1)
+        set -l uid (string match -rg 'uid:([0-9]+)' $raw | tail -n 1)
 
         if test -n "$uid"
             adb shell cmd netpolicy remove restrict-background-blacklist $uid >/dev/null 2>&1; or true

@@ -57,6 +57,7 @@ apply_restrictions() {
     echo "Optimizing third-party application background limits..."
     while IFS= read -r line; do
         pkg="${line#package:}"
+        pkg="${pkg%$'\r'}"
         [[ -z "$pkg" ]] && continue
 
         if is_whitelisted "$pkg"; then
@@ -84,6 +85,7 @@ revert_restrictions() {
 
     while IFS= read -r line; do
         pkg="${line#package:}"
+        pkg="${pkg%$'\r'}"
         [[ -z "$pkg" ]] && continue
 
         uid=$(adb shell dumpsys package "$pkg" 2>/dev/null | grep -m1 "userId=" | sed -E 's/.*userId=([0-9]+).*/\1/' || true)

@@ -82,10 +82,10 @@ is_package_installed() {
     local pkg="$1"
     case "$DETECTED_BACKEND" in
         root|su|adb)
-            exec_android_cmd "pm list packages $pkg 2>/dev/null" | grep -q "^package:$pkg$" || return 1
+            exec_android_cmd "pm list packages $pkg 2>/dev/null" | tr -d '\r' | grep -q "^package:${pkg}$" || return 1
             ;;
         userland)
-            pm list packages "$pkg" 2>/dev/null | grep -q "^package:$pkg$" || return 1
+            pm list packages "$pkg" 2>/dev/null | tr -d '\r' | grep -q "^package:${pkg}$" || return 1
             ;;
     esac
 }

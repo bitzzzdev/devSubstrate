@@ -33,6 +33,7 @@ status_storage() {
     echo "=== Package Cache Candidates (Top 10 App Code/Cache Sizes) ==="
     adb shell "pm list packages -3" 2>/dev/null | head -n 10 | while read -r line; do
         pkg="${line#package:}"
+        pkg="${pkg%$'\r'}"
         echo "Package: $pkg"
     done
 }

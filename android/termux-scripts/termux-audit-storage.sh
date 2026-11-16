@@ -42,8 +42,14 @@ trim_caches() {
     echo "[*] Cleaning Termux APT package cache..."
     apt-get clean 2>/dev/null || true
 
-    echo "[*] Cleaning temporary files in \$TMPDIR..."
-    rm -rf "$TMPDIR"/* 2>/dev/null || true
+    local tmp_dir="${TMPDIR:-${PREFIX:-$HOME}/tmp}"
+    echo "[*] Cleaning temporary files in $tmp_dir..."
+    # Never expand an unset var into a glob and never follow symlinks out of the dir.
+    if [[ "$tmp_dir" != "/" && "$tmp_dir" != "$HOME" && -d "$tmp_dir" ]]; then
+        find "$tmp_dir" -mindepth 1 -xdev -delete 2>/dev/null || true
+    else
+        echo "Skipping: $tmp_dir is not a safe temporary directory."
+    fi
 
     local trimmed_os=0
     if command -v adb >/dev/null 2>&1 && adb get-state >/dev/null 2>&1; then
