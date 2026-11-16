@@ -266,7 +266,7 @@ function pause_traffic
     end
 
     if test $is_rooted -eq 1
-        install_boot_hook "/data/adb/service.d/devsubstrate-shopping-restrictions.sh" 1 $TARGET_PACKAGES
+        install_boot_hook "/data/adb/service.d/devsubstrate-shopping-restrictions.sh" 1 $TARGET_PACKAGES; or true
     end
 
     echo ""

@@ -270,7 +270,7 @@ apply_restrictions() {
 
     if [[ $is_rooted -eq 1 ]]; then
         if [[ ${#restricted_pkgs[@]} -gt 0 ]]; then
-            install_boot_hook "/data/adb/service.d/devsubstrate-hotspot-restrictions.sh" "${restricted_pkgs[@]}"
+            install_boot_hook "/data/adb/service.d/devsubstrate-hotspot-restrictions.sh" "${restricted_pkgs[@]}" || true
         else
             echo "[i] No third-party packages were restricted; skipping boot hook install."
         fi
