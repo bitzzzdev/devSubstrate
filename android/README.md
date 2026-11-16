@@ -12,7 +12,7 @@ Android device diagnostics, ADB workflows, app troubleshooting, storage cleanup,
 
 - [Termux Mobile Fix Hub](termux-scripts/README.md): Self-contained on-device scripts with execution audits and unprivileged fallbacks.
 - [Claude Code CLI Workaround on Termux](termux/claude-code-cli-workaround.md): Installation procedure and verification for compatible Claude Code CLI.
-- [Google Cloud CLI on Termux](termux/gcloud-cli-termux-workaround.md): Platform-tailored SDK setup, Python paths, and Cloud Shell aliases.
+- [Google Cloud CLI on Termux](termux/gcloud-cli-termux-workaround.md): Platform-specific SDK setup, Python paths, and Cloud Shell aliases.
 
 ## Quick Execution One-Liners
 

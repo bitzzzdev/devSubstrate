@@ -14,7 +14,7 @@ This paper reviews `git-tulkun`, an open-source procedural visualization project
 
 Mechanics:
 - Logarithmic scaling: Contribution counts are mapped across developmental stages (from infant calf to armored bull) using logarithmic curves. This prevents early activity spikes from maxing out stages prematurely while rewarding steady contributions.
-- Dynamic color extraction: Top language percentages from the user's public repositories determine the color palette of the whale's spine, fins, and body textures.
+- Color extraction: Top language percentages from the user's public repositories determine the color palette of the whale's spine, fins, and body textures.
 - Annual lifecycle: A reset triggers automatically on January 1st (or on a rolling 365-day window) to establish yearly milestones.
 
 ## 2. GitHub Actions Automation

@@ -1,6 +1,6 @@
 # Free AI API Providers: Flash Frontier Models & OpenCode Integration Guide
 
-A comprehensive technical benchmark and directory of AI inference providers offering **free tiers, permanent zero-cost models, or recurring free credits** for high-velocity "Flash" frontier models (such as Zhipu GLM-4.7-Flash, Google Gemini 2.0 Flash, Cloudflare Workers AI, Groq, and Kilo Gateway). This guide includes ready-to-use configuration templates for [OpenCode](https://opencode.ai/), [Kilo CLI](https://kilo.ai/cli), [Aider](https://aider.chat/), [Continue.dev](https://www.continue.dev/), [Roo Code](https://github.com/RooVetGit/Roo-Code), and the OpenAI SDK.
+A technical benchmark and directory of AI inference providers offering **free tiers, permanent zero-cost models, or recurring free credits** for high-velocity "Flash" frontier models (such as Zhipu GLM-4.7-Flash, Google Gemini 2.0 Flash, Cloudflare Workers AI, Groq, and Kilo Gateway). This guide includes ready-to-use configuration templates for [OpenCode](https://opencode.ai/), [Kilo CLI](https://kilo.ai/cli), [Aider](https://aider.chat/), [Continue.dev](https://www.continue.dev/), [Roo Code](https://github.com/RooVetGit/Roo-Code), and the OpenAI SDK.
 
 > Research snapshot supplied on 2026-11-15. Provider availability, model IDs, quotas, context limits, pricing, and compatibility can change. Treat the figures below as leads to verify against each provider's current official documentation before relying on them. This resource has been added without independently validating every listed claim.
 
@@ -14,18 +14,18 @@ Modern frontier model developers have shifted from costly, heavyweight monoliths
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | [**Zhipu AI BigModel**](https://open.bigmodel.cn/) | `glm-4.7-flash`, `glm-4-flash`, `glm-4.6v-flash` | **100% Permanently Free** (¥0 / $0 token cost) | **200K in / 128K out** | `https://open.bigmodel.cn/api/paas/v4` | No |
 | [**Google AI Studio**](https://aistudio.google.com/) | `gemini-2.0-flash`, `gemini-1.5-flash`, `gemini-2.0-flash-lite` | **15 RPM / 1,500 RPD / 1M TPM** (Daily renewal) | **1M tokens** | `https://generativelanguage.googleapis.com/v1beta/openai/` | No |
-| [**Cloudflare Workers AI**](https://developers.cloudflare.com/workers-ai/) | `@cf/meta/llama-3.3-70b-instruct`, `@cf/deepseek-ai/deepseek-r1-distill-qwen-32b`, `@cf/cloudflare/clef-flash` | **10,000 Neurons / day** (~millions of tokens daily) | **8K – 128K** | `https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/v1` | No |
+| [**Cloudflare Workers AI**](https://developers.cloudflare.com/workers-ai/) | `@cf/meta/llama-3.3-70b-instruct`, `@cf/deepseek-ai/deepseek-r1-distill-qwen-32b`, `@cf/cloudflare/clef-flash` | **10,000 Neurons / day** (~millions of tokens daily) | **8K-128K** | `https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/v1` | No |
 | [**GroqCloud**](https://console.groq.com/) | `llama-3.3-70b-versatile`, `llama-3.1-8b-instant`, `deepseek-r1-distill-llama-70b` | **30 RPM / 14,400 RPD / up to 30K TPM** | **128K** | `https://api.groq.com/openai/v1` | No |
-| [**Kilo Gateway**](https://models.opencode.ai/providers/kilo) | `kilo-auto/free`, `nvidia/nemotron-3.5-lightning:free`, `cohere/north-mini-code:free` | **$0.00 / token** via Auto Free & `:free` gateway models | **256K – 1M** | `https://api.kilo.ai/api/gateway` | No |
-| [**OpenRouter**](https://openrouter.ai/) | `google/gemini-2.0-flash-exp:free`, `meta-llama/llama-3.3-70b-instruct:free`, `qwen/qwen-2.5-coder-32b-instruct:free` | **20–50 requests / day** on `:free` endpoints | **32K – 1M** | `https://openrouter.ai/api/v1` | No |
-| [**SiliconFlow**](https://siliconflow.cn/) | `Qwen/Qwen2.5-Coder-7B-Instruct`, `deepseek-ai/DeepSeek-V3` (free tier) + 20M tokens | **Permanent free models** + 20 Million signup tokens | **32K – 64K** | `https://api.siliconflow.cn/v1` | No |
-| [**Cerebras Cloud**](https://cloud.cerebras.ai/) | `llama3.3-70b`, `llama3.1-8b` | **1,000,000 tokens / day** (30 RPM, 60K TPM) | **8K – 128K** | `https://api.cerebras.ai/v1` | No |
-| [**SambaNova Cloud**](https://cloud.sambanova.ai/) | `Meta-Llama-3.3-70B-Instruct`, `Qwen2.5-Coder-32B-Instruct` | **20 RPM / 200,000 tokens / day** | **8K – 64K** | `https://api.sambanova.ai/v1` | No |
-| [**Mistral La Plateforme**](https://console.mistral.ai/) | `codestral-latest`, `mistral-small-latest`, `ministral-8b-latest` | **Free Experimentation Tier** (1 RPS rate limit) | **32K – 256K** | `https://api.mistral.ai/v1` | No |
+| [**Kilo Gateway**](https://models.opencode.ai/providers/kilo) | `kilo-auto/free`, `nvidia/nemotron-3.5-lightning:free`, `cohere/north-mini-code:free` | **$0.00 / token** via Auto Free & `:free` gateway models | **256K-1M** | `https://api.kilo.ai/api/gateway` | No |
+| [**OpenRouter**](https://openrouter.ai/) | `google/gemini-2.0-flash-exp:free`, `meta-llama/llama-3.3-70b-instruct:free`, `qwen/qwen-2.5-coder-32b-instruct:free` | **20-50 requests / day** on `:free` endpoints | **32K-1M** | `https://openrouter.ai/api/v1` | No |
+| [**SiliconFlow**](https://siliconflow.cn/) | `Qwen/Qwen2.5-Coder-7B-Instruct`, `deepseek-ai/DeepSeek-V3` (free tier) + 20M tokens | **Permanent free models** + 20 Million signup tokens | **32K-64K** | `https://api.siliconflow.cn/v1` | No |
+| [**Cerebras Cloud**](https://cloud.cerebras.ai/) | `llama3.3-70b`, `llama3.1-8b` | **1,000,000 tokens / day** (30 RPM, 60K TPM) | **8K-128K** | `https://api.cerebras.ai/v1` | No |
+| [**SambaNova Cloud**](https://cloud.sambanova.ai/) | `Meta-Llama-3.3-70B-Instruct`, `Qwen2.5-Coder-32B-Instruct` | **20 RPM / 200,000 tokens / day** | **8K-64K** | `https://api.sambanova.ai/v1` | No |
+| [**Mistral La Plateforme**](https://console.mistral.ai/) | `codestral-latest`, `mistral-small-latest`, `ministral-8b-latest` | **Free Experimentation Tier** (1 RPS rate limit) | **32K-256K** | `https://api.mistral.ai/v1` | No |
 
 ## 2. In-Depth Provider Profiles
 
-### 1. Zhipu AI (BigModel.cn) — The Premier Free Frontier Flash
+### 1. Zhipu AI (BigModel.cn): The Premier Free Frontier Flash
 
 * **Official Portal**: [open.bigmodel.cn](https://open.bigmodel.cn/)
 * **Pricing & Quota**: **Permanently ¥0.00 / token** for the Flash tier. No credit card, no expiration date, no hidden token drain.
@@ -92,7 +92,7 @@ Modern frontier model developers have shifted from costly, heavyweight monoliths
 * **Hardware & Speed**: Custom LPU (Language Processing Unit) chips running open weights at **300 to 800+ tokens per second**.
 * **Pricing & Quota**: Free tier refreshed every minute/day:
   * **30 RPM** and **14,400 RPD** for standard models.
-  * Model-specific TPM (up to 30,000 TPM for Llama 3.3 70B; 30,000–70,000 TPM for Llama 3.1 8B).
+  * Model-specific TPM (up to 30,000 TPM for Llama 3.3 70B; 30,000-70,000 TPM for Llama 3.1 8B).
 * **Top Flash Models**:
   * `llama-3.3-70b-versatile`
   * `llama-3.1-8b-instant`
@@ -107,7 +107,7 @@ Modern frontier model developers have shifted from costly, heavyweight monoliths
 ### 5. OpenRouter Free Tier
 
 * **Official Portal**: [openrouter.ai](https://openrouter.ai/)
-* **Pricing & Quota**: Offers a rotating catalog of free models tagged with `:free`. Unfunded accounts receive 20–50 requests/day; any one-time credit purchase unlocks up to 1,000 free requests/day.
+* **Pricing & Quota**: Offers a rotating catalog of free models tagged with `:free`. Unfunded accounts receive 20-50 requests/day; any one-time credit purchase unlocks up to 1,000 free requests/day.
 * **Top Flash Models**:
   * `google/gemini-2.0-flash-exp:free`
   * `meta-llama/llama-3.3-70b-instruct:free`
@@ -131,12 +131,12 @@ Modern frontier model developers have shifted from costly, heavyweight monoliths
   * Base URL: `https://api.sambanova.ai/v1`
   * Key Models: `Meta-Llama-3.3-70B-Instruct`, `Qwen2.5-Coder-32B-Instruct`.
 
-### 7. Kilo Gateway (Kilo Code) — No-Card Auto Free Routing
+### 7. Kilo Gateway (Kilo Code): No-Card Auto Free Routing
 
 * **Official Portal & Docs**: [kilo.ai](https://kilo.ai/) | [Using Kilo for Free](https://kilo.ai/docs/getting-started/using-kilo-for-free) | [Kilo Gateway API Docs](https://models.opencode.ai/providers/kilo)
 * **Pricing & Quota**: **$0.00 / $0.00** on `kilo-auto/free` and `:free`-tagged models. No credit card required; pairs with a standard Google sign-in when using the CLI or plugins. Served independently of OpenRouter credits.
 * **Top Free Models on Kilo Gateway**:
-  * `kilo-auto/free` (**Auto Free** — 256K context, 32K output; automatically routes across zero-cost coding models currently available on the gateway).
+  * `kilo-auto/free` (**Auto Free**: 256K context, 32K output; automatically routes across zero-cost coding models currently available on the gateway).
   * `nvidia/nemotron-3.5-lightning:free` (1M context, 65K output).
   * `nvidia/nemotron-3.5-super-vl:free` (1M context, 131K output).
   * `nvidia/nemotron-3-ultra-550b-a55b:free` (1M context, 65K output).

@@ -206,10 +206,3 @@ Run any fix directly without cloning the repository. Every script supports statu
 | Hotspot Background Saver (Revert) | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/network/scripts/hotspot-background-traffic-control.sh \| bash -s -- revert` |
 | Hotspot Background Saver (Revert) (GitLab) | `curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/network/scripts/hotspot-background-traffic-control.sh \| bash -s -- revert` |
 
----
-
-## 5. Engineering and Writing Standards
-
-- Every paper documents observed behavior, verified endpoints, and architectural mechanisms.
-- All prose follows strict human writing standards: no promotional filler, no em dashes, and no emoji.
-- Configurations must include exact file locations, parameter types, and rollback steps.

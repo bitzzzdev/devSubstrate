@@ -32,6 +32,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Updated `linux/arch/scripts/manage-sudo-user.sh` and `manage-sudo-user.fish` to query `/dev/tty` for interactive password input when executed through piped curl streams.
 - Replaced non-standard typographical dashes and emoji symbols across documentation files to satisfy strict human writing standards.
 - Added BigBasket, JioMart, Nykaa, Snapdeal, and Tata CLiQ to the shopping traffic restriction targets.
+- Removed the `## 5. Engineering and Writing Standards` section from `scripts/update-readme.py`; `README.md` regenerated from the updated template.
+- Rewrote stock wording in `developer-tools/README.md`, `papers/git-tulkun-visualization.md`, `android/README.md`, `android/storage-optimization.md`, and the Flash provider guide to state project facts directly. Replaced en dashes in numeric ranges and heading separators in the Flash provider guide with hyphens and colons.
 - Added the Flash provider guide to `ai-providers/README.md` and marked its quota/model data as a dated research snapshot requiring provider-side verification.
 
 ### Fixed
