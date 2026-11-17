@@ -45,6 +45,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Fixed `termux-audit-storage.sh` and `termux-audit-storage.fish` deleting `"$TMPDIR"/*` when `TMPDIR` is unset, which crashed bash under `set -u` and could expand to `rm -rf /*` in fish. Both now resolve a safe default and use `find -mindepth 1 -xdev -delete` with an explicit guard against unsafe paths.
 - Added Magisk/KernelSU boot hooks at `/data/adb/service.d/devsubstrate-shopping-restrictions.sh` and `/data/adb/service.d/devsubstrate-hotspot-restrictions.sh` so rooted devices re-apply AppOps modes, standby buckets, NetPolicy blacklists and `iptables`/`ip6tables` DROP rules after every reboot. The `resume`/`revert` actions remove the hook. On non-rooted devices the restrictions persist natively via the Android settings/AppOps/NetPolicy stores.
 - Hardened the `/etc/sudoers` edit in `manage-sudo-user.sh` and `manage-sudo-user.fish` with a timestamped backup and `visudo -cf` validation; the backup is restored automatically when validation fails.
+- Fixed AppOps `SecurityException: uid 2000 does not have android.permission.MANAGE_APP_OPS_MODES` on ColorOS, OxygenOS, Realme UI, MIUI, and HyperOS with the permission monitor enabled. Scripts now detect the permission-denied output, show the OEM-specific toggle name, and continue with the remaining restrictions (standby bucket and NetPolicy blacklist) without aborting. The exit code is non-zero when AppOps is refused.
 
 ## [0.2.0] - 2026-11-08
 

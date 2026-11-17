@@ -67,6 +67,82 @@ exec_android_cmd() {
     esac
 }
 
+# ColorOS, OxygenOS, Realme UI, MIUI, and HyperOS do not grant
+# MANAGE_APP_OPS_MODES to the shell user while their permission monitor is active.
+# The shell command then fails with a SecurityException even though the same
+# command works on a stock build. One warning explains the fix; later failures
+# stay quiet so the per-package output remains readable.
+APP_OPS_AVAILABLE=1
+
+oem_permission_monitor_hint() {
+    local brand
+    brand=$(exec_android_cmd "getprop ro.product.brand 2>/dev/null" | tr -d '\r\n' | tr '[:upper:]' '[:lower:]') || true
+    case "$brand" in
+        realme|oppo|oneplus|coloros)
+            echo "Settings -> System -> Developer Options -> 'Disable permission monitoring' (newer ColorOS and OxygenOS builds call it 'Disable system optimization')"
+            ;;
+        xiaomi|redmi|poco)
+            echo "Settings -> Additional settings -> Developer Options -> 'USB debugging (Security settings)'"
+            ;;
+        *)
+            echo "Settings -> Developer Options -> the OEM option that lets USB debugging change app permissions"
+            ;;
+    esac
+}
+
+report_appops_blocked() {
+    [[ "$APP_OPS_AVAILABLE" -eq 1 ]] || return 0
+    APP_OPS_AVAILABLE=0
+    {
+        echo ""
+        echo "[!] Android denied the AppOps change: the shell user is missing MANAGE_APP_OPS_MODES."
+        echo "    This build gates AppOps behind its permission monitor, so 'cmd appops set' is refused."
+        echo "    To grant it:"
+        echo "      $(oem_permission_monitor_hint)"
+        echo "      Reboot and rerun this script for notification and background control."
+        echo "    Continuing with the restrictions that do not need AppOps."
+        echo ""
+    } >&2
+}
+
+exec_appops_set() {
+    local pkg="$1"
+    local op="$2"
+    local mode="$3"
+    local output
+    local status=0
+    output=$(exec_android_cmd "cmd appops set $pkg $op $mode 2>&1") || status=$?
+    if [[ "$output" == *"SecurityException"* || "$output" == *"MANAGE_APP_OPS_MODES"* ]]; then
+        report_appops_blocked
+        return 1
+    fi
+    return "$status"
+}
+
+exec_appops_get() {
+    local pkg="$1"
+    local op="$2"
+    local output
+    local status=0
+    output=$(exec_android_cmd "cmd appops get $pkg $op 2>&1") || status=$?
+    if [[ "$output" == *"SecurityException"* || "$output" == *"MANAGE_APP_OPS_MODES"* ]]; then
+        echo "unknown"
+        return 0
+    fi
+    if [[ $status -ne 0 ]]; then
+        echo "unknown"
+        return 0
+    fi
+    head -n 1 <<< "$output"
+}
+
+appops_available() {
+    local pkg="${TARGET_PACKAGES[0]}"
+    local output
+    output=$(exec_android_cmd "cmd appops get $pkg RUN_IN_BACKGROUND 2>&1") || true
+    [[ "$output" != *"SecurityException"* && "$output" != *"MANAGE_APP_OPS_MODES"* ]]
+}
+
 get_package_uid() {
     local pkg="$1"
     case "$DETECTED_BACKEND" in
@@ -173,8 +249,9 @@ pause_traffic() {
         for pkg in "${TARGET_PACKAGES[@]}"; do
             if is_package_installed "$pkg"; then
                 echo "[+] Applying privileged controls to: $pkg"
-                exec_android_cmd "cmd appops set $pkg POST_NOTIFICATION ignore" || true
-                exec_android_cmd "cmd appops set $pkg RUN_ANY_IN_BACKGROUND ignore" || true
+                local applied=0
+                if exec_appops_set "$pkg" POST_NOTIFICATION ignore; then applied=$((applied + 1)); fi
+                if exec_appops_set "$pkg" RUN_ANY_IN_BACKGROUND ignore; then applied=$((applied + 1)); fi
                 
                 local uid
                 uid="$(get_package_uid "$pkg")"
@@ -183,6 +260,9 @@ pause_traffic() {
                     echo "    -> Blacklisted UID $uid via netpolicy."
                 fi
                 privileged_success=1
+                if [[ $applied -lt 2 ]]; then
+                    echo "    -> AppOps applied partially ($applied/2)."
+                fi
             fi
         done
     else
@@ -202,8 +282,13 @@ pause_traffic() {
     echo "==================== EXECUTION AUDIT ===================="
     if [[ $privileged_success -eq 1 ]]; then
         echo "COMPLETED VIA PRIVILEGED BACKEND ($DETECTED_BACKEND):"
-        echo "  - POST_NOTIFICATION disabled for retail apps."
-        echo "  - RUN_ANY_IN_BACKGROUND blocked via AppOps."
+        if [[ $APP_OPS_AVAILABLE -eq 1 ]]; then
+            echo "  - POST_NOTIFICATION disabled for retail apps."
+            echo "  - RUN_ANY_IN_BACKGROUND blocked via AppOps."
+        else
+            echo "  - AppOps controls refused by the device permission monitor (see warning above)."
+            echo "  - NetPolicy and standby controls still applied where supported."
+        fi
         echo "  - NetPolicy cellular background sockets blacklisted."
         echo "  - WhatsApp, Instagram, Telegram, and hotspot remain unaffected."
     elif [[ $fallback_used -eq 1 ]]; then
@@ -220,6 +305,9 @@ pause_traffic() {
         echo "  in Android Settings, and run 'adb pair localhost:<port>' followed by 'adb connect'."
     fi
     echo "=========================================================="
+    if [[ $APP_OPS_AVAILABLE -eq 0 ]]; then
+        return 1
+    fi
 }
 
 resume_traffic() {
@@ -232,8 +320,9 @@ resume_traffic() {
         for pkg in "${TARGET_PACKAGES[@]}"; do
             if is_package_installed "$pkg"; then
                 echo "[+] Restoring: $pkg"
-                exec_android_cmd "cmd appops set $pkg POST_NOTIFICATION allow" || true
-                exec_android_cmd "cmd appops set $pkg RUN_ANY_IN_BACKGROUND allow" || true
+                local applied=0
+                if exec_appops_set "$pkg" POST_NOTIFICATION allow; then applied=$((applied + 1)); fi
+                if exec_appops_set "$pkg" RUN_ANY_IN_BACKGROUND allow; then applied=$((applied + 1)); fi
                 
                 local uid
                 uid="$(get_package_uid "$pkg")"
@@ -244,6 +333,10 @@ resume_traffic() {
             fi
         done
         echo ""
+        if [[ $APP_OPS_AVAILABLE -eq 0 ]]; then
+            echo "Partial: netpolicy entries removed. AppOps modes were not changed."
+            return 1
+        fi
         echo "All permissions and background sockets restored to defaults."
     else
         echo "[!] Standard userland: No permanent system restrictions were active."
@@ -257,14 +350,18 @@ show_status() {
     echo "Detected Backend: $DETECTED_BACKEND"
     echo "=========================================================="
 
+    if [[ "$DETECTED_BACKEND" != "userland" ]] && ! appops_available; then
+        report_appops_blocked
+    fi
+
     for pkg in "${TARGET_PACKAGES[@]}"; do
         if is_package_installed "$pkg"; then
             echo "Package: $pkg"
             if [[ "$DETECTED_BACKEND" != "userland" ]]; then
                 local post_notif
                 local run_bg
-                post_notif="$(exec_android_cmd "cmd appops get $pkg POST_NOTIFICATION 2>/dev/null" | head -n 1 || echo "unknown")"
-                run_bg="$(exec_android_cmd "cmd appops get $pkg RUN_ANY_IN_BACKGROUND 2>/dev/null" | head -n 1 || echo "unknown")"
+                post_notif="$(exec_appops_get "$pkg" POST_NOTIFICATION)"
+                run_bg="$(exec_appops_get "$pkg" RUN_ANY_IN_BACKGROUND)"
                 echo "  POST_NOTIFICATION:   $post_notif"
                 echo "  RUN_ANY_IN_BACKGROUND: $run_bg"
             else

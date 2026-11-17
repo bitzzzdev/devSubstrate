@@ -15,7 +15,7 @@
 #   ./termux-manage-shopping-traffic.fish check   # Checks root and OEM unlocking status
 #
 
-set -l TARGET_PACKAGES \
+set -g TARGET_PACKAGES \
     in.amazon.mShop.android.shopping \
     com.flipkart.android \
     com.myntra.android \
@@ -56,6 +56,76 @@ function exec_android_cmd -a cmd
         case "userland"
             return 1
     end
+end
+
+# ColorOS, OxygenOS, Realme UI, MIUI, and HyperOS do not grant
+# MANAGE_APP_OPS_MODES to the shell user while their permission monitor is active.
+# The shell command then fails with a SecurityException even though the same
+# command works on a stock build. One warning explains the fix; later failures
+# stay quiet so the per-package output remains readable.
+set -g APP_OPS_AVAILABLE 1
+
+function oem_permission_monitor_hint
+    set -l brand (exec_android_cmd "getprop ro.product.brand 2>/dev/null" | tr -d '\r\n' | tr '[:upper:]' '[:lower:]')
+    switch "$brand"
+        case realme oppo oneplus coloros
+            echo "Settings -> System -> Developer Options -> 'Disable permission monitoring' (newer ColorOS and OxygenOS builds call it 'Disable system optimization')"
+        case xiaomi redmi poco
+            echo "Settings -> Additional settings -> Developer Options -> 'USB debugging (Security settings)'"
+        case '*'
+            echo "Settings -> Developer Options -> the OEM option that lets USB debugging change app permissions"
+    end
+end
+
+function report_appops_blocked
+    if test "$APP_OPS_AVAILABLE" != "1"
+        return 0
+    end
+    set -g APP_OPS_AVAILABLE 0
+    echo ""
+    echo "[!] Android denied the AppOps change: the shell user is missing MANAGE_APP_OPS_MODES." >&2
+    echo "    This build gates AppOps behind its permission monitor, so 'cmd appops set' is refused." >&2
+    echo "    To grant it:" >&2
+    echo "      "(oem_permission_monitor_hint) >&2
+    echo "      Reboot and rerun this script for notification and background control." >&2
+    echo "    Continuing with the restrictions that do not need AppOps." >&2
+    echo "" >&2
+end
+
+function exec_appops_set -a pkg op mode
+    set -l output (exec_android_cmd "cmd appops set $pkg $op $mode 2>&1")
+    set -l rc $pipestatus[1]
+    if string match -q "*SecurityException*" "$output"
+        or string match -q "*MANAGE_APP_OPS_MODES*" "$output"
+        report_appops_blocked
+        return 1
+    end
+    return $rc
+end
+
+function exec_appops_get -a pkg op
+    set -l output (exec_android_cmd "cmd appops get $pkg $op 2>&1")
+    set -l rc $pipestatus[1]
+    if string match -q "*SecurityException*" "$output"
+        or string match -q "*MANAGE_APP_OPS_MODES*" "$output"
+        echo "unknown"
+        return 0
+    end
+    if test $rc -ne 0
+        echo "unknown"
+        return 0
+    end
+    printf '%s\n' $output | head -n 1
+end
+
+function appops_available
+    set -l pkg $TARGET_PACKAGES[1]
+    set -l output (exec_android_cmd "cmd appops get $pkg RUN_IN_BACKGROUND 2>&1")
+    if string match -q "*SecurityException*" "$output"
+        or string match -q "*MANAGE_APP_OPS_MODES*" "$output"
+        return 1
+    end
+    return 0
 end
 
 function get_package_uid -a pkg
@@ -161,8 +231,13 @@ function pause_traffic
         for pkg in $TARGET_PACKAGES
             if is_package_installed $pkg
                 echo "[+] Applying privileged controls to: $pkg"
-                exec_android_cmd "cmd appops set $pkg POST_NOTIFICATION ignore"; or true
-                exec_android_cmd "cmd appops set $pkg RUN_ANY_IN_BACKGROUND ignore"; or true
+                set -l applied 0
+                if exec_appops_set $pkg POST_NOTIFICATION ignore
+                    set applied (math $applied + 1)
+                end
+                if exec_appops_set $pkg RUN_ANY_IN_BACKGROUND ignore
+                    set applied (math $applied + 1)
+                end
 
                 set -l uid (get_package_uid $pkg)
                 if test -n "$uid"
@@ -170,6 +245,9 @@ function pause_traffic
                     echo "    -> Blacklisted UID $uid via netpolicy."
                 end
                 set privileged_success 1
+                if test $applied -lt 2
+                    echo "    -> AppOps applied partially ($applied/2)."
+                end
             end
         end
     else
@@ -189,8 +267,13 @@ function pause_traffic
     echo "==================== EXECUTION AUDIT ===================="
     if test $privileged_success -eq 1
         echo "COMPLETED VIA PRIVILEGED BACKEND ($DETECTED_BACKEND):"
-        echo "  - POST_NOTIFICATION disabled for retail apps."
-        echo "  - RUN_ANY_IN_BACKGROUND blocked via AppOps."
+        if test "$APP_OPS_AVAILABLE" = "1"
+            echo "  - POST_NOTIFICATION disabled for retail apps."
+            echo "  - RUN_ANY_IN_BACKGROUND blocked via AppOps."
+        else
+            echo "  - AppOps controls refused by the device permission monitor (see warning above)."
+            echo "  - NetPolicy controls still applied where supported."
+        end
         echo "  - NetPolicy cellular background sockets blacklisted."
         echo "  - WhatsApp, Instagram, Telegram, and hotspot remain unaffected."
     else if test $fallback_used -eq 1

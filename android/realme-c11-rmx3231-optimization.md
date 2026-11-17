@@ -239,7 +239,7 @@ If Instagram background restrictions cause unwanted behavior, restore the defaul
 
 ```sh
 adb shell cmd appops set com.instagram.android RUN_IN_BACKGROUND default
-adb shell cmd appops set com.instagram.android RUN_ANY_BACKGROUND default
+adb shell cmd appops set com.instagram.android RUN_ANY_IN_BACKGROUND default
 ```
 
 ### Current state

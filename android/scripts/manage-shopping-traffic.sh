@@ -39,6 +39,82 @@ TARGET_PACKAGES=(
 # Cellular network interfaces across Qualcomm, MediaTek, Exynos, and standard modems
 CELLULAR_INTERFACES=("rmnet+" "ccmni+" "pdp+" "wwan+")
 
+# ColorOS, OxygenOS, Realme UI, MIUI, and HyperOS do not grant
+# MANAGE_APP_OPS_MODES to the shell user while their permission monitor is active.
+# The shell command then fails with a SecurityException even though the same
+# command works on a stock build. One warning explains the fix; later failures
+# stay quiet so the per-package output remains readable.
+APP_OPS_AVAILABLE=1
+
+oem_permission_monitor_hint() {
+    local brand
+    brand=$(adb shell getprop ro.product.brand 2>/dev/null | tr -d '\r\n' | tr '[:upper:]' '[:lower:]') || true
+    case "$brand" in
+        realme|oppo|oneplus|coloros)
+            echo "Settings -> System -> Developer Options -> 'Disable permission monitoring' (newer ColorOS and OxygenOS builds call it 'Disable system optimization')"
+            ;;
+        xiaomi|redmi|poco)
+            echo "Settings -> Additional settings -> Developer Options -> 'USB debugging (Security settings)'"
+            ;;
+        *)
+            echo "Settings -> Developer Options -> the OEM option that lets USB debugging change app permissions"
+            ;;
+    esac
+}
+
+report_appops_blocked() {
+    [[ "$APP_OPS_AVAILABLE" -eq 1 ]] || return 0
+    APP_OPS_AVAILABLE=0
+    {
+        echo ""
+        echo "[!] Android denied the AppOps change: the shell user is missing MANAGE_APP_OPS_MODES."
+        echo "    This build gates AppOps behind its permission monitor, so 'cmd appops set' is refused."
+        echo "    To grant it:"
+        echo "      $(oem_permission_monitor_hint)"
+        echo "      Reboot, reconnect ADB, and run this script again for notification and background control."
+        echo "    Continuing with the restrictions that do not need AppOps (standby bucket and UID blacklist)."
+        echo ""
+    } >&2
+}
+
+appops_set() {
+    local pkg="$1"
+    local op="$2"
+    local mode="$3"
+    local output
+    local status=0
+    output=$(adb shell cmd appops set "$pkg" "$op" "$mode" 2>&1 | tr -d '\r') || status=$?
+    if [[ "$output" == *"SecurityException"* || "$output" == *"MANAGE_APP_OPS_MODES"* ]]; then
+        report_appops_blocked
+        return 1
+    fi
+    return "$status"
+}
+
+appops_get() {
+    local pkg="$1"
+    local op="$2"
+    local output
+    local status=0
+    output=$(adb shell cmd appops get "$pkg" "$op" 2>&1 | tr -d '\r') || status=$?
+    if [[ "$output" == *"SecurityException"* || "$output" == *"MANAGE_APP_OPS_MODES"* ]]; then
+        echo "unknown"
+        return 0
+    fi
+    if [[ $status -ne 0 ]]; then
+        echo "unknown"
+        return 0
+    fi
+    head -n 1 <<< "$output"
+}
+
+appops_available() {
+    local pkg="${TARGET_PACKAGES[0]}"
+    local output
+    output=$(adb shell cmd appops get "$pkg" RUN_IN_BACKGROUND 2>&1 | tr -d '\r') || true
+    [[ "$output" != *"SecurityException"* && "$output" != *"MANAGE_APP_OPS_MODES"* ]]
+}
+
 check_adb() {
     if ! command -v adb >/dev/null 2>&1; then
         echo "Error: adb command not found. Install Android platform-tools." >&2
@@ -262,11 +338,12 @@ pause_traffic() {
     for pkg in "${TARGET_PACKAGES[@]}"; do
         if is_package_installed "$pkg"; then
             echo "Restricting: $pkg"
+            local applied=0
             # 1. Suppress push notification display and associated media payload downloads
-            adb shell cmd appops set "$pkg" POST_NOTIFICATION ignore
+            if appops_set "$pkg" POST_NOTIFICATION ignore; then applied=$((applied + 1)); fi
             # 2. Block arbitrary background broadcast wakeups and services
-            adb shell cmd appops set "$pkg" RUN_ANY_IN_BACKGROUND ignore
-            adb shell cmd appops set "$pkg" RUN_IN_BACKGROUND ignore
+            if appops_set "$pkg" RUN_ANY_IN_BACKGROUND ignore; then applied=$((applied + 1)); fi
+            if appops_set "$pkg" RUN_IN_BACKGROUND ignore; then applied=$((applied + 1)); fi
             # 3. Demote to restricted standby bucket
             adb shell cmd usagestats set-app-standby-bucket "$pkg" restricted 2>/dev/null || true
             
@@ -275,7 +352,13 @@ pause_traffic() {
             if [[ -n "$uid" ]]; then
                 # 4. Blacklist UID from metered background sockets in NetworkPolicyManager
                 adb shell cmd netpolicy add restrict-background-blacklist "$uid" 2>/dev/null || true
-                echo "  -> AppOps restricted, standby bucket set to restricted, UID $uid blacklisted."
+                if [[ $applied -eq 3 ]]; then
+                    echo "  -> AppOps restricted, standby bucket restricted, UID $uid blacklisted."
+                elif [[ $applied -gt 0 ]]; then
+                    echo "  -> AppOps partially applied ($applied/3), standby bucket restricted, UID $uid blacklisted."
+                else
+                    echo "  -> AppOps unavailable, standby bucket restricted, UID $uid blacklisted."
+                fi
                 
                 # 5. If root is available, apply hardware/kernel-level drop on cellular interfaces
                 if [[ $is_rooted -eq 1 ]]; then
@@ -293,6 +376,12 @@ pause_traffic() {
     fi
 
     echo ""
+    if [[ $APP_OPS_AVAILABLE -eq 0 ]]; then
+        echo "Partial: standby buckets and UID blacklist applied. AppOps notification and background controls were refused by this build."
+        echo "Fix the permission monitor and rerun with 'pause' to apply the rest."
+        return 1
+    fi
+
     echo "Finished. WhatsApp, Instagram, Telegram, and Hotspot routing remain unhindered."
 }
 
@@ -308,9 +397,10 @@ resume_traffic() {
     for pkg in "${TARGET_PACKAGES[@]}"; do
         if is_package_installed "$pkg"; then
             echo "Restoring: $pkg"
-            adb shell cmd appops set "$pkg" POST_NOTIFICATION allow
-            adb shell cmd appops set "$pkg" RUN_ANY_IN_BACKGROUND allow
-            adb shell cmd appops set "$pkg" RUN_IN_BACKGROUND allow
+            local applied=0
+            if appops_set "$pkg" POST_NOTIFICATION allow; then applied=$((applied + 1)); fi
+            if appops_set "$pkg" RUN_ANY_IN_BACKGROUND allow; then applied=$((applied + 1)); fi
+            if appops_set "$pkg" RUN_IN_BACKGROUND allow; then applied=$((applied + 1)); fi
             adb shell cmd usagestats set-app-standby-bucket "$pkg" active 2>/dev/null || true
             
             local uid
@@ -320,7 +410,11 @@ resume_traffic() {
                 if [[ $is_rooted -eq 1 ]]; then
                     remove_iptables_uid_drop "$uid"
                 fi
-                echo "  -> AppOps restored, standby bucket set to active, UID $uid removed from blacklist."
+                if [[ $applied -eq 3 ]]; then
+                    echo "  -> AppOps restored, standby bucket active, UID $uid removed from blacklist."
+                else
+                    echo "  -> AppOps partially restored ($applied/3), standby bucket active, UID $uid removed from blacklist."
+                fi
             fi
         else
             echo "Skipping uninstalled package: $pkg"
@@ -332,6 +426,10 @@ resume_traffic() {
     fi
 
     echo ""
+    if [[ $APP_OPS_AVAILABLE -eq 0 ]]; then
+        echo "Partial: standby buckets and UID blacklist restored. AppOps modes were not changed."
+        return 1
+    fi
     echo "Finished. Default settings restored."
 }
 
@@ -340,6 +438,10 @@ show_status() {
     echo "Current Restriction Status for Target Packages"
     echo "=========================================================="
     check_oem_and_root_compatibility
+
+    if ! appops_available; then
+        report_appops_blocked
+    fi
 
     local is_rooted=0
     if check_root; then
@@ -355,8 +457,8 @@ show_status() {
             local bucket
             local uid
             uid="$(get_package_uid "$pkg")"
-            post_notif="$(adb shell cmd appops get "$pkg" POST_NOTIFICATION 2>/dev/null | head -n 1 || echo "unknown")"
-            run_bg="$(adb shell cmd appops get "$pkg" RUN_ANY_IN_BACKGROUND 2>/dev/null | head -n 1 || echo "unknown")"
+            post_notif="$(appops_get "$pkg" POST_NOTIFICATION)"
+            run_bg="$(appops_get "$pkg" RUN_ANY_IN_BACKGROUND)"
             bucket="$(adb shell cmd usagestats get-app-standby-bucket "$pkg" 2>/dev/null | tr -d '\r\n' || echo "unknown")"
             
             echo "Package: $pkg (UID: ${uid:-unknown})"
