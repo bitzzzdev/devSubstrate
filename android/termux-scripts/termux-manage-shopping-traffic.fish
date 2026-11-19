@@ -148,17 +148,6 @@ function is_package_installed -a pkg
     end
 end
 
-function set_tethering_offload
-    if exec_android_cmd "settings put global tether_offload_disabled 0" >/dev/null 2>&1
-        set -l current (exec_android_cmd "settings get global tether_offload_disabled" 2>/dev/null | string trim)
-        if test "$current" = "0"
-            echo "  - Tethering hardware offload enabled (0)."
-            return 0
-        end
-    end
-    echo "  - Tethering offload setting was not writable; existing device behavior is unchanged."
-end
-
 function check_oem_and_root_compatibility
     echo "=========================================================="
     echo "Device Compatibility: Root and Bootloader Lock Diagnostics"
@@ -226,7 +215,6 @@ function pause_traffic
     set -l fallback_used 0
 
     if test "$DETECTED_BACKEND" != "userland"
-        set_tethering_offload
 
         for pkg in $TARGET_PACKAGES
             if is_package_installed $pkg

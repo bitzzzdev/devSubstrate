@@ -226,24 +226,6 @@ is_package_installed() {
     adb shell pm list packages "$pkg" 2>/dev/null | tr -d '\r' | grep -q "^package:${pkg}$"
 }
 
-set_tethering_offload() {
-    if adb shell settings put global tether_offload_disabled 0 >/dev/null 2>&1 &&
-        [[ "$(adb shell settings get global tether_offload_disabled 2>/dev/null | tr -d '\r')" == "0" ]]; then
-        echo "Confirmed tethering hardware offload enabled (0)."
-    else
-        echo "Warning: Android denied the tethering offload setting. Continuing with app restrictions." >&2
-    fi
-}
-
-optimize_cellular_idle_settings() {
-    # Disabling mobile_data_always_on stops cellular modem from keeping an active session on Wi-Fi
-    if adb shell settings put global mobile_data_always_on 0 >/dev/null 2>&1; then
-        echo "Confirmed mobile data always active disabled (0). Prevents background cellular leak."
-    fi
-    # Ensure DUN requirement does not interfere with hotspot
-    adb shell settings put global tether_dun_required 0 >/dev/null 2>&1 || true
-}
-
 apply_iptables_uid_drop() {
     local uid="$1"
     for iface in "${CELLULAR_INTERFACES[@]}"; do
@@ -326,8 +308,6 @@ remove_boot_hook() {
 pause_traffic() {
     echo "Applying selective background and notification restrictions..."
     check_oem_and_root_compatibility
-    set_tethering_offload
-    optimize_cellular_idle_settings
 
     local is_rooted=0
     if check_root; then

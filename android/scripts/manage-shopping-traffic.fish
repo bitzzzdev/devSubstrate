@@ -215,24 +215,6 @@ function is_package_installed -a pkg
     adb shell pm list packages $pkg 2>/dev/null | string replace -a -r '\r' '' | string match -q "package:$pkg"
 end
 
-function set_tethering_offload
-    if adb shell settings put global tether_offload_disabled 0 >/dev/null 2>&1
-        set -l current (adb shell settings get global tether_offload_disabled 2>/dev/null | string trim)
-        if test "$current" = "0"
-            echo "Confirmed tethering hardware offload enabled (0)."
-            return 0
-        end
-    end
-    echo "Warning: Android denied the tethering offload setting. Continuing with app restrictions." >&2
-end
-
-function optimize_cellular_idle_settings
-    if adb shell settings put global mobile_data_always_on 0 >/dev/null 2>&1
-        echo "Confirmed mobile data always active disabled (0). Prevents background cellular leak."
-    end
-    adb shell settings put global tether_dun_required 0 >/dev/null 2>&1
-end
-
 function apply_iptables_uid_drop -a uid
     for iface in $CELLULAR_INTERFACES
         run_as_root "iptables -C OUTPUT -o $iface -m owner --uid-owner $uid -j DROP 2>/dev/null || iptables -I OUTPUT -o $iface -m owner --uid-owner $uid -j DROP" >/dev/null 2>&1
@@ -305,8 +287,6 @@ end
 function pause_traffic
     echo "Applying selective background and notification restrictions..."
     check_oem_and_root_compatibility
-    set_tethering_offload
-    optimize_cellular_idle_settings
 
     set -l is_rooted 0
     if check_root

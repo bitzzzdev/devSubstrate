@@ -131,12 +131,6 @@ function is_whitelisted -a pkg
     return 1
 end
 
-function optimize_cellular_idle_settings
-    adb shell settings put global mobile_data_always_on 0 >/dev/null 2>&1
-    adb shell settings put global tether_dun_required 0 >/dev/null 2>&1
-    adb shell settings put global tether_offload_disabled 0 >/dev/null 2>&1
-end
-
 function apply_iptables_uid_drop -a uid
     for iface in $CELLULAR_INTERFACES
         run_as_root "iptables -C OUTPUT -o $iface -m owner --uid-owner $uid -j DROP 2>/dev/null || iptables -I OUTPUT -o $iface -m owner --uid-owner $uid -j DROP" >/dev/null 2>&1
@@ -220,7 +214,6 @@ function apply_restrictions
     echo "Ensuring global Data Saver remains off so hotspot functions..."
     adb shell cmd netpolicy set restrict-background false
     check_oem_and_root_compatibility
-    optimize_cellular_idle_settings
 
     set -l is_rooted 0
     if check_root

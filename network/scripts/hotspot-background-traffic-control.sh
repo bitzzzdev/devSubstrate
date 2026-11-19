@@ -135,12 +135,6 @@ is_whitelisted() {
     return 1
 }
 
-optimize_cellular_idle_settings() {
-    adb shell settings put global mobile_data_always_on 0 >/dev/null 2>&1 || true
-    adb shell settings put global tether_dun_required 0 >/dev/null 2>&1 || true
-    adb shell settings put global tether_offload_disabled 0 >/dev/null 2>&1 || true
-}
-
 apply_iptables_uid_drop() {
     local uid="$1"
     for iface in "${CELLULAR_INTERFACES[@]}"; do
@@ -233,7 +227,6 @@ apply_restrictions() {
     echo "Ensuring global Data Saver remains off so hotspot functions..."
     adb shell cmd netpolicy set restrict-background false
     check_oem_and_root_compatibility
-    optimize_cellular_idle_settings
 
     local is_rooted=0
     if check_root; then

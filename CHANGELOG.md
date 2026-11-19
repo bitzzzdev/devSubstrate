@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Changed
+- Made Android curl option 2 default to the `all` profile, applying shopping-app controls and the hotspot-safe third-party background profile without an extra prompt.
+- Removed automatic writes to `mobile_data_always_on`, `tether_dun_required`, and `tether_offload_disabled` from Android ADB and Termux traffic scripts. Per-app restrictions do not require changing global carrier or tethering settings.
+- Revised the cellular and hotspot research paper to remove unmeasured data-saving percentages and distinguish documented Android behavior from device-specific results.
+
+
 ### Added
 - Free-tier Flash model and coding-agent integration reference `ai-providers/free-ai-api-providers-opencode-guide.md`, covering provider endpoints, model catalogs, quota snapshots, OpenCode, Kilo CLI, Continue.dev, Aider, and OpenAI SDK configuration.
 - Smart root privilege and OEM unlocking diagnostics (`check` action) across `manage-shopping-traffic.sh`, `manage-shopping-traffic.fish`, `hotspot-background-traffic-control.sh`, and Termux traffic scripts.
