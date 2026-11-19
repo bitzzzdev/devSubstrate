@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [Unreleased]
 
 ### Added
+- Added `ai-providers/openrouter-free-coding-models.md` with a dated OpenRouter free coding model catalogue, upstream inference provider notes, tool support, privacy constraints, rate limits, and model expiry warnings.
 - Added `android/scripts/app-data-saver.sh` to apply, inspect, and revert per-app background metered-data restrictions through Android 11 NetPolicy. It preserves allowlisted UIDs and protected shared UIDs without enabling global Data Saver.
 - Added a mocked ADB regression test for apply, status, allowlist preservation, shared-UID exclusions, and scoped revert.
 
