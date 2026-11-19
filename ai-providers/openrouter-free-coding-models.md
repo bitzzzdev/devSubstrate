@@ -35,7 +35,10 @@ long-horizon agentic coding.
 
 - Model page: https://openrouter.ai/recursive/flint-v1.0:free
 - Model ID: `recursive/flint-v1.0:free`
-- OpenRouter lists it as free with a 262,144-token context.
+- OpenRouter lists it as free with a 262,144-token context. The
+  235,929-token output figure in the table comes from a third-party
+  October 28, 2026 API snapshot, not a permanent provider guarantee;
+  verify the live endpoint metadata before setting a cap.
 - Its model description specifically targets coding agents, codebase
   investigation, bug fixing, feature implementation, and test writing.
 - Tool calls are supported. JSON output is available through
@@ -267,3 +270,6 @@ No coding-agent integration test was run for this research.
   https://openrouter.ai/google/gemma-4-26b-a4b-it:free
 - LiquidAI LFM3-1.7B:
   https://openrouter.ai/liquid/lfm-3-1.7b:free
+
+Secondary API snapshot used only for Flint's output-token figure:
+- https://www.teamday.ai/blog/best-free-openrouter-models-coding-2026
