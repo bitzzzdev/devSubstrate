@@ -10,8 +10,8 @@
 # Preserves WhatsApp, Instagram, Telegram, Google Play Services, and Wi-Fi Hotspot.
 #
 # Usage:
-#   ./manage-shopping-traffic.fish pause         # Restricts shopping apps
-#   ./manage-shopping-traffic.fish resume        # Restores shopping apps
+#   ./manage-shopping-traffic.fish pause         # Restricts installed catalog apps
+#   ./manage-shopping-traffic.fish resume        # Restores catalog apps
 #   ./manage-shopping-traffic.fish status        # Displays current restriction status
 #   ./manage-shopping-traffic.fish check         # Checks root and OEM unlocking compatibility
 #   ./manage-shopping-traffic.fish automate-ui   # UI automation to toggle background data
@@ -20,18 +20,101 @@
 set -g TARGET_PACKAGES \
     in.amazon.mShop.android.shopping \
     com.flipkart.android \
+    com.flipkart.shopsy \
     com.myntra.android \
     com.ril.ajio \
     com.meesho.supply \
     com.grofers.customerapp \
     com.zeptoconsumerapp \
-    in.swiggy.android \
-    com.application.zomato \
     com.bigbasket.mobileapp \
     com.jpl.jiomart \
     com.fsn.nykaa \
     com.snapdeal.main \
-    com.tul.tatacliq
+    com.tul.tatacliq \
+    com.firstcry.android \
+    com.purplle \
+    com.olx.southasia \
+    com.indiamart.m \
+    com.urbanic \
+    com.limeroad \
+    com.pepperfry \
+    in.swiggy.android \
+    com.application.zomato \
+    com.rebelfoods.eatsure \
+    com.dominos \
+    com.pizzahutindia \
+    com.yum.kfc \
+    com.instagram.android \
+    com.facebook.katana \
+    com.instagram.barcelona \
+    com.twitter.android \
+    com.snapchat.android \
+    com.pinterest \
+    com.reddit.frontpage \
+    com.linkedin.android \
+    in.mohalla.sharechat \
+    in.mohalla.video \
+    in.mohalla.josh \
+    io.chingari.app \
+    com.tumblr \
+    com.quora.android \
+    com.discord \
+    tv.twitch.android.app \
+    com.bereal.ft \
+    com.clubhouse.app \
+    com.narvii.amino.master \
+    com.roposo.android \
+    com.google.android.youtube \
+    com.google.android.apps.youtube.music \
+    com.netflix.mediaclient \
+    com.amazon.avod.thirdpartyclient \
+    in.startv.hotstar \
+    com.jio.media.ondemand \
+    com.sonyliv \
+    com.graymatrix.did \
+    com.mxtech.videoplayer.ad \
+    com.spotify.music \
+    com.jio.media.jiobeats \
+    com.gaana \
+    com.bsbportal.music \
+    com.audible.application \
+    com.pocketfm \
+    com.kukufm \
+    com.amazon.mp3 \
+    com.soundcloud.android \
+    com.pubg.imobile \
+    com.dts.freefireth \
+    com.dts.freefiremax \
+    com.activision.callofduty.shooter \
+    com.supercell.clashofclans \
+    com.supercell.clashroyale \
+    com.roblox.client \
+    com.mojang.minecraftpe \
+    com.kiloo.subwaysurf \
+    com.ludo.king \
+    com.miniclip.eightballpool \
+    com.king.candycrushsaga \
+    com.miHoYo.GenshinImpact \
+    com.HoYoverse.hkrpgoversea \
+    com.gameloft.android.ANMP.GloftA9HM \
+    com.ea.game.pvz2_row \
+    com.ea.game.fifa.mobile \
+    com.supercell.brawlstars \
+    com.nis.app \
+    com.eterno \
+    com.toi.reader.activities \
+    com.cricbuzz.android \
+    com.espn.score_center \
+    com.dream11pro \
+    com.fancode.video \
+    com.ndtv.news \
+    com.ibn.livetv \
+    com.google.android.apps.magazines \
+    com.tinder \
+    com.bumble.app \
+    co.hinge.app \
+    com.app.aisle \
+    com.happn
 
 set -g CELLULAR_INTERFACES rmnet+ ccmni+ pdp+ wwan+
 
@@ -339,7 +422,7 @@ function pause_traffic
         echo "Fix the permission monitor and rerun with 'pause' to apply the rest."
         return 1
     end
-    echo "Finished. WhatsApp, Instagram, Telegram, and Hotspot routing remain unhindered."
+    echo "Finished. Installed catalog targets were processed; excluded essential apps and hotspot routing remain untouched."
 end
 
 function resume_traffic

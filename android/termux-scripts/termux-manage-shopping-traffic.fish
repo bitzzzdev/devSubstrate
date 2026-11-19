@@ -1,7 +1,7 @@
 #!/usr/bin/env fish
 #
 # termux-manage-shopping-traffic.fish: Local Termux Fish shell script to manage
-# shopping application background data and notification drain without a PC.
+# catalog application background data and notification drain without a PC.
 #
 # Execution modes:
 #   1. Direct root / Shizuku / su (full capability matching ADB)
@@ -9,8 +9,8 @@
 #   3. Standard non-root Termux (process termination and cache optimization)
 #
 # Usage:
-#   ./termux-manage-shopping-traffic.fish pause   # Restricts shopping apps
-#   ./termux-manage-shopping-traffic.fish resume  # Restores shopping apps
+#   ./termux-manage-shopping-traffic.fish pause   # Restricts installed catalog apps
+#   ./termux-manage-shopping-traffic.fish resume  # Restores catalog apps
 #   ./termux-manage-shopping-traffic.fish status  # Inspects current restrictions
 #   ./termux-manage-shopping-traffic.fish check   # Checks root and OEM unlocking status
 #
@@ -18,18 +18,101 @@
 set -g TARGET_PACKAGES \
     in.amazon.mShop.android.shopping \
     com.flipkart.android \
+    com.flipkart.shopsy \
     com.myntra.android \
     com.ril.ajio \
     com.meesho.supply \
     com.grofers.customerapp \
     com.zeptoconsumerapp \
-    in.swiggy.android \
-    com.application.zomato \
     com.bigbasket.mobileapp \
     com.jpl.jiomart \
     com.fsn.nykaa \
     com.snapdeal.main \
-    com.tul.tatacliq
+    com.tul.tatacliq \
+    com.firstcry.android \
+    com.purplle \
+    com.olx.southasia \
+    com.indiamart.m \
+    com.urbanic \
+    com.limeroad \
+    com.pepperfry \
+    in.swiggy.android \
+    com.application.zomato \
+    com.rebelfoods.eatsure \
+    com.dominos \
+    com.pizzahutindia \
+    com.yum.kfc \
+    com.instagram.android \
+    com.facebook.katana \
+    com.instagram.barcelona \
+    com.twitter.android \
+    com.snapchat.android \
+    com.pinterest \
+    com.reddit.frontpage \
+    com.linkedin.android \
+    in.mohalla.sharechat \
+    in.mohalla.video \
+    in.mohalla.josh \
+    io.chingari.app \
+    com.tumblr \
+    com.quora.android \
+    com.discord \
+    tv.twitch.android.app \
+    com.bereal.ft \
+    com.clubhouse.app \
+    com.narvii.amino.master \
+    com.roposo.android \
+    com.google.android.youtube \
+    com.google.android.apps.youtube.music \
+    com.netflix.mediaclient \
+    com.amazon.avod.thirdpartyclient \
+    in.startv.hotstar \
+    com.jio.media.ondemand \
+    com.sonyliv \
+    com.graymatrix.did \
+    com.mxtech.videoplayer.ad \
+    com.spotify.music \
+    com.jio.media.jiobeats \
+    com.gaana \
+    com.bsbportal.music \
+    com.audible.application \
+    com.pocketfm \
+    com.kukufm \
+    com.amazon.mp3 \
+    com.soundcloud.android \
+    com.pubg.imobile \
+    com.dts.freefireth \
+    com.dts.freefiremax \
+    com.activision.callofduty.shooter \
+    com.supercell.clashofclans \
+    com.supercell.clashroyale \
+    com.roblox.client \
+    com.mojang.minecraftpe \
+    com.kiloo.subwaysurf \
+    com.ludo.king \
+    com.miniclip.eightballpool \
+    com.king.candycrushsaga \
+    com.miHoYo.GenshinImpact \
+    com.HoYoverse.hkrpgoversea \
+    com.gameloft.android.ANMP.GloftA9HM \
+    com.ea.game.pvz2_row \
+    com.ea.game.fifa.mobile \
+    com.supercell.brawlstars \
+    com.nis.app \
+    com.eterno \
+    com.toi.reader.activities \
+    com.cricbuzz.android \
+    com.espn.score_center \
+    com.dream11pro \
+    com.fancode.video \
+    com.ndtv.news \
+    com.ibn.livetv \
+    com.google.android.apps.magazines \
+    com.tinder \
+    com.bumble.app \
+    co.hinge.app \
+    com.app.aisle \
+    com.happn
 
 set -g DETECTED_BACKEND "none"
 
@@ -266,7 +349,7 @@ function pause_traffic
         echo "  - WhatsApp, Instagram, Telegram, and hotspot remain unaffected."
     else if test $fallback_used -eq 1
         echo "COMPLETED IN TERMUX NON-ROOT USERLAND:"
-        echo "  - Active background processes terminated for shopping apps."
+        echo "  - Active background processes terminated for catalog apps."
         echo ""
         echo "WHAT STILL NEEDS ADB OR ROOT PRIVILEGES:"
         echo "  1. Permanent notification suppression: 'cmd appops set <pkg> POST_NOTIFICATION ignore'"

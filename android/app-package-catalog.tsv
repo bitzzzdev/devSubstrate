@@ -1,0 +1,117 @@
+# devSubstrate Android app package catalog
+# Schema: category<TAB>package<TAB>app<TAB>policy
+# policy=restrict is included in the automatic background restriction profile.
+# policy=keep is intentionally excluded from automatic restrictions.
+shopping	in.amazon.mShop.android.shopping	Amazon Shopping	restrict
+shopping	com.flipkart.android	Flipkart	restrict
+shopping	com.flipkart.shopsy	Shopsy	restrict
+shopping	com.myntra.android	Myntra	restrict
+shopping	com.ril.ajio	AJIO	restrict
+shopping	com.meesho.supply	Meesho	restrict
+shopping	com.grofers.customerapp	Blinkit	restrict
+shopping	com.zeptoconsumerapp	Zepto	restrict
+shopping	com.bigbasket.mobileapp	BigBasket	restrict
+shopping	com.jpl.jiomart	JioMart	restrict
+shopping	com.fsn.nykaa	Nykaa	restrict
+shopping	com.snapdeal.main	Snapdeal	restrict
+shopping	com.tul.tatacliq	Tata CLiQ	restrict
+shopping	com.firstcry.android	FirstCry	restrict
+shopping	com.purplle	Purplle	restrict
+shopping	com.olx.southasia	OLX	restrict
+shopping	com.indiamart.m	IndiaMART	restrict
+shopping	com.urbanic	Urbanic	restrict
+shopping	com.limeroad	LimeRoad	restrict
+shopping	com.pepperfry	Pepperfry	restrict
+food_delivery	in.swiggy.android	Swiggy	restrict
+food_delivery	com.application.zomato	Zomato	restrict
+food_delivery	com.rebelfoods.eatsure	EatSure	restrict
+food_delivery	com.dominos	Domino's	restrict
+food_delivery	com.pizzahutindia	Pizza Hut India	restrict
+food_delivery	com.yum.kfc	KFC	restrict
+social	com.instagram.android	Instagram	restrict
+social	com.facebook.katana	Facebook	restrict
+social	com.instagram.barcelona	Threads	restrict
+social	com.twitter.android	X	restrict
+social	com.snapchat.android	Snapchat	restrict
+social	com.pinterest	Pinterest	restrict
+social	com.reddit.frontpage	Reddit	restrict
+social	com.linkedin.android	LinkedIn	restrict
+social	in.mohalla.sharechat	ShareChat	restrict
+social	in.mohalla.video	Moj	restrict
+social	in.mohalla.josh	Josh	restrict
+social	io.chingari.app	Chingari	restrict
+social	com.tumblr	Tumblr	restrict
+social	com.quora.android	Quora	restrict
+social	com.discord	Discord	restrict
+social	tv.twitch.android.app	Twitch	restrict
+social	com.bereal.ft	BeReal	restrict
+social	com.clubhouse.app	Clubhouse	restrict
+social	com.narvii.amino.master	Amino	restrict
+social	com.roposo.android	Roposo	restrict
+streaming	com.google.android.youtube	YouTube	restrict
+streaming	com.google.android.apps.youtube.music	YouTube Music	restrict
+streaming	com.netflix.mediaclient	Netflix	restrict
+streaming	com.amazon.avod.thirdpartyclient	Prime Video	restrict
+streaming	in.startv.hotstar	JioHotstar	restrict
+streaming	com.jio.media.ondemand	JioCinema	restrict
+streaming	com.sonyliv	SonyLIV	restrict
+streaming	com.graymatrix.did	ZEE5	restrict
+streaming	com.mxtech.videoplayer.ad	MX Player	restrict
+streaming	com.spotify.music	Spotify	restrict
+streaming	com.jio.media.jiobeats	JioSaavn	restrict
+streaming	com.gaana	Gaana	restrict
+streaming	com.bsbportal.music	Wynk Music	restrict
+streaming	com.audible.application	Audible	restrict
+streaming	com.pocketfm	Pocket FM	restrict
+streaming	com.kukufm	Kuku FM	restrict
+streaming	com.amazon.mp3	Amazon Music	restrict
+streaming	com.soundcloud.android	SoundCloud	restrict
+games	com.pubg.imobile	BGMI	restrict
+games	com.dts.freefireth	Free Fire	restrict
+games	com.dts.freefiremax	Free Fire MAX	restrict
+games	com.activision.callofduty.shooter	Call of Duty Mobile	restrict
+games	com.supercell.clashofclans	Clash of Clans	restrict
+games	com.supercell.clashroyale	Clash Royale	restrict
+games	com.roblox.client	Roblox	restrict
+games	com.mojang.minecraftpe	Minecraft	restrict
+games	com.kiloo.subwaysurf	Subway Surfers	restrict
+games	com.ludo.king	Ludo King	restrict
+games	com.miniclip.eightballpool	8 Ball Pool	restrict
+games	com.king.candycrushsaga	Candy Crush Saga	restrict
+games	com.miHoYo.GenshinImpact	Genshin Impact	restrict
+games	com.HoYoverse.hkrpgoversea	Honkai: Star Rail	restrict
+games	com.gameloft.android.ANMP.GloftA9HM	Asphalt Legends	restrict
+games	com.ea.game.pvz2_row	Plants vs. Zombies 2	restrict
+games	com.ea.game.fifa.mobile	EA SPORTS FC Mobile	restrict
+games	com.supercell.brawlstars	Brawl Stars	restrict
+news_sports	com.nis.app	Inshorts	restrict
+news_sports	com.eterno	Dailyhunt	restrict
+news_sports	com.toi.reader.activities	The Times of India	restrict
+news_sports	com.cricbuzz.android	Cricbuzz	restrict
+news_sports	com.espn.score_center	ESPN	restrict
+news_sports	com.dream11pro	Dream11	restrict
+news_sports	com.fancode.video	FanCode	restrict
+news_sports	com.ndtv.news	NDTV	restrict
+news_sports	com.ibn.livetv	News18	restrict
+news_sports	com.google.android.apps.magazines	Google News	restrict
+dating	com.tinder	Tinder	restrict
+dating	com.bumble.app	Bumble	restrict
+dating	co.hinge.app	Hinge	restrict
+dating	com.app.aisle	Aisle	restrict
+dating	com.happn	happn	restrict
+essential_messaging	com.whatsapp	WhatsApp	keep
+essential_messaging	org.telegram.messenger	Telegram	keep
+essential_messaging	org.thoughtcrime.securesms	Signal	keep
+essential_messaging	com.google.android.apps.messaging	Google Messages	keep
+essential_services	com.google.android.gms	Google Play services	keep
+essential_services	com.android.vending	Google Play Store	keep
+essential_services	com.google.android.gsf	Google Services Framework	keep
+essential_services	com.google.android.apps.maps	Google Maps	keep
+essential_services	com.google.android.gm	Gmail	keep
+payments_banking	com.phonepe.app	PhonePe	keep
+payments_banking	com.google.android.apps.nbu.paisa.user	Google Pay	keep
+payments_banking	net.one97.paytm	Paytm	keep
+payments_banking	in.org.npci.upiapp	BHIM UPI	keep
+transport	com.ubercab	Uber	keep
+transport	com.olacabs.customer	Ola	keep
+transport	com.rapido.passenger	Rapido	keep

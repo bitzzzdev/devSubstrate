@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added
+- Added `android/app-package-catalog.tsv` with discretionary app package candidates across shopping, social, streaming, games, news, sports, food delivery, and dating. Instagram is now included; messaging, payment, core Google, and transport apps are explicitly excluded.
+- Expanded the ADB and Termux Bash/Fish traffic profiles to apply restrictions only to exact catalog package IDs installed on the device. Added catalog documentation and a parity regression test.
+
 ### Fixed
 - Kept the hotspot stage running when the shopping stage reports partial success due to OEM AppOps permission-monitor restrictions. Added a development-branch Android shell validation job and a mocked regression test for the combined curl profile.
 

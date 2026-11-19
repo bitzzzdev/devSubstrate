@@ -7,11 +7,11 @@
 # AppOps notification suppression, NetPolicy cellular blacklisting, standby bucketing,
 # and UI/Accessibility automation to toggle background data across OEM skins.
 #
-# Leaves WhatsApp, Instagram, Telegram, Google Play Services, and Wi-Fi Hotspot intact.
+# Targets installed discretionary apps from the catalog. WhatsApp, Telegram, Signal, payment apps, Google services, and transport apps are excluded.
 #
 # Usage:
-#   ./manage-shopping-traffic.sh pause         # Restricts shopping apps
-#   ./manage-shopping-traffic.sh resume        # Restores shopping apps
+#   ./manage-shopping-traffic.sh pause         # Restricts installed catalog apps
+#   ./manage-shopping-traffic.sh resume        # Restores catalog apps
 #   ./manage-shopping-traffic.sh status        # Inspects current restrictions
 #   ./manage-shopping-traffic.sh check         # Checks root and OEM unlocking compatibility
 #   ./manage-shopping-traffic.sh automate-ui   # UI automation to toggle background data
@@ -22,18 +22,101 @@ set -euo pipefail
 TARGET_PACKAGES=(
     "in.amazon.mShop.android.shopping"
     "com.flipkart.android"
+    "com.flipkart.shopsy"
     "com.myntra.android"
     "com.ril.ajio"
     "com.meesho.supply"
     "com.grofers.customerapp"
     "com.zeptoconsumerapp"
-    "in.swiggy.android"
-    "com.application.zomato"
     "com.bigbasket.mobileapp"
     "com.jpl.jiomart"
     "com.fsn.nykaa"
     "com.snapdeal.main"
     "com.tul.tatacliq"
+    "com.firstcry.android"
+    "com.purplle"
+    "com.olx.southasia"
+    "com.indiamart.m"
+    "com.urbanic"
+    "com.limeroad"
+    "com.pepperfry"
+    "in.swiggy.android"
+    "com.application.zomato"
+    "com.rebelfoods.eatsure"
+    "com.dominos"
+    "com.pizzahutindia"
+    "com.yum.kfc"
+    "com.instagram.android"
+    "com.facebook.katana"
+    "com.instagram.barcelona"
+    "com.twitter.android"
+    "com.snapchat.android"
+    "com.pinterest"
+    "com.reddit.frontpage"
+    "com.linkedin.android"
+    "in.mohalla.sharechat"
+    "in.mohalla.video"
+    "in.mohalla.josh"
+    "io.chingari.app"
+    "com.tumblr"
+    "com.quora.android"
+    "com.discord"
+    "tv.twitch.android.app"
+    "com.bereal.ft"
+    "com.clubhouse.app"
+    "com.narvii.amino.master"
+    "com.roposo.android"
+    "com.google.android.youtube"
+    "com.google.android.apps.youtube.music"
+    "com.netflix.mediaclient"
+    "com.amazon.avod.thirdpartyclient"
+    "in.startv.hotstar"
+    "com.jio.media.ondemand"
+    "com.sonyliv"
+    "com.graymatrix.did"
+    "com.mxtech.videoplayer.ad"
+    "com.spotify.music"
+    "com.jio.media.jiobeats"
+    "com.gaana"
+    "com.bsbportal.music"
+    "com.audible.application"
+    "com.pocketfm"
+    "com.kukufm"
+    "com.amazon.mp3"
+    "com.soundcloud.android"
+    "com.pubg.imobile"
+    "com.dts.freefireth"
+    "com.dts.freefiremax"
+    "com.activision.callofduty.shooter"
+    "com.supercell.clashofclans"
+    "com.supercell.clashroyale"
+    "com.roblox.client"
+    "com.mojang.minecraftpe"
+    "com.kiloo.subwaysurf"
+    "com.ludo.king"
+    "com.miniclip.eightballpool"
+    "com.king.candycrushsaga"
+    "com.miHoYo.GenshinImpact"
+    "com.HoYoverse.hkrpgoversea"
+    "com.gameloft.android.ANMP.GloftA9HM"
+    "com.ea.game.pvz2_row"
+    "com.ea.game.fifa.mobile"
+    "com.supercell.brawlstars"
+    "com.nis.app"
+    "com.eterno"
+    "com.toi.reader.activities"
+    "com.cricbuzz.android"
+    "com.espn.score_center"
+    "com.dream11pro"
+    "com.fancode.video"
+    "com.ndtv.news"
+    "com.ibn.livetv"
+    "com.google.android.apps.magazines"
+    "com.tinder"
+    "com.bumble.app"
+    "co.hinge.app"
+    "com.app.aisle"
+    "com.happn"
 )
 
 # Cellular network interfaces across Qualcomm, MediaTek, Exynos, and standard modems
@@ -362,7 +445,7 @@ pause_traffic() {
         return 1
     fi
 
-    echo "Finished. WhatsApp, Instagram, Telegram, and Hotspot routing remain unhindered."
+    echo "Finished. Installed catalog targets were processed; excluded essential apps and hotspot routing remain untouched."
 }
 
 resume_traffic() {
