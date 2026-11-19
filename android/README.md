@@ -5,6 +5,7 @@ Android device diagnostics, ADB workflows, app troubleshooting, storage cleanup,
 ## Device Optimization & ADB Procedures
 
 - [App Package Catalog](app-package-catalog.md): supported discretionary app categories, protected exclusions, and exact package matching.
+- [Per-app Background Data Saver](app-data-saver.md): ADB NetPolicy restrictions for installed catalog apps, with status and scoped revert.
 
 - [Cellular Traffic & Notification Saver](cellular-data-notification-saver.md): Granular background traffic and notification control over ADB.
 - [AppOps Permission Monitor Troubleshooting](appops-permission-monitor.md): Realme UI and ColorOS guidance for ADB AppOps permission denials.

@@ -7,6 +7,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [Unreleased]
 
 ### Added
+- Added `android/scripts/app-data-saver.sh` to apply, inspect, and revert per-app background metered-data restrictions through Android 11 NetPolicy. It preserves allowlisted UIDs and protected shared UIDs without enabling global Data Saver.
+- Added a mocked ADB regression test for apply, status, allowlist preservation, shared-UID exclusions, and scoped revert.
+
+### Added
 - Added `android/app-package-catalog.tsv` with discretionary app package candidates across shopping, social, streaming, games, news, sports, food delivery, and dating. Instagram is now included; messaging, payment, core Google, and transport apps are explicitly excluded.
 - Expanded the ADB and Termux Bash/Fish traffic profiles to apply restrictions only to exact catalog package IDs installed on the device. Added catalog documentation and a parity regression test.
 
