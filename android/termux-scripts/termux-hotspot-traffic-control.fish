@@ -45,6 +45,20 @@ function exec_android_cmd -a cmd
     end
 end
 
+set -g APP_OPS_AVAILABLE 1
+
+function exec_appops_set -a pkg op mode
+    set -l output (exec_android_cmd "cmd appops set $pkg $op $mode" 2>&1 | string collect)
+    if string match -q -r 'SecurityException|MANAGE_APP_OPS_MODES' -- $output
+        if test "$APP_OPS_AVAILABLE" = "1"
+            set -g APP_OPS_AVAILABLE 0
+            echo "[!] AppOps denied by the OEM permission monitor. Continuing with NetPolicy and standby restrictions." >&2
+        end
+        return 1
+    end
+    return 0
+end
+
 function is_whitelisted -a pkg
     for w in $WHITELIST
         if test "$pkg" = "$w"
@@ -99,8 +113,8 @@ function apply_restrictions
 
             if test -n "$uid"
                 exec_android_cmd "cmd netpolicy add restrict-background-blacklist $uid 2>/dev/null"; or true
-                exec_android_cmd "cmd appops set $pkg RUN_IN_BACKGROUND ignore 2>/dev/null"; or true
-                exec_android_cmd "cmd appops set $pkg RUN_ANY_IN_BACKGROUND ignore 2>/dev/null"; or true
+                exec_appops_set $pkg RUN_IN_BACKGROUND ignore; or true
+                exec_appops_set $pkg RUN_ANY_IN_BACKGROUND ignore; or true
                 exec_android_cmd "cmd usagestats set-app-standby-bucket $pkg restricted 2>/dev/null"; or true
                 echo "[+] Restricted: $pkg (UID: $uid)"
             end
@@ -126,7 +140,10 @@ function apply_restrictions
     if test $privileged_success -eq 1
         echo "COMPLETED VIA PRIVILEGED BACKEND ($DETECTED_BACKEND):"
         echo "  - Third-party apps restricted from background data."
-        echo "  - WhatsApp, Telegram, Signal, and hotspot remain functional."
+        echo "  - WhatsApp, Telegram, Signal, and hotspot routing are excluded from app UID rules."
+        if test "$APP_OPS_AVAILABLE" = "0"
+            echo "  - AppOps was refused; NetPolicy and standby controls were attempted."
+        end
     else if test $fallback_used -eq 1
         echo "COMPLETED IN TERMUX USERLAND:"
         echo "  - Third-party apps killed to clear memory and halt active sockets."

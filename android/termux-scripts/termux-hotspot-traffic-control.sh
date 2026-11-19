@@ -53,6 +53,21 @@ exec_android_cmd() {
     esac
 }
 
+APP_OPS_AVAILABLE=1
+
+exec_appops_set() {
+    local pkg="$1" op="$2" mode="$3" output status=0
+    output=$(exec_android_cmd "cmd appops set $pkg $op $mode" 2>&1 | tr -d '\r') || status=$?
+    if [[ "$output" == *"SecurityException"* || "$output" == *"MANAGE_APP_OPS_MODES"* ]]; then
+        if [[ "$APP_OPS_AVAILABLE" -eq 1 ]]; then
+            APP_OPS_AVAILABLE=0
+            echo "[!] AppOps denied by the OEM permission monitor. Continuing with NetPolicy and standby restrictions." >&2
+        fi
+        return 1
+    fi
+    return "$status"
+}
+
 is_whitelisted() {
     local pkg="$1"
     for w in "${WHITELIST[@]}"; do
@@ -109,8 +124,8 @@ apply_restrictions() {
 
             if [[ -n "$uid" ]]; then
                 exec_android_cmd "cmd netpolicy add restrict-background-blacklist $uid" >/dev/null 2>&1 || true
-                exec_android_cmd "cmd appops set $pkg RUN_IN_BACKGROUND ignore" >/dev/null 2>&1 || true
-                exec_android_cmd "cmd appops set $pkg RUN_ANY_IN_BACKGROUND ignore" >/dev/null 2>&1 || true
+                if ! exec_appops_set "$pkg" RUN_IN_BACKGROUND ignore; then :; fi
+                if ! exec_appops_set "$pkg" RUN_ANY_IN_BACKGROUND ignore; then :; fi
                 exec_android_cmd "cmd usagestats set-app-standby-bucket $pkg restricted" >/dev/null 2>&1 || true
                 echo "[+] Restricted: $pkg (UID: $uid)"
             fi
@@ -137,7 +152,10 @@ apply_restrictions() {
     if [[ $privileged_success -eq 1 ]]; then
         echo "COMPLETED VIA PRIVILEGED BACKEND ($DETECTED_BACKEND):"
         echo "  - Third-party apps restricted from background data."
-        echo "  - WhatsApp, Telegram, Signal, and hotspot remain functional."
+        echo "  - WhatsApp, Telegram, Signal, and hotspot routing are excluded from app UID rules."
+        if [[ "$APP_OPS_AVAILABLE" -eq 0 ]]; then
+            echo "  - AppOps was refused; NetPolicy and standby controls were attempted."
+        fi
     elif [[ $fallback_used -eq 1 ]]; then
         echo "COMPLETED IN TERMUX USERLAND:"
         echo "  - Third-party apps killed to clear memory and halt active sockets."

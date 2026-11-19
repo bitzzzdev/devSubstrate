@@ -80,8 +80,10 @@ run_drainage_reduction() {
             fi
             ;;
         all)
-            run_drainage_reduction shopping
-            run_drainage_reduction hotspot
+            local result=0
+            run_drainage_reduction shopping || result=$?
+            run_drainage_reduction hotspot || result=$?
+            return "$result"
             ;;
         *)
             echo "Usage: $0 2 {shopping|hotspot|all}" >&2

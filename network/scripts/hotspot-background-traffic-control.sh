@@ -38,6 +38,21 @@ check_adb() {
     fi
 }
 
+APP_OPS_AVAILABLE=1
+
+appops_set() {
+    local pkg="$1" op="$2" mode="$3" output status=0
+    output=$(adb shell cmd appops set "$pkg" "$op" "$mode" 2>&1 | tr -d '\r') || status=$?
+    if [[ "$output" == *"SecurityException"* || "$output" == *"MANAGE_APP_OPS_MODES"* ]]; then
+        if [[ "$APP_OPS_AVAILABLE" -eq 1 ]]; then
+            APP_OPS_AVAILABLE=0
+            echo "[!] AppOps denied by the OEM permission monitor. Continuing with NetPolicy and standby restrictions." >&2
+        fi
+        return 1
+    fi
+    return "$status"
+}
+
 check_root() {
     if adb shell "id" 2>/dev/null | grep -q "uid=0(root)"; then
         return 0
@@ -250,8 +265,8 @@ apply_restrictions() {
 
         if [[ -n "$uid" ]]; then
             adb shell cmd netpolicy add restrict-background-blacklist "$uid" >/dev/null 2>&1 || true
-            adb shell cmd appops set "$pkg" RUN_IN_BACKGROUND ignore >/dev/null 2>&1 || true
-            adb shell cmd appops set "$pkg" RUN_ANY_IN_BACKGROUND ignore >/dev/null 2>&1 || true
+            if ! appops_set "$pkg" RUN_IN_BACKGROUND ignore; then :; fi
+            if ! appops_set "$pkg" RUN_ANY_IN_BACKGROUND ignore; then :; fi
             adb shell cmd usagestats set-app-standby-bucket "$pkg" restricted >/dev/null 2>&1 || true
             if [[ $is_rooted -eq 1 ]]; then
                 apply_iptables_uid_drop "$uid"
@@ -270,7 +285,11 @@ apply_restrictions() {
     fi
 
     echo ""
-    echo "Done. Background data restricted while hotspot remains active."
+    if [[ "$APP_OPS_AVAILABLE" -eq 0 ]]; then
+        echo "Partial: AppOps was refused. Per-UID NetPolicy and standby restrictions were attempted; verify their status on this device."
+        return 1
+    fi
+    echo "Done. Background data restrictions applied; hotspot settings were left unchanged."
 }
 
 revert_restrictions() {
