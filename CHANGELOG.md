@@ -9,14 +9,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Fixed
 - Kept the hotspot stage running when the shopping stage reports partial success due to OEM AppOps permission-monitor restrictions. Added a development-branch Android shell validation job and a mocked regression test for the combined curl profile.
 
-
 ### Changed
 - Made Android curl option 2 default to the `all` profile, applying shopping-app controls and the hotspot-safe third-party background profile without an extra prompt.
 - Removed automatic writes to `mobile_data_always_on`, `tether_dun_required`, and `tether_offload_disabled` from Android ADB and Termux traffic scripts. Per-app restrictions do not require changing global carrier or tethering settings.
 - Revised the cellular and hotspot research paper to remove unmeasured data-saving percentages and distinguish documented Android behavior from device-specific results.
 
-
 ### Added
+- Added `android/appops-permission-monitor.md` with Realme UI and ColorOS troubleshooting for ADB AppOps denials, including the Developer options location, security trade-offs, verification commands, and fallback behavior.
+
 - Free-tier Flash model and coding-agent integration reference `ai-providers/free-ai-api-providers-opencode-guide.md`, covering provider endpoints, model catalogs, quota snapshots, OpenCode, Kilo CLI, Continue.dev, Aider, and OpenAI SDK configuration.
 - Smart root privilege and OEM unlocking diagnostics (`check` action) across `manage-shopping-traffic.sh`, `manage-shopping-traffic.fish`, `hotspot-background-traffic-control.sh`, and Termux traffic scripts.
 - Kernel-level Netfilter (`iptables` / `ip6tables`) cellular packet dropping on rooted devices across `rmnet+`, `ccmni+`, `pdp+`, and `wwan+` interfaces to ensure zero background cellular leakage.
@@ -70,7 +70,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Added
 - Initial project structure created from `fixes` transformation into `devSubstrate`.
 - Core technical research papers in `papers/`:
-  - `groq-inference-analysis.md` (Groq LPU architecture and deterministic scheduling)
+  - `groq-wse-inference.md` (Groq LPU architecture and deterministic scheduling)
   - `cerebras-wse-inference.md` (Cerebras WSE-3 wafer-scale inference benchmarks)
   - `google-ai-studio-gemini.md` (Gemini million-token context windows and REST API)
   - `apinex-gateway-proxy.md` (Multi-model proxy routing and security trade-offs)
