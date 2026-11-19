@@ -14,7 +14,10 @@ CATALOG_FILE=""
 TEMP_CATALOG=""
 
 cleanup() {
-    [[ -n "$TEMP_CATALOG" ]] && rm -f "$TEMP_CATALOG"
+    if [[ -n "$TEMP_CATALOG" ]]; then
+        rm -f "$TEMP_CATALOG"
+    fi
+    return 0
 }
 trap cleanup EXIT
 
