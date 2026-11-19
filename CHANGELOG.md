@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Fixed
+- Kept the hotspot stage running when the shopping stage reports partial success due to OEM AppOps permission-monitor restrictions. Added a development-branch Android shell validation job and a mocked regression test for the combined curl profile.
+
+
 ### Changed
 - Made Android curl option 2 default to the `all` profile, applying shopping-app controls and the hotspot-safe third-party background profile without an extra prompt.
 - Removed automatic writes to `mobile_data_always_on`, `tether_dun_required`, and `tether_offload_disabled` from Android ADB and Termux traffic scripts. Per-app restrictions do not require changing global carrier or tethering settings.

@@ -1,5 +1,19 @@
 stages:
+  - validate
   - maintenance
+
+android-shell-validation:
+  stage: validate
+  image: alpine:3.21
+  before_script:
+    - apk add --no-cache bash fish
+  script:
+    - for file in androidCurlScripts.sh android/scripts/manage-shopping-traffic.sh android/termux-scripts/termux-manage-shopping-traffic.sh network/scripts/hotspot-background-traffic-control.sh android/termux-scripts/termux-hotspot-traffic-control.sh; do bash -n "$file"; done
+    - for file in android/scripts/manage-shopping-traffic.fish android/termux-scripts/termux-manage-shopping-traffic.fish network/scripts/hotspot-background-traffic-control.fish android/termux-scripts/termux-hotspot-traffic-control.fish; do fish -n "$file"; done
+    - bash android/tests/test-curl-wrapper.sh
+    - if grep -nE "settings put global (mobile_data_always_on|tether_dun_required|tether_offload_disabled)" android/scripts/manage-shopping-traffic.sh android/scripts/manage-shopping-traffic.fish android/termux-scripts/termux-manage-shopping-traffic.sh android/termux-scripts/termux-manage-shopping-traffic.fish network/scripts/hotspot-background-traffic-control.sh network/scripts/hotspot-background-traffic-control.fish; then exit 1; fi
+  rules:
+    - if: $CI_COMMIT_BRANCH == "dev"
 
 update-readme:
   stage: maintenance
