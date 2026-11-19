@@ -1,7 +1,9 @@
 # Android app package catalog
 
-This catalog drives the target package set in the ADB and Termux Bash/Fish
-traffic-control scripts. It covers discretionary apps across shopping,
+This catalog is the canonical target list for the ADB and Termux Bash/Fish
+traffic-control scripts. Each standalone script carries a generated copy of
+the target package IDs so curl-based execution works offline; the CI parity
+test checks that the copies match this file. It covers discretionary apps across shopping,
 food delivery, social media, streaming, games, news and sports, and dating.
 
 ## Schema

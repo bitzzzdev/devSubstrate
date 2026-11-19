@@ -28,7 +28,7 @@ while IFS="$(printf '\t')" read -r category package app policy; do
     done
   else
     for script in "${SCRIPTS[@]}"; do
-      if grep -Fq ""$package"" "$script" || grep -Fq "    $package" "$script"; then
+      if grep -Fq "\"$package\"" "$script" || grep -Fq "    $package" "$script"; then
         echo "Protected package unexpectedly targeted: $package in $script" >&2
         exit 1
       fi

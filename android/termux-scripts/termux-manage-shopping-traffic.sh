@@ -363,7 +363,7 @@ pause_traffic() {
             echo "  - NetPolicy and standby controls still applied where supported."
         fi
         echo "  - NetPolicy cellular background sockets blacklisted."
-        echo "  - WhatsApp, Instagram, Telegram, and hotspot remain unaffected."
+        echo "  - Protected messaging, payment, Google core, and transport apps remain outside the target set."
     elif [[ $fallback_used -eq 1 ]]; then
         echo "COMPLETED IN TERMUX NON-ROOT USERLAND:"
         echo "  - Active background processes terminated for catalog apps."

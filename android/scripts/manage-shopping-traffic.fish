@@ -7,7 +7,7 @@
 # AppOps notification suppression, NetPolicy cellular blacklisting, standby bucketing,
 # and UI/Accessibility automation to toggle background data across OEM skins.
 #
-# Preserves WhatsApp, Instagram, Telegram, Google Play Services, and Wi-Fi Hotspot.
+# Targets installed discretionary catalog apps. WhatsApp, Telegram, Signal, payment apps, Google services, and transport apps are excluded.
 #
 # Usage:
 #   ./manage-shopping-traffic.fish pause         # Restricts installed catalog apps
