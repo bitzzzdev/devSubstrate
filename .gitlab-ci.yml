@@ -8,7 +8,8 @@ validate-curl-scripts:
   stage: validate
   image: ubuntu:24.04
   script:
-    - bash -n androidCurlScripts.sh linuxCurlScripts.sh
+    - bash -n androidCurlScripts.sh linuxCurlScripts.sh tests/test-launchers.sh
+    - bash tests/test-launchers.sh
     - test -x androidCurlScripts.sh
     - test -x linuxCurlScripts.sh
     - grep -q 'raw.githubusercontent.com/bitzzdev/devSubstrate/' androidCurlScripts.sh
@@ -19,3 +20,6 @@ validate-curl-scripts:
     - grep -q 'SOURCE_REF' linuxCurlScripts.sh
     - grep -q 'DEVSUBSTRATE_REMOTE' androidCurlScripts.sh
     - grep -q 'DEVSUBSTRATE_REMOTE' linuxCurlScripts.sh
+    - grep -q 'REMOTE="\${DEVSUBSTRATE_REMOTE:-gitlab}"' androidCurlScripts.sh
+    - grep -q 'REMOTE="\${DEVSUBSTRATE_REMOTE:-gitlab}"' linuxCurlScripts.sh
+    - if grep -n 'curl -fsSL "$BASE_URL/$path" | bash' androidCurlScripts.sh linuxCurlScripts.sh; then exit 1; fi
