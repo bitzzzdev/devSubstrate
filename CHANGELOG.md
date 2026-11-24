@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Added a mocked regression test for metered-profile apply, status, revert, and missing-active-Wi-Fi behavior. Added Bash and Fish syntax checks to the development CI job.
 
 ### Fixed
+- Hardened `androidCurlScripts.sh` to default to GitLab, validate downloaded Bash scripts before execution, report failed remote paths, and preserve the invoking user's home when run through sudo.
 - Corrected the Linux curl launcher's Wi-Fi data-reduction target to use NetworkManager metered signaling instead of disabling QCA9377 radio power saving. The hardware-specific QCA9377 action remains available under its own target.
 
 ### Added
