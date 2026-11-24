@@ -7,7 +7,7 @@ The launchers fetch implementation scripts from GitLab by default. Set
 `DEVSUBSTRATE_REMOTE=github` to use the GitHub mirror, and set
 `DEVSUBSTRATE_REF` to pin a branch or commit. The launcher downloads each
 script to a temporary file, checks it with `bash -n`, and executes it only
-after a successful download and syntax check.
+after a successful download and syntax check. When invoked through sudo, they preserve the invoking user's home directory for downloaded scripts that manage user files.
 
 When a launcher must run as root, place environment assignments after
 `sudo`, for example `sudo env DEVSUBSTRATE_REMOTE=github bash`. Do not
