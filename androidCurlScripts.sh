@@ -3,7 +3,7 @@
 set -euo pipefail
 
 SOURCE_REF="${DEVSUBSTRATE_REF:-dev}"
-REMOTE="${DEVSUBSTRATE_REMOTE:-github}"
+REMOTE="${DEVSUBSTRATE_REMOTE:-gitlab}"
 case "$REMOTE" in
     github)
         BASE_URL="https://raw.githubusercontent.com/bitzzdev/devSubstrate/${SOURCE_REF}"
@@ -20,7 +20,30 @@ esac
 run_remote() {
     local path="$1"
     shift
-    curl -fsSL "$BASE_URL/$path" | bash -s -- "$@"
+    local url="$BASE_URL/$path"
+    local tmp status=0
+
+    tmp="$(mktemp)" || return 1
+    if ! curl --fail --location --silent --show-error --output "$tmp" "$url"; then
+        rm -f "$tmp"
+        echo "Error: failed to fetch implementation script: $path" >&2
+        echo "Source: $url" >&2
+        return 1
+    fi
+
+    if ! bash -n "$tmp"; then
+        rm -f "$tmp"
+        echo "Error: downloaded script failed Bash syntax validation: $path" >&2
+        return 1
+    fi
+
+    if bash "$tmp" "$@"; then
+        status=0
+    else
+        status=$?
+    fi
+    rm -f "$tmp"
+    return "$status"
 }
 
 read_choice() {
@@ -49,7 +72,7 @@ Android curl scripts
 4. Storage maintenance
 5. Install or configure Termux tools
 
-Pass a number to run an option without the menu.
+Pass a number to run an option without the menu. Option 2 defaults to all restrictions.
 MENU
 }
 
@@ -62,8 +85,7 @@ run_device_info() {
 }
 
 run_drainage_reduction() {
-    local target="${1:-}"
-    target="${target:-$(read_choice 'Choose shopping, hotspot, or all: ')}"
+    local target="${1:-all}"
 
     case "$target" in
         shopping)
@@ -81,8 +103,10 @@ run_drainage_reduction() {
             fi
             ;;
         all)
-            run_drainage_reduction shopping
-            run_drainage_reduction hotspot
+            local result=0
+            run_drainage_reduction shopping || result=$?
+            run_drainage_reduction hotspot || result=$?
+            return "$result"
             ;;
         *)
             echo "Usage: $0 2 {shopping|hotspot|all}" >&2
@@ -179,6 +203,7 @@ case "$choice" in
         ;;
     *)
         echo "Usage: $0 {1|2|3|4|5} [target]" >&2
+        echo "Option 2 targets: shopping, hotspot, all (default: all)." >&2
         exit 1
         ;;
 esac
