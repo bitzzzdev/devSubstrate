@@ -104,7 +104,11 @@ curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/smartCurlScripts/linux
 ```
 
 To pin the implementation branch or commit, pass `DEVSUBSTRATE_REF` the same
-way, for example `sudo env DEVSUBSTRATE_REF=dev bash`.
+way:
+
+```bash
+curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/smartCurlScripts/linuxCurlScripts.sh | sudo env DEVSUBSTRATE_REF=dev bash -s -- 2 wifi
+```
 
 ## Full repository
 
