@@ -17,6 +17,14 @@ case "$REMOTE" in
         ;;
 esac
 
+RUN_HOME="${HOME:-/}"
+if [[ -n "${SUDO_USER:-}" ]] && command -v getent >/dev/null 2>&1; then
+    invoking_home="$(getent passwd "$SUDO_USER" | awk -F: 'NR == 1 { print $6 }')"
+    if [[ -n "$invoking_home" ]]; then
+        RUN_HOME="$invoking_home"
+    fi
+fi
+
 run_remote() {
     local path="$1"
     shift
@@ -37,7 +45,7 @@ run_remote() {
         return 1
     fi
 
-    if bash "$tmp" "$@"; then
+    if HOME="$RUN_HOME" bash "$tmp" "$@"; then
         status=0
     else
         status=$?
