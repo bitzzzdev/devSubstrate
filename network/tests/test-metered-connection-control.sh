@@ -23,7 +23,7 @@ elif [[ "$1" == "-g" && "$2" == "connection.id" ]]; then
 elif [[ "$1" == "-g" && "$2" == "connection.metered" ]]; then
     cat "$NMCLI_STATE_FILE"
 elif [[ "$1" == "connection" && "$2" == "modify" ]]; then
-    printf '%s\n' "$4" > "$NMCLI_STATE_FILE"
+    printf '%s\n' "$5" > "$NMCLI_STATE_FILE"
 else
     echo "Unexpected nmcli invocation: $*" >&2
     exit 2
