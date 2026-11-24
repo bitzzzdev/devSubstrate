@@ -3,7 +3,7 @@
 set -euo pipefail
 
 SOURCE_REF="${DEVSUBSTRATE_REF:-dev}"
-REMOTE="${DEVSUBSTRATE_REMOTE:-github}"
+REMOTE="${DEVSUBSTRATE_REMOTE:-gitlab}"
 case "$REMOTE" in
     github)
         BASE_URL="https://raw.githubusercontent.com/bitzzdev/devSubstrate/${SOURCE_REF}"
@@ -20,7 +20,30 @@ esac
 run_remote() {
     local path="$1"
     shift
-    curl -fsSL "$BASE_URL/$path" | bash -s -- "$@"
+    local url="$BASE_URL/$path"
+    local tmp status=0
+
+    tmp="$(mktemp)" || return 1
+    if ! curl --fail --location --silent --show-error --output "$tmp" "$url"; then
+        rm -f "$tmp"
+        echo "Error: failed to fetch implementation script: $path" >&2
+        echo "Source: $url" >&2
+        return 1
+    fi
+
+    if ! bash -n "$tmp"; then
+        rm -f "$tmp"
+        echo "Error: downloaded script failed Bash syntax validation: $path" >&2
+        return 1
+    fi
+
+    if bash "$tmp" "$@"; then
+        status=0
+    else
+        status=$?
+    fi
+    rm -f "$tmp"
+    return "$status"
 }
 
 read_choice() {
@@ -56,13 +79,13 @@ run_device_info() {
 
 run_drainage_reduction() {
     local target="${1:-}"
-    target="${target:-$(read_choice 'Choose hotspot or wifi: ')}"
+    target="${target:-$(read_choice 'Choose hotspot or metered wifi: ')}"
     case "$target" in
         hotspot)
             run_remote network/scripts/hotspot-background-traffic-control.sh apply
             ;;
         wifi)
-            run_remote network/wifi/scripts/qca9377-powersave-fix.sh apply
+            run_remote network/scripts/metered-connection-control.sh apply
             ;;
         *)
             echo "Usage: $0 2 {hotspot|wifi}" >&2
@@ -73,12 +96,15 @@ run_drainage_reduction() {
 
 run_revert() {
     local target="${1:-}"
-    target="${target:-$(read_choice 'Choose hotspot, wifi, uki, vlc, or ssh: ')}"
+    target="${target:-$(read_choice 'Choose hotspot, wifi, qca9377, uki, vlc, or ssh: ')}"
     case "$target" in
         hotspot)
             run_remote network/scripts/hotspot-background-traffic-control.sh revert
             ;;
         wifi)
+            run_remote network/scripts/metered-connection-control.sh revert
+            ;;
+        qca9377)
             run_remote network/wifi/scripts/qca9377-powersave-fix.sh revert
             ;;
         uki)
@@ -91,7 +117,7 @@ run_revert() {
             run_remote linux/ssh/scripts/configure-ssh-x11-forwarding.sh revert
             ;;
         *)
-            echo "Usage: $0 3 {hotspot|wifi|uki|vlc|ssh}" >&2
+            echo "Usage: $0 3 {hotspot|wifi|qca9377|uki|vlc|ssh}" >&2
             exit 1
             ;;
     esac
@@ -99,8 +125,11 @@ run_revert() {
 
 run_system_fix() {
     local target="${1:-}"
-    target="${target:-$(read_choice 'Choose uki, vlc, or ssh: ')}"
+    target="${target:-$(read_choice 'Choose qca9377, uki, vlc, or ssh: ')}"
     case "$target" in
+        qca9377)
+            run_remote network/wifi/scripts/qca9377-powersave-fix.sh apply
+            ;;
         uki)
             run_remote linux/arch/scripts/uki-qca9377-fix.sh apply
             ;;
@@ -111,7 +140,7 @@ run_system_fix() {
             run_remote linux/ssh/scripts/configure-ssh-x11-forwarding.sh apply
             ;;
         *)
-            echo "Usage: $0 4 {uki|vlc|ssh}" >&2
+            echo "Usage: $0 4 {qca9377|uki|vlc|ssh}" >&2
             exit 1
             ;;
     esac
