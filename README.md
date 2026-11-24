@@ -197,6 +197,12 @@ Run any fix directly without cloning the repository. Every script supports statu
 
 | Operation | Direct One-Line curl Command |
 | --- | --- |
+| Mark Wi-Fi Profile Metered (Apply) | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/dev/network/scripts/metered-connection-control.sh | sudo bash -s -- apply` |
+| Mark Wi-Fi Profile Metered (Apply) (GitLab) | `curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/dev/network/scripts/metered-connection-control.sh | sudo bash -s -- apply` |
+| Wi-Fi Metered Profile Status | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/dev/network/scripts/metered-connection-control.sh | bash -s -- status` |
+| Wi-Fi Metered Profile Status (GitLab) | `curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/dev/network/scripts/metered-connection-control.sh | bash -s -- status` |
+| Restore Wi-Fi Metered Auto Detection | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/dev/network/scripts/metered-connection-control.sh | sudo bash -s -- revert` |
+| Restore Wi-Fi Metered Auto Detection (GitLab) | `curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/dev/network/scripts/metered-connection-control.sh | sudo bash -s -- revert` |
 | Disable Wi-Fi Powersave (Apply) | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/network/wifi/scripts/qca9377-powersave-fix.sh \| sudo bash -s -- apply` |
 | Disable Wi-Fi Powersave (Apply) (GitLab) | `curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/network/wifi/scripts/qca9377-powersave-fix.sh \| sudo bash -s -- apply` |
 | Restore Wi-Fi Powersave (Revert) | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/network/wifi/scripts/qca9377-powersave-fix.sh \| sudo bash -s -- revert` |
