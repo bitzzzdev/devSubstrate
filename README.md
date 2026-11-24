@@ -124,6 +124,7 @@ Technical troubleshooting procedures, diagnostics, and recovery scripts.
 | QCA9377 Service | [QCA9377 Wi-Fi Automated Fix](network/wifi/qca9377-auto-fix.md) | Driver reload and systemd service creation |
 | Mobile Hotspot | [QCA9377 Hotspot Disconnect Fix](network/wifi/qca9377-hotspot-disconnect-fix.md) | Packet drop mitigation and power save disabling |
 | Data Metering | [Linux & Android Data Consumption Reduction](network/linux-android-internet-usage-optimization.md) | Metered connection rules and daemon traffic limits |
+| Internet Data Drain | [Linux & Android Internet Data Drain Reduction](network/internet-data-drain-reduction.md) | Fish and Bash commands for traffic accounting, metered profiles, rate-limited downloads, pacman, Git, Docker, and Android |
 | Network Overview | [Network Troubleshooting Hub](network/README.md) | Wi-Fi and mobile interface maintenance index |
 
 ### Windows and Cross-Platform Tools
