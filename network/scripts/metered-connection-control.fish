@@ -30,15 +30,17 @@ set -l name (nmcli -g connection.id connection show "$uuid")
 
 switch "$action"
     case apply
-        nmcli connection modify "$uuid" connection.metered yes
-        or exit $status
+        if not nmcli connection modify "$uuid" connection.metered yes
+            exit 1
+        end
         echo "Marked Wi-Fi profile as metered: $name"
         echo "Compatible applications can now treat this connection as data-limited."
         echo "This does not block all background traffic or impose a hard data quota."
         echo "Metered setting:" (nmcli -g connection.metered connection show "$uuid")
     case revert
-        nmcli connection modify "$uuid" connection.metered unknown
-        or exit $status
+        if not nmcli connection modify "$uuid" connection.metered unknown
+            exit 1
+        end
         echo "Restored automatic metered detection for: $name"
         echo "Metered setting:" (nmcli -g connection.metered connection show "$uuid")
     case status
@@ -46,6 +48,6 @@ switch "$action"
         echo "Profile UUID: $uuid"
         echo "Metered setting:" (nmcli -g connection.metered connection show "$uuid")
     case '*'
-        echo "Usage: $argv[0] {apply|revert|status}" >&2
+        echo "Usage: metered-connection-control.fish {apply|revert|status}" >&2
         exit 2
 end
