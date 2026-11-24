@@ -62,61 +62,37 @@ devices, protocol overhead, and billing sessions differently.
 
 ## 2. Mark the current Wi-Fi connection as metered
 
-On systems using NetworkManager, set the active connection profile to
-metered. Compatible desktop applications can then avoid or defer large
-background downloads. NetworkManager applies a changed metered property to
-an already active profile immediately.
+On systems using NetworkManager, mark the active Wi-Fi profile as metered.
+Compatible applications can then avoid or defer some background downloads.
+NetworkManager applies a changed metered property to an already active
+profile immediately.
+
+Use the repository helper instead of selecting the first active connection
+by name. It identifies an active Wi-Fi profile by connection type, so it does
+not accidentally modify a VPN or wired profile.
 
 ### Fish
 
 ```fish
-set active (nmcli -g NAME connection show --active | head -n 1)
-
-if test -n "$active"
-    nmcli connection modify "$active" connection.metered yes
-    nmcli -f connection.id,connection.metered connection show "$active"
-else
-    echo "No active NetworkManager connection found."
-end
+sudo fish network/scripts/metered-connection-control.fish apply
+fish network/scripts/metered-connection-control.fish status
+sudo fish network/scripts/metered-connection-control.fish revert
 ```
 
 ### Bash
 
 ```bash
-active="$(nmcli -g NAME connection show --active | head -n 1)"
-
-if [[ -n "$active" ]]; then
-    nmcli connection modify "$active" connection.metered yes
-    nmcli -f connection.id,connection.metered connection show "$active"
-else
-    echo "No active NetworkManager connection found."
-fi
+sudo bash network/scripts/metered-connection-control.sh apply
+bash network/scripts/metered-connection-control.sh status
+sudo bash network/scripts/metered-connection-control.sh revert
 ```
 
-To restore automatic detection for that profile, replace `yes` with
-`unknown`:
-
-### Fish
-
-```fish
-set active (nmcli -g NAME connection show --active | head -n 1)
-if test -n "$active"
-    nmcli connection modify "$active" connection.metered unknown
-end
-```
-
-### Bash
-
-```bash
-active="$(nmcli -g NAME connection show --active | head -n 1)"
-if [[ -n "$active" ]]; then
-    nmcli connection modify "$active" connection.metered unknown
-fi
-```
-
-This changes only the selected NetworkManager profile. Repeat it for another
-profile when you connect through a different hotspot. If you use iwd directly,
-systemd-networkd, or another network manager, do not run these commands.
+The `apply` action sets `connection.metered=yes`; `revert` sets it to
+`unknown`, allowing NetworkManager to use its automatic metered-state
+detection again. The helper requires an active NetworkManager-managed Wi-Fi
+connection. It does not block traffic, impose a hard quota, or guarantee
+that every application honors the metered flag. If you use iwd directly,
+systemd-networkd, or another network manager, this helper does not apply.
 
 ## 3. Limit individual downloads
 
