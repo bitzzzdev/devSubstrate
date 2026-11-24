@@ -137,6 +137,7 @@ Technical troubleshooting procedures, diagnostics, and recovery scripts.
 | QCA9377 Service | [QCA9377 Wi-Fi Automated Fix](network/wifi/qca9377-auto-fix.md) | Driver reload and systemd service creation |
 | Mobile Hotspot | [QCA9377 Hotspot Disconnect Fix](network/wifi/qca9377-hotspot-disconnect-fix.md) | Packet drop mitigation and power save disabling |
 | Data Metering | [Linux & Android Data Consumption Reduction](network/linux-android-internet-usage-optimization.md) | Metered connection rules and daemon traffic limits |
+| Wi-Fi Metered Profile | [NetworkManager Metered Profile Control](network/scripts/metered-connection-control.sh) | Active Wi-Fi profile metering with status and automatic-detection revert |
 | Network Overview | [Network Troubleshooting Hub](network/README.md) | Wi-Fi and mobile interface maintenance index |
 
 ### Windows and Cross-Platform Tools
@@ -208,6 +209,12 @@ Run any fix directly without cloning the repository. Every script supports statu
 
 | Operation | Direct One-Line curl Command |
 | --- | --- |
+| Mark Wi-Fi Profile Metered (Apply) | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/dev/network/scripts/metered-connection-control.sh | sudo bash -s -- apply` |
+| Mark Wi-Fi Profile Metered (Apply) (GitLab) | `curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/dev/network/scripts/metered-connection-control.sh | sudo bash -s -- apply` |
+| Wi-Fi Metered Profile Status | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/dev/network/scripts/metered-connection-control.sh | bash -s -- status` |
+| Wi-Fi Metered Profile Status (GitLab) | `curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/dev/network/scripts/metered-connection-control.sh | bash -s -- status` |
+| Restore Wi-Fi Metered Auto Detection | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/dev/network/scripts/metered-connection-control.sh | sudo bash -s -- revert` |
+| Restore Wi-Fi Metered Auto Detection (GitLab) | `curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/dev/network/scripts/metered-connection-control.sh | sudo bash -s -- revert` |
 | Disable Wi-Fi Powersave (Apply) | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/network/wifi/scripts/qca9377-powersave-fix.sh \| sudo bash -s -- apply` |
 | Disable Wi-Fi Powersave (Apply) (GitLab) | `curl -fsSL https://gitlab.com/bitzzdev/devSubstrate/-/raw/main/network/wifi/scripts/qca9377-powersave-fix.sh \| sudo bash -s -- apply` |
 | Restore Wi-Fi Powersave (Revert) | `curl -fsSL https://raw.githubusercontent.com/bitzzdev/devSubstrate/main/network/wifi/scripts/qca9377-powersave-fix.sh \| sudo bash -s -- revert` |
