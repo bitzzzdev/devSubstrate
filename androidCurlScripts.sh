@@ -3,7 +3,7 @@
 set -euo pipefail
 
 SOURCE_REF="${DEVSUBSTRATE_REF:-dev}"
-REMOTE="${DEVSUBSTRATE_REMOTE:-github}"
+REMOTE="${DEVSUBSTRATE_REMOTE:-gitlab}"
 case "$REMOTE" in
     github)
         BASE_URL="https://raw.githubusercontent.com/bitzzdev/devSubstrate/${SOURCE_REF}"
@@ -20,7 +20,30 @@ esac
 run_remote() {
     local path="$1"
     shift
-    curl -fsSL "$BASE_URL/$path" | bash -s -- "$@"
+    local url="$BASE_URL/$path"
+    local tmp status=0
+
+    tmp="$(mktemp)" || return 1
+    if ! curl --fail --location --silent --show-error --output "$tmp" "$url"; then
+        rm -f "$tmp"
+        echo "Error: failed to fetch implementation script: $path" >&2
+        echo "Source: $url" >&2
+        return 1
+    fi
+
+    if ! bash -n "$tmp"; then
+        rm -f "$tmp"
+        echo "Error: downloaded script failed Bash syntax validation: $path" >&2
+        return 1
+    fi
+
+    if bash "$tmp" "$@"; then
+        status=0
+    else
+        status=$?
+    fi
+    rm -f "$tmp"
+    return "$status"
 }
 
 read_choice() {
