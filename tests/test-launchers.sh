@@ -57,6 +57,7 @@ SCRIPT
     *)
         cat > "$output" <<'SCRIPT'
 echo "REMOTE_STAGE:$1"
+echo "HOME=$HOME"
 SCRIPT
         ;;
 esac
