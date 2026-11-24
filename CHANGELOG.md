@@ -7,6 +7,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [Unreleased]
 
 ### Added
+- Added Bash and Fish NetworkManager helpers to mark only the active Wi-Fi profile as metered, inspect its state, and restore automatic metered-state detection.
+- Added a mocked regression test for metered-profile apply, status, revert, and missing-active-Wi-Fi behavior. Added Bash and Fish syntax checks to the development CI job.
+
+### Fixed
+- Corrected the Linux curl launcher's Wi-Fi data-reduction target to use NetworkManager metered signaling instead of disabling QCA9377 radio power saving. The hardware-specific QCA9377 action remains available under its own target.
+
+### Added
 - Added `network/internet-data-drain-reduction.md` with Fish and Bash command blocks for traffic accounting, NetworkManager metered profiles, rate-limited transfers, pacman download controls, Git and Docker cache practices, and Android per-app data restrictions.
 - Added `ai-providers/openrouter-free-coding-models.md` with a dated OpenRouter free coding model catalogue, upstream inference provider notes, tool support, privacy constraints, rate limits, and model expiry warnings.
 - Added `android/scripts/app-data-saver.sh` to apply, inspect, and revert per-app background metered-data restrictions through Android 11 NetPolicy. It preserves allowlisted UIDs and protected shared UIDs without enabling global Data Saver.
