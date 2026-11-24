@@ -2,7 +2,7 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
-SCRIPT="$ROOT/scripts/metered-connection-control.sh"
+SCRIPT="$ROOT/network/scripts/metered-connection-control.sh"
 TMP="$(mktemp -d)"
 trap 'rm -rf "$TMP"' EXIT
 
@@ -53,7 +53,7 @@ grep -q 'no active NetworkManager Wi-Fi connection' "$TMP/no-wifi.out"
 
 echo "PASS: metered apply, status, revert, and no-active-Wi-Fi handling."
 if command -v fish >/dev/null 2>&1; then
-    fish -n "$ROOT/scripts/metered-connection-control.fish"
+    fish -n "$ROOT/network/scripts/metered-connection-control.fish"
     echo "PASS: Fish syntax."
 else
     echo "SKIP: fish is not installed; Fish syntax was not checked."
