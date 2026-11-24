@@ -10,6 +10,7 @@ Wi-Fi, mobile hotspot, connectivity, network adapter, bandwidth optimization, an
 ## Bandwidth Optimization & Traffic Control
 
 - [Linux & Android Internet Data Optimization](linux-android-internet-usage-optimization.md): 12-hour continuous streaming on a 1 GB quota, cache clamping, traffic shaping, and hotspot background control.
+- [Internet Data Drain Reduction](internet-data-drain-reduction.md): NetworkManager metered profiles, traffic accounting, per-transfer rate limits, pacman download controls, Git and Docker cache guidance, and Android per-app restrictions.
 
 ## Quick Execution One-Liners
 
