@@ -8,7 +8,7 @@ validate-curl-scripts:
   stage: validate
   image: ubuntu:24.04
   script:
-    - bash -n androidCurlScripts.sh linuxCurlScripts.sh tests/test-launchers.sh
+    - for file in androidCurlScripts.sh linuxCurlScripts.sh tests/test-launchers.sh; do bash -n "$file"; done
     - bash tests/test-launchers.sh
     - test -x androidCurlScripts.sh
     - test -x linuxCurlScripts.sh
