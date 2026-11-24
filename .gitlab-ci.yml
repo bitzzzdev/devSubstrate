@@ -13,6 +13,9 @@ android-shell-validation:
     - bash android/tests/test-curl-wrapper.sh
     - bash android/tests/test-app-package-catalog.sh
     - bash -n android/scripts/app-data-saver.sh
+    - bash -n network/scripts/metered-connection-control.sh
+    - fish -n network/scripts/metered-connection-control.fish
+    - bash network/tests/test-metered-connection-control.sh
     - bash android/tests/test-app-data-saver.sh
     - if grep -nE "settings put global (mobile_data_always_on|tether_dun_required|tether_offload_disabled)" android/scripts/manage-shopping-traffic.sh android/scripts/manage-shopping-traffic.fish android/termux-scripts/termux-manage-shopping-traffic.sh android/termux-scripts/termux-manage-shopping-traffic.fish network/scripts/hotspot-background-traffic-control.sh network/scripts/hotspot-background-traffic-control.fish; then exit 1; fi
   rules:
