@@ -5,12 +5,14 @@
 ### Fixed
 
 - Default both launchers to GitLab so a `DEVSUBSTRATE_REMOTE` assignment removed by `sudo` cannot silently switch implementation downloads to GitHub.
+- Preserve the invoking user's home directory when launchers run through `sudo`, preventing SSH configuration and Downloads-based installers from writing to `/root`.
 - Download implementation scripts to a temporary file, validate with `bash -n`, and execute only after a successful fetch. Report the failed path and source URL.
 - Route Linux option `2 wifi` to NetworkManager metered-profile control instead of the QCA9377 radio power-save fix. Keep that hardware-specific fix under the explicit `qca9377` target.
 
 ### Added
 
 - Document GitLab-first invocation and correct `sudo env NAME=value bash` placement for overrides.
+- Add mocked regression coverage for caller-home preservation, both remote mirrors, launcher dispatch, aggregate Android execution, and HTTP fetch failures.
 
 ### Added
 
